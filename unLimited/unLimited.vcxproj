@@ -123,14 +123,30 @@
   <ItemGroup>
     <ClCompile Include="hooks\hooks.cpp" />
     <ClCompile Include="interfaces.cpp" />
+    <ClCompile Include="sdk\Color.cpp" />
+    <ClCompile Include="sdk\Convar.cpp" />
+    <ClCompile Include="sdk\UtlBuffer.cpp" />
+    <ClCompile Include="sdk\UtlString.cpp" />
+    <ClCompile Include="sdk\Vector2D.cpp" />
+    <ClCompile Include="sdk\Vector4D.cpp" />
+    <ClCompile Include="sdk\VMatrix.cpp" />
     <ClCompile Include="unLimited.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hooks\hooks.hpp" />
     <ClInclude Include="interfaces.hpp" />
+    <ClInclude Include="sdk\BaseHandle.hpp" />
     <ClInclude Include="sdk\CClientState.hpp" />
     <ClInclude Include="sdk\CInput.hpp" />
+    <ClInclude Include="sdk\ClientClass.hpp" />
+    <ClInclude Include="sdk\Color.hpp" />
+    <ClInclude Include="sdk\Convar.hpp" />
+    <ClInclude Include="sdk\CUserCmd.hpp" />
+    <ClInclude Include="sdk\EHandle.hpp" />
+    <ClInclude Include="sdk\Enums.hpp" />
+    <ClInclude Include="sdk\GlobalVars.hpp" />
+    <ClInclude Include="sdk\glow_outline_effect.hpp" />
     <ClInclude Include="sdk\IAppSystem.hpp" />
     <ClInclude Include="sdk\IBaseClientDll.hpp" />
     <ClInclude Include="sdk\IClientEntity.hpp" />
@@ -146,6 +162,7 @@
     <ClInclude Include="sdk\IEngineSound.hpp" />
     <ClInclude Include="sdk\IEngineTrace.hpp" />
     <ClInclude Include="sdk\IGameEventmanager.hpp" />
+    <ClInclude Include="sdk\IHandleEntity.hpp" />
     <ClInclude Include="sdk\IMaterialSystem.hpp" />
     <ClInclude Include="sdk\IMDLCache.hpp" />
     <ClInclude Include="sdk\IMoveHelper.hpp" />
@@ -159,8 +176,19 @@
     <ClInclude Include="sdk\IViewRender.hpp" />
     <ClInclude Include="sdk\IVModelInfoClient.hpp" />
     <ClInclude Include="sdk\IVModelRender.hpp" />
+    <ClInclude Include="sdk\platform.hpp" />
+    <ClInclude Include="sdk\QAngle.hpp" />
+    <ClInclude Include="sdk\Recv.hpp" />
     <ClInclude Include="sdk\sdk.hpp" />
+    <ClInclude Include="sdk\Studio.hpp" />
+    <ClInclude Include="sdk\UtlBuffer.hpp" />
+    <ClInclude Include="sdk\UtlMemory.hpp" />
+    <ClInclude Include="sdk\UtlString.hpp" />
     <ClInclude Include="sdk\Vector.hpp" />
+    <ClInclude Include="sdk\Vector2D.hpp" />
+    <ClInclude Include="sdk\Vector4D.hpp" />
+    <ClInclude Include="sdk\vfunc.hpp" />
+    <ClInclude Include="sdk\VMatrix.hpp" />
     <ClInclude Include="utils.hpp" />
     <ClInclude Include="vmt_hook.hpp" />
   </ItemGroup>
