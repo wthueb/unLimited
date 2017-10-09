@@ -14,5 +14,8 @@ namespace utils
 
 	uint64_t find_signature(const char* szModule, const char* szSignature);
 
+	template<typename fn>
+	fn get_vfunc(void* base, int index);
+
 	extern HMODULE dll;
 }

@@ -7,24 +7,6 @@
       <Filter>hooks</Filter>
     </ClCompile>
     <ClCompile Include="interfaces.cpp" />
-    <ClCompile Include="sdk\Color.cpp">
-      <Filter>sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="sdk\Convar.cpp">
-      <Filter>sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="sdk\UtlBuffer.cpp">
-      <Filter>sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="sdk\UtlString.cpp">
-      <Filter>sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="sdk\Vector2D.cpp">
-      <Filter>sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="sdk\Vector4D.cpp">
-      <Filter>sdk</Filter>
-    </ClCompile>
     <ClCompile Include="sdk\VMatrix.cpp">
       <Filter>sdk</Filter>
     </ClCompile>
@@ -35,29 +17,23 @@
       <Filter>hooks</Filter>
     </ClInclude>
     <ClInclude Include="vmt_hook.hpp" />
-    <ClInclude Include="sdk\sdk.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
     <ClInclude Include="interfaces.hpp" />
-    <ClInclude Include="sdk\CClientState.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\CInput.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IAppSystem.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IBaseClientDll.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
     <ClInclude Include="sdk\IClientEntity.hpp">
       <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\IClientEntityList.hpp">
+    <ClInclude Include="sdk\sdk.hpp">
       <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\IClientMode.hpp">
+    <ClInclude Include="sdk\IVEngineClient.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\Vector.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\QAngle.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\VMatrix.hpp">
       <Filter>sdk</Filter>
     </ClInclude>
     <ClInclude Include="sdk\IClientNetworkable.hpp">
@@ -66,133 +42,13 @@
     <ClInclude Include="sdk\IClientRenderable.hpp">
       <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\IClientThinkable.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
     <ClInclude Include="sdk\IClientUnknown.hpp">
       <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\ICollideable.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IConVar.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\ICvar.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IEngineSound.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IEngineTrace.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IGameEventmanager.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IMaterialSystem.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IMDLCache.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IMoveHelper.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IPanel.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IPhysics.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IPrediction.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IRenderView.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\ISurface.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IVDebugOverlay.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IVEngineClient.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IViewRender.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IVModelInfoClient.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\IVModelRender.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\Vector.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\BaseHandle.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\ClientClass.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\Color.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\Convar.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\CUserCmd.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\EHandle.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\Enums.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\GlobalVars.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\glow_outline_effect.hpp">
+    <ClInclude Include="sdk\IClientThinkable.hpp">
       <Filter>sdk</Filter>
     </ClInclude>
     <ClInclude Include="sdk\IHandleEntity.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\platform.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\Recv.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\Studio.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\UtlBuffer.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\UtlMemory.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\UtlString.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\vfunc.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\QAngle.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\Vector2D.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\Vector4D.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\VMatrix.hpp">
       <Filter>sdk</Filter>
     </ClInclude>
   </ItemGroup>

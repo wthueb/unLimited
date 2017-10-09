@@ -130,3 +130,9 @@ uint64_t utils::find_signature(const char* szModule, const char* szSignature)
 
 	return NULL;
 }
+
+template<typename fn>
+fn get_vfunc(void* base, int index)
+{
+	return *static_cast<fn**>(base)[index];
+}

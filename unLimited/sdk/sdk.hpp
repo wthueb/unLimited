@@ -1,4 +1,6 @@
 #pragma once
 
-#include "CClientState.hpp"
-#include "Vector.hpp"
+#include "IClientEntity.hpp"
+#include "IVEngineClient.hpp"
+
+extern IVEngineClient* g_engine_client;
