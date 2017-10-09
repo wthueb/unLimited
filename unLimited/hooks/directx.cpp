@@ -11,5 +11,7 @@ HRESULT __stdcall hooks::hk_reset(IDirect3DDevice9* pDevice, D3DPRESENT_PARAMETE
 {
 	static auto o_reset = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*, D3DPRESENT_PARAMETERS*)>(index::reset);
 
-	return o_reset(pDevice, pPresentationParameters);
+	auto ret = o_reset(pDevice, pPresentationParameters);
+
+	return ret;
 }
