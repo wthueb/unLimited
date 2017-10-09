@@ -38,6 +38,11 @@ public:
 		return reinterpret_cast<fn>(m_old_vmt[index]);
 	}
 
+	void restore()
+	{
+		memcpy(*m_class, m_old_vmt, sizeof(m_new_vmt));
+	}
+
 private:
 	bool is_code_ptr(void* ptr)
 	{

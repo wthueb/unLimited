@@ -12,7 +12,7 @@ namespace utils
 	bool console_print(const char* fmt, ...);
 	char console_read_key();
 
-	uint64_t find_signature(const char* szModule, const char* szSignature);
+	uint64_t find_signature(const std::string &szModule, const std::string &szSignature);
 
 	template<typename fn>
 	fn get_vfunc(void* base, int index);

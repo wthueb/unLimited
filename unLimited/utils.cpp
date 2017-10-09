@@ -86,19 +86,19 @@ char utils::console_read_key()
 }
 
 // credits: learn_more
-uint64_t utils::find_signature(const char* szModule, const char* szSignature)
+uint64_t utils::find_signature(const std::string &module, const std::string &signature)
 {
 #define INRANGE(x, a, b)  (x >= a && x <= b) 
 #define GET_BITS(x)       (INRANGE((x&(~0x20)),'A','F') ? ((x&(~0x20)) - 'A' + 0xa) : (INRANGE(x,'0','9') ? x - '0' : 0))
 #define GET_BYTE(x)       (GET_BITS(x[0]) << 4 | GET_BITS(x[1]))
 
 	MODULEINFO mod_info;
-	GetModuleInformation(GetCurrentProcess(), GetModuleHandleA(szModule), &mod_info, sizeof(MODULEINFO));
+	GetModuleInformation(GetCurrentProcess(), GetModuleHandleA(module.c_str()), &mod_info, sizeof(MODULEINFO));
 
 	auto startAddress = reinterpret_cast<DWORD>(mod_info.lpBaseOfDll);
 	auto endAddress = startAddress + mod_info.SizeOfImage;
 
-	const char* pat = szSignature;
+	const char* pat = signature.c_str();
 
 	DWORD firstMatch = 0;
 	for (auto cur = startAddress; cur < endAddress; ++cur)
@@ -123,7 +123,7 @@ uint64_t utils::find_signature(const char* szModule, const char* szSignature)
 		}
 		else
 		{
-			pat = szSignature;
+			pat = signature.c_str();
 			firstMatch = 0;
 		}
 	}
