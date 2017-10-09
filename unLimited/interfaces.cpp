@@ -1,5 +1,7 @@
 #include "interfaces.hpp"
 
+#include "sdk/sdk.hpp"
+
 #include <Windows.h>
 #include <string>
 
