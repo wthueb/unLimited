@@ -12,8 +12,8 @@ namespace hooks
 	{
 		auto d3d_device = **reinterpret_cast<uintptr_t**>(utils::find_signature("shaderapidx9.dll", "A1 ? ? ? ? 50 8B 08 FF 51 0C") + 1);
 
-		d3d_device_hook = std::make_unique<vmt_hook>(reinterpret_cast<void*>(d3d_device));
-		engine_client_hook = std::make_unique<vmt_hook>(reinterpret_cast<void*>(g_engine_client));
+		d3d_device_hook = std::make_unique<vmt_hook>(d3d_device);
+		engine_client_hook = std::make_unique<vmt_hook>(g_engine_client);
 
 		d3d_device_hook->hook(reinterpret_cast<void*>(hk_end_scene), index::end_scene);
 		d3d_device_hook->hook(reinterpret_cast<void*>(hk_reset), index::reset);
