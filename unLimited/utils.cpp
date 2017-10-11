@@ -12,15 +12,21 @@ HANDLE out = NULL, old_out = NULL;
 HANDLE err = NULL, old_err = NULL;
 HANDLE in = NULL, old_in = NULL;
 
+extern void gui_shutdown();
+
 void utils::unload()
 {
 #ifdef _DEBUG
 	detach_console();
 #endif
 
-	hooks::unload();
+	gui_shutdown();
+	Sleep(100);
 
-	FreeLibraryAndExitThread(dll, 1);
+	hooks::unload();
+	Sleep(500);
+
+	FreeLibraryAndExitThread(dll, 0);
 }
 
 void utils::attach_console()

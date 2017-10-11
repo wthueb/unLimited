@@ -27,9 +27,10 @@ public:
 		delete[] m_new_vmt;
 	}
 
-	void* hook(void* hooked_fn, size_t index)
+	template<typename fn>
+	void* hook(fn hooked_fn, size_t index)
 	{
-		m_new_vmt[index] = hooked_fn;
+		m_new_vmt[index] = reinterpret_cast<void*>(hooked_fn);
 		return m_old_vmt[index];
 	}
 

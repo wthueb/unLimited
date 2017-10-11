@@ -84,6 +84,7 @@
     <ClInclude Include="imgui\stb_truetype.h">
       <Filter>imgui</Filter>
     </ClInclude>
+    <ClInclude Include="gui.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="hooks">

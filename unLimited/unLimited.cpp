@@ -4,11 +4,14 @@
 #include "interfaces.hpp"
 #include "utils.hpp"
 
+// this is stupid, but don't want a header for directx.cpp
+extern void gui_init();
+
 void wait_for_unload()
 {
 	while (true)
 	{
-		if (GetAsyncKeyState(VK_DELETE))
+		if (GetAsyncKeyState(VK_DELETE) & 1)
 			utils::unload();
 
 		Sleep(500);
@@ -23,15 +26,19 @@ void attach(HMODULE dll)
 	utils::attach_console();
 #endif
 
-	utils::console_print("successfully attached dll to process\n\n");
+	utils::console_print("successfully attached dll to process\n\n\n");
 
 	utils::console_print("initializing interfaces...\n\n");
 	interfaces::init();
-	utils::console_print("\ndone initializing interfaces\n\n");
+	utils::console_print("done initializing interfaces\n\n\n");
 
 	utils::console_print("initializing hooks...\n\n");
 	hooks::init();
-	utils::console_print("\ndone initializing hooks\n\n");
+	utils::console_print("done initializing hooks\n\n\n");
+
+	utils::console_print("initializing gui...\n\n");
+	gui_init();
+	utils::console_print("done initializing gui\n\n\n");
 
 	wait_for_unload();
 }

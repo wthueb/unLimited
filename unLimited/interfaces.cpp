@@ -5,7 +5,7 @@
 #include <Windows.h>
 #include <string>
 
-IVEngineClient* g_engine_client = nullptr;
+IVEngineClient* g_engine = nullptr;
 
 template<typename t>
 t* capture_interface(const std::string &module, const std::string &interface)
@@ -26,5 +26,5 @@ t* capture_interface(const std::string &module, const std::string &interface)
 
 void interfaces::init()
 {
-	g_engine_client = capture_interface<IVEngineClient>("engine.dll", "VEngineClient014");
+	g_engine = capture_interface<IVEngineClient>("engine.dll", "VEngineClient014");
 }

@@ -120,8 +120,8 @@ public:
 	virtual void                  EngineStats_BeginFrame(void) = 0;
 	virtual void                  EngineStats_EndFrame(void) = 0;
 	virtual void                  FireEvents() = 0;
-	virtual int                   GetLeavesArea(unsigned short *pLeaves, int nLeaves) = 0;
-	virtual bool                  DoesBoxTouchAreaFrustum(const Vector &mins, const Vector &maxs, int iArea) = 0; // 60
+	virtual int                   GetLeavesArea(unsigned short *pLeaves, int nLeaves) = 0; // 60
+	virtual bool                  DoesBoxTouchAreaFrustum(const Vector &mins, const Vector &maxs, int iArea) = 0;
 	virtual int                   GetFrustumList(Frustum_t **pList, int listMax) = 0;
 	virtual bool                  ShouldUseAreaFrustum(int i) = 0;
 	virtual void                  SetAudioState(const AudioState_t& state) = 0;
@@ -130,7 +130,7 @@ public:
 	virtual int                   SentenceIndexFromName(const char *pSentenceName) = 0;
 	virtual const char*           SentenceNameFromIndex(int sentenceIndex) = 0;
 	virtual int                   SentenceGroupIndexFromName(const char *pGroupName) = 0;
-	virtual const char*           SentenceGroupNameFromIndex(int groupIndex) = 0;
+	virtual const char*           SentenceGroupNameFromIndex(int groupIndex) = 0; // 70
 	virtual float                 SentenceLength(int sentenceIndex) = 0;
 	virtual void                  ComputeLighting(const Vector& pt, const Vector* pNormal, bool bClamp, Vector& color, Vector *pBoxColors = NULL) = 0;
 	virtual void                  ActivateOccluder(int nOccluderIndex, bool bActive) = 0;
@@ -170,11 +170,11 @@ public:
 	virtual bool                  IsHammerRunning() const = 0;
 	virtual void                  ExecuteClientCmd(const char *szCmdString) = 0; //108
 	virtual bool                  MapHasHDRLighting(void) = 0;
-	virtual bool                  MapHasLightMapAlphaData(void) = 0;
+	virtual bool                  MapHasLightMapAlphaData(void) = 0; // 110
 	virtual int                   GetAppID() = 0;
 	virtual Vector                GetLightForPointFast(const Vector &pos, bool bClamp) = 0;
-	virtual void                  ClientCmd_Unrestricted(char  const*, int, bool) = 0;
-	virtual void                  ClientCmd_Unrestricted(const char *szCmdString) = 0; // 114
+	virtual void                  ClientCmd_Unrestricted0(char  const*, int, bool) = 0;
+	virtual void                  ClientCmd_Unrestricted(const char *szCmdString, bool delayed = false) = 0; // 114
 	virtual void                  SetRestrictServerCommands(bool bRestrict) = 0;
 	virtual void                  SetRestrictClientCommands(bool bRestrict) = 0;
 	virtual void                  SetOverlayBindProxy(int iOverlayID, void *pBindProxy) = 0;
