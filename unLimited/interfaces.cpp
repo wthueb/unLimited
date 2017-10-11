@@ -27,6 +27,6 @@ t* capture_interface(const std::string &module, const std::string &interface)
 
 void interfaces::init()
 {
-	g_client = capture_interface<IBaseClientDLL>("client.dll", "VClient008");
+	g_client = capture_interface<IBaseClientDLL>("client.dll", "VClient018");
 	g_engine = capture_interface<IVEngineClient>("engine.dll", "VEngineClient014");
 }
