@@ -76,6 +76,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetExt>.dll</TargetExt>
+    <IncludePath>$(DXSDK_DIR)\Include;$(ProjectDir)\imgui;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -101,7 +103,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;NOMINMAX</PreprocessorDefinitions>
       <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -129,6 +131,7 @@
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="imgui\imgui_impl_dx9.cpp" />
     <ClCompile Include="interfaces.cpp" />
+    <ClCompile Include="netvars.cpp" />
     <ClCompile Include="sdk\VMatrix.cpp" />
     <ClCompile Include="unLimited.cpp" />
     <ClCompile Include="utils.cpp" />
@@ -144,6 +147,11 @@
     <ClInclude Include="imgui\stb_textedit.h" />
     <ClInclude Include="imgui\stb_truetype.h" />
     <ClInclude Include="interfaces.hpp" />
+    <ClInclude Include="netvars.hpp" />
+    <ClInclude Include="sdk\CGlobalVarsBase.hpp" />
+    <ClInclude Include="sdk\ClientClass.hpp" />
+    <ClInclude Include="sdk\IAppSystem.hpp" />
+    <ClInclude Include="sdk\IBaseClientDLL.hpp" />
     <ClInclude Include="sdk\IClientEntity.hpp" />
     <ClInclude Include="sdk\IClientNetworkable.hpp" />
     <ClInclude Include="sdk\IClientRenderable.hpp" />
@@ -152,6 +160,7 @@
     <ClInclude Include="sdk\IHandleEntity.hpp" />
     <ClInclude Include="sdk\IVEngineClient.hpp" />
     <ClInclude Include="sdk\QAngle.hpp" />
+    <ClInclude Include="sdk\Recv.hpp" />
     <ClInclude Include="sdk\sdk.hpp" />
     <ClInclude Include="sdk\Vector.hpp" />
     <ClInclude Include="sdk\VMatrix.hpp" />

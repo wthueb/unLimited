@@ -22,6 +22,7 @@
     <ClCompile Include="imgui\imgui_impl_dx9.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
+    <ClCompile Include="netvars.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />
@@ -85,6 +86,22 @@
       <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="gui.hpp" />
+    <ClInclude Include="netvars.hpp" />
+    <ClInclude Include="sdk\Recv.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\CGlobalVarsBase.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\ClientClass.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\IAppSystem.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\IBaseClientDLL.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="hooks">

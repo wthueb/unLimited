@@ -20,7 +20,7 @@ namespace gui
 			ImGui::Text("unLimited by wi1");
 			ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize("http://wi1.us.to/").x - 17);
 			ImGui::Text("http://wi1.us.to/");
-
+			
 			ImGui::End();
 		}
 	}
