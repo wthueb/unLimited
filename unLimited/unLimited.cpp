@@ -30,15 +30,21 @@ void attach(HMODULE dll)
 
 	utils::console_print("initializing interfaces...\n\n");
 	interfaces::init();
-	utils::console_print("done initializing interfaces\n\n\n");
+	utils::console_print("finished initializing interfaces\n\n\n");
 
 	utils::console_print("initializing hooks...\n\n");
 	hooks::init();
-	utils::console_print("done initializing hooks\n\n\n");
+	utils::console_print("finished initializing hooks\n\n\n");
 
 	utils::console_print("initializing gui...\n\n");
 	gui_init();
-	utils::console_print("done initializing gui\n\n\n");
+	utils::console_print("finished initializing gui\n\n\n");
+
+#ifdef _DEBUG
+	utils::console_print("dumping netvars...\n\n");
+	netvar_sys::get().dump();
+	utils::console_print("finished dumping netvars...\n\n\n");
+#endif
 
 	wait_for_unload();
 }

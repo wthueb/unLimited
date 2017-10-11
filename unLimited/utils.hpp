@@ -1,5 +1,7 @@
 #pragma once
 
+#include "netvars.hpp"
+
 #include <Windows.h>
 #include <codecvt>
 
@@ -19,3 +21,15 @@ namespace utils
 
 	extern HMODULE dll;
 }
+
+#define NETVAR(type, name, table, netvar)                                      \
+    type& name##() const {                                                     \
+        static uint32_t _##name = netvar_sys::get().get_offset(table, netvar); \
+        return *reinterpret_cast<type*>(uintptr_t(this) + _##name);            \
+    }
+
+#define PNETVAR(type, name, table, netvar)                                     \
+    type* name##() const {                                                     \
+        static uint32_t _##name = netvar_sys::get().get_offset(table, netvar); \
+        return reinterpret_cast<type*>(uintptr_t(this) + _##name);             \
+    }

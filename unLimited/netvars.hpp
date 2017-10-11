@@ -16,6 +16,14 @@ class netvar_sys
 	};
 
 public:
+	static netvar_sys get()
+	{
+		static netvar_sys inst{};
+		return inst;
+	}
+
+	netvar_sys() { init(); }
+
 	void init();
 
 	void dump();
