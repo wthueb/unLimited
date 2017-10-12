@@ -54,7 +54,7 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 	static auto o_end_scene = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*)>(index::end_scene);
 
 	static bool mouse_enabled = true;
-
+	
 	if (gui_open)
 	{
 		if (mouse_enabled)

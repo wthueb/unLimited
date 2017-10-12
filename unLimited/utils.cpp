@@ -136,9 +136,3 @@ uint64_t utils::find_signature(const std::string &module, const std::string &sig
 
 	return NULL;
 }
-
-template<typename fn>
-fn get_vfunc(void* base, int index)
-{
-	return *static_cast<fn**>(base)[index];
-}

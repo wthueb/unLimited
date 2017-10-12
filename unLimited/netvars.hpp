@@ -6,6 +6,7 @@
 
 class netvar_sys
 {
+private:
 	struct netvar_table
 	{
 		std::string               name;

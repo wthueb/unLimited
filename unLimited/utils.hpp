@@ -16,10 +16,13 @@ namespace utils
 
 	uint64_t find_signature(const std::string &szModule, const std::string &szSignature);
 
-	template<typename fn>
-	fn get_vfunc(void* base, int index);
-
 	extern HMODULE dll;
+}
+
+template<typename fn>
+__forceinline static fn get_vfunc(void* base, int index)
+{
+	return reinterpret_cast<fn>((*reinterpret_cast<uintptr_t**>(base))[index]);
 }
 
 #define NETVAR(type, name, table, netvar)                                      \
