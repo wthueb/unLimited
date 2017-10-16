@@ -3,6 +3,8 @@
 #include <cmath>
 #include <limits>
 
+using vec_t = float;
+
 class Vector
 {
 public:
@@ -10,7 +12,7 @@ public:
 	{
 		Invalidate();
 	}
-	Vector(float X, float Y, float Z)
+	Vector(vec_t X, vec_t Y, vec_t Z)
 	{
 		x = X;
 		y = Y;
@@ -23,7 +25,7 @@ public:
 		z = clr[2];
 	}
 
-	void Init(float ix = 0.0f, float iy = 0.0f, float iz = 0.0f)
+	void Init(vec_t ix = 0.0f, vec_t iy = 0.0f, vec_t iz = 0.0f)
 	{
 		x = ix; y = iy; z = iz;
 	}
@@ -38,11 +40,11 @@ public:
 
 	float& operator[](int i)
 	{
-		return ((float*)this)[i];
+		return ((vec_t*)this)[i];
 	}
 	float operator[](int i) const
 	{
-		return ((float*)this)[i];
+		return ((vec_t*)this)[i];
 	}
 
 	void Zero()
@@ -69,7 +71,7 @@ public:
 		x -= v.x; y -= v.y; z -= v.z;
 		return *this;
 	}
-	Vector& operator*=(float fl)
+	Vector& operator*=(vec_t fl)
 	{
 		x *= fl;
 		y *= fl;
@@ -90,21 +92,21 @@ public:
 		z /= v.z;
 		return *this;
 	}
-	Vector& operator+=(float fl)
+	Vector& operator+=(vec_t fl)
 	{
 		x += fl;
 		y += fl;
 		z += fl;
 		return *this;
 	}
-	Vector& operator/=(float fl)
+	Vector& operator/=(vec_t fl)
 	{
 		x /= fl;
 		y /= fl;
 		z /= fl;
 		return *this;
 	}
-	Vector& operator-=(float fl)
+	Vector& operator-=(vec_t fl)
 	{
 		x -= fl;
 		y -= fl;
@@ -212,6 +214,12 @@ inline Vector operator/(float lhs, const Vector& rhs)
 {
 	return rhs / lhs;
 }
+
+void  VectorCopy(const Vector& src, Vector& dst);
+float VectorLength(const Vector& v);
+void  VectorLerp(const Vector& src1, const Vector& src2, vec_t t, Vector& dest);
+void  VectorCrossProduct(const Vector& a, const Vector& b, Vector& result);
+vec_t NormalizeVector(Vector& v);
 
 class __declspec(align(16)) VectorAligned : public Vector
 {
