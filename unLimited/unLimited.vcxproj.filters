@@ -35,6 +35,13 @@
     <ClCompile Include="sdk\Vector.cpp">
       <Filter>sdk</Filter>
     </ClCompile>
+    <ClCompile Include="sdk\CRC.cpp">
+      <Filter>sdk</Filter>
+    </ClCompile>
+    <ClCompile Include="hooks\create_move.cpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="features\backtracking.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />
@@ -167,6 +174,15 @@
     </ClInclude>
     <ClInclude Include="sdk\Vector2D.hpp">
       <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\CInput.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\CRC.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="features\backtracking.hpp">
+      <Filter>features</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -25,14 +25,16 @@ __forceinline static fn get_vfunc(void* base, int index)
 	return reinterpret_cast<fn>((*reinterpret_cast<uintptr_t**>(base))[index]);
 }
 
-#define NETVAR(type, name, table, netvar)                                      \
-    type& name##() const {                                                     \
-        static uint32_t _##name = netvar_sys::get().get_offset(table, netvar); \
-        return *reinterpret_cast<type*>(uintptr_t(this) + _##name);            \
-    }
+#define NETVAR(name, type, table, prop)                                 \
+	type& name##() const                                                \
+	{                                                                   \
+		static auto offset = netvar_sys::get().get_offset(table, prop); \
+		return *reinterpret_cast<type*>(uintptr_t(this) + offset);      \
+	}
 
-#define PNETVAR(type, name, table, netvar)                                     \
-    type* name##() const {                                                     \
-        static uint32_t _##name = netvar_sys::get().get_offset(table, netvar); \
-        return reinterpret_cast<type*>(uintptr_t(this) + _##name);             \
-    }
+#define PNETVAR(name, type, table, prop)                                \
+	type* name##() const                                                \
+	{                                                                   \
+		static auto offset = netvar_sys::get().get_offset(table, prop); \
+		return reinterpret_cast<type*>(uintptr_t(this) + offset);       \
+	}

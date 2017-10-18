@@ -125,6 +125,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="features\backtracking.cpp" />
+    <ClCompile Include="hooks\create_move.cpp" />
     <ClCompile Include="hooks\directx.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
@@ -133,6 +135,7 @@
     <ClCompile Include="interfaces.cpp" />
     <ClCompile Include="netvars.cpp" />
     <ClCompile Include="sdk\Color.cpp" />
+    <ClCompile Include="sdk\CRC.cpp" />
     <ClCompile Include="sdk\Vector.cpp" />
     <ClCompile Include="sdk\Vector2D.cpp" />
     <ClCompile Include="sdk\Vector4D.cpp" />
@@ -141,6 +144,7 @@
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="features\backtracking.hpp" />
     <ClInclude Include="gui.hpp" />
     <ClInclude Include="hooks\hooks.hpp" />
     <ClInclude Include="imgui\imconfig.h" />
@@ -156,8 +160,10 @@
     <ClInclude Include="sdk\CGlobalVarsBase.hpp" />
     <ClInclude Include="sdk\CGlowObjectManager.hpp" />
     <ClInclude Include="sdk\CHandle.hpp" />
+    <ClInclude Include="sdk\CInput.hpp" />
     <ClInclude Include="sdk\ClientClass.hpp" />
     <ClInclude Include="sdk\Color.hpp" />
+    <ClInclude Include="sdk\CRC.hpp" />
     <ClInclude Include="sdk\IAppSystem.hpp" />
     <ClInclude Include="sdk\IBaseClientDLL.hpp" />
     <ClInclude Include="sdk\IClientEntity.hpp" />

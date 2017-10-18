@@ -3,6 +3,7 @@
 #include "CBaseClientState.hpp"
 #include "CGlobalVarsBase.hpp"
 #include "CGlowObjectManager.hpp"
+#include "CInput.hpp"
 #include "IBaseClientDll.hpp"
 #include "IClientEntity.hpp"
 #include "IClientEntityList.hpp"
