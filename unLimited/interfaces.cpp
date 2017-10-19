@@ -42,12 +42,10 @@ t* capture_interface(const std::string &module, const std::string &interface)
 
 void interfaces::init()
 {
-	g_client_state = **reinterpret_cast<CBaseClientState***>((*reinterpret_cast<uintptr_t**>(g_engine))[12] + 0x10);;
 	g_global_vars = *reinterpret_cast<CGlobalVarsBase**>(utils::find_signature("engine.dll", "68 ? ? ? ? 68 ? ? ? ? FF 50 08 85 C0") + 1);
 	g_glow_manager = *reinterpret_cast<CGlowObjectManager**>(utils::find_signature("client.dll", "0F 11 05 ? ? ? ? 83 C8 01") + 3);
 	g_client = capture_interface<IBaseClientDLL>("client.dll", "VClient018");
 	g_entity_list = capture_interface<IClientEntityList>("client.dll", "VClientEntityList003");
-	g_client_mode = **reinterpret_cast<IClientMode***>((*reinterpret_cast<uintptr_t**>(g_client))[10] + 0x5);
 	g_cvar = capture_interface<ICvar>("vstdlib.dll", "VEngineCvar007");
 	g_engine_trace = capture_interface<IEngineTrace>("engine.dll", "EngineTraceClient004");
 	g_game_event_manager = capture_interface<IGameEventManager2>("engine.dll", "GAMEEVENTSMANAGER002");
@@ -57,4 +55,7 @@ void interfaces::init()
 	g_debug_overlay = capture_interface<IVDebugOverlay>("engine.dll", "VDebugOverlay004");
 	g_engine = capture_interface<IVEngineClient>("engine.dll", "VEngineClient014");
 	g_model_info = capture_interface<IVModelInfo>("engine.dll", "VModelInfoClient004");
+
+	g_client_state = **reinterpret_cast<CBaseClientState***>((*reinterpret_cast<uintptr_t**>(g_engine))[12] + 0x10);
+	g_client_mode = **reinterpret_cast<IClientMode***>((*reinterpret_cast<uintptr_t**>(g_client))[10] + 0x5);
 }

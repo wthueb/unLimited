@@ -18,9 +18,11 @@ namespace hooks
 	HRESULT __stdcall hk_end_scene(IDirect3DDevice9* pDevice);
 
 	bool __stdcall hk_create_move(float sample_input_frametime, CUserCmd* cmd);
+	void __fastcall hk_paint_traverse(void* thisptr, void* edx, VPANEL panel, bool force_repaint, bool allow_force);
 
 	extern vmt_hook* d3d_device_hook;
 	extern vmt_hook* client_mode_hook;
+	extern vmt_hook* panel_hook;
 
 	namespace index
 	{
@@ -28,5 +30,6 @@ namespace hooks
 		constexpr size_t end_scene = 42;
 
 		constexpr size_t create_move = 24;
+		constexpr size_t paint_traverse = 41;
 	}
 }

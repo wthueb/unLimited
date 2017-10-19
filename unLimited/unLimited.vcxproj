@@ -126,14 +126,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="features\backtracking.cpp" />
+    <ClCompile Include="features\legitaim.cpp" />
     <ClCompile Include="hooks\create_move.cpp" />
     <ClCompile Include="hooks\directx.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
+    <ClCompile Include="hooks\paint_traverse.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="imgui\imgui_impl_dx9.cpp" />
     <ClCompile Include="interfaces.cpp" />
     <ClCompile Include="netvars.cpp" />
+    <ClCompile Include="options.cpp" />
     <ClCompile Include="sdk\Color.cpp" />
     <ClCompile Include="sdk\CRC.cpp" />
     <ClCompile Include="sdk\Vector.cpp" />
@@ -145,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="features\backtracking.hpp" />
+    <ClInclude Include="features\legitaim.hpp" />
     <ClInclude Include="gui.hpp" />
     <ClInclude Include="hooks\hooks.hpp" />
     <ClInclude Include="imgui\imconfig.h" />
@@ -155,7 +159,9 @@
     <ClInclude Include="imgui\stb_textedit.h" />
     <ClInclude Include="imgui\stb_truetype.h" />
     <ClInclude Include="interfaces.hpp" />
+    <ClInclude Include="math.hpp" />
     <ClInclude Include="netvars.hpp" />
+    <ClInclude Include="options.hpp" />
     <ClInclude Include="sdk\CBaseClientState.hpp" />
     <ClInclude Include="sdk\CGlobalVarsBase.hpp" />
     <ClInclude Include="sdk\CGlowObjectManager.hpp" />

@@ -4,7 +4,10 @@
 #include "interfaces.hpp"
 #include "utils.hpp"
 
-// this is stupid, but don't want a header for directx.cpp
+#define VERSION_MAJOR 0
+#define VERSION_MINOR 0
+#define VERSION_PATCH 1
+
 extern void gui_init();
 
 void wait_for_unload()

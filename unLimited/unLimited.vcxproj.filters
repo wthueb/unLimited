@@ -41,7 +41,16 @@
     <ClCompile Include="hooks\create_move.cpp">
       <Filter>hooks</Filter>
     </ClCompile>
-    <ClCompile Include="features\backtracking.cpp" />
+    <ClCompile Include="features\backtracking.cpp">
+      <Filter>features</Filter>
+    </ClCompile>
+    <ClCompile Include="hooks\paint_traverse.cpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="features\legitaim.cpp">
+      <Filter>features</Filter>
+    </ClCompile>
+    <ClCompile Include="options.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />
@@ -184,6 +193,11 @@
     <ClInclude Include="features\backtracking.hpp">
       <Filter>features</Filter>
     </ClInclude>
+    <ClInclude Include="math.hpp" />
+    <ClInclude Include="features\legitaim.hpp">
+      <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="options.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="hooks">

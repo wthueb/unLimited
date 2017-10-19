@@ -1,64 +1,117 @@
 #include "backtracking.hpp"
 
+#include "../options.hpp"
+
+#include "../math.hpp"
+
+#define TICK_INTERVAL      (g_global_vars->interval_per_tick)
+#define TIME_TO_TICKS(dt)  ((int)(.5f + (float)(dt) / TICK_INTERVAL))
+
 struct backtrack_data
 {
 	float simtime;
-	Vector hitbox_pos;
+	Vector headpos;
 };
 
 backtrack_data head_positions[64][12];
 
 void backtracking::create_move(CUserCmd* cmd)
 {
-	//if (options::misc::backtracking)
+	if (!options::aim::backtracking)
+		return;
+	
+	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+	if (!localplayer)
+		return;
+
+	if (!localplayer->IsAlive())
+		return;
+
+	int best_target = -1;
+	float best_fov = FLT_MAX;
+
+	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
 	{
-		auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
-		if (!localplayer)
-			return;
+		auto entity = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
+		if (!entity)
+			continue;
 
-		if (!localplayer->IsAlive())
-			return;
+		if (entity == localplayer || entity->IsDormant() ||
+			!entity->IsAlive() || entity->GetTeam() == localplayer->GetTeam())
+			continue;
 
-		int best_target = -1;
-		float best_fov = FLT_MAX;
+		float simtime = entity->GetSimulationTime();
+		Vector headpos = entity->GetBonePos(BONE_HEAD);
 
-		for (auto i = 1; i < g_engine->GetMaxClients(); ++i)
+		head_positions[i][cmd->command_number % 13] = backtrack_data{ simtime, headpos };
+
+		Vector viewdir;
+		math::AngleVectors(cmd->viewangles + localplayer->GetAimPunch() * 2.f, &viewdir);
+
+		float fov = math::distance_point_to_line(headpos, localplayer->GetEyePosition(), viewdir);
+
+		if (best_fov > fov)
 		{
-			auto entity = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
-			if (!entity)
-				continue;
+			best_fov = fov;
+			best_target = i;
+		}
+	}
 
-			if (entity == localplayer || entity->IsDormant() ||
-				!entity->IsAlive() || entity->GetTeam() == localplayer->GetTeam())
-				continue;
+	float best_target_simtime;
 
-			float simtime = entity->GetSimulationTime();
-			Vector hitbox_pos = GetHitboxPosition(entity, 0);
+	if (best_target != -1)
+	{
+		float temp = FLT_MAX;
 
-			head_positions[i][cmd->command_number % 13] = backtrack_data{ simtime, hitbox_pos };
-			Vector view_dir = AngleVector(cmd->viewangles + localplayer->GetAimPunch() * 2.f);
-			float fov = distance_point_to_line(hitbox_pos, localplayer->GetEyePosition(), view_dir);
+		Vector viewdir;
+		math::AngleVectors(cmd->viewangles + localplayer->GetAimPunch() * 2.f, &viewdir);
 
-			if (best_fov > fov)
+		for (auto i = 0; i < 12; ++i)
+		{
+			float temp_fov = math::distance_point_to_line(head_positions[best_target][i].headpos, localplayer->GetEyePosition(), viewdir);
+
+			if (temp > temp_fov && head_positions[best_target][i].simtime > localplayer->GetSimulationTime() - 1)
 			{
-				best_fov = fov;
-				best_target = i;
+				temp = temp_fov;
+				best_target_simtime = head_positions[best_target][i].simtime;
 			}
 		}
 
-		float best_target_simtime;
+		if (cmd->buttons & IN_ATTACK)
+			cmd->tick_count = TIME_TO_TICKS(best_target_simtime);
+	}
+}
 
-		if (best_target != -1)
+void backtracking::paint_traverse()
+{
+	if (!options::aim::backtracking)
+		return;
+
+	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
+	{
+		auto player = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
+		if (!player)
+			continue;
+
+		if (player->IsDormant() || !player->IsAlive())
+			continue;
+
+		auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+		if (!localplayer)
+			return;
+		
+		if (player == localplayer || player->GetTeam() == localplayer->GetTeam())
+			continue;
+
+		for (auto t = 0; t < 12; ++t)
 		{
-			float temp = FLT_MAX;
-			Vector view_dir = AngleVector(cmd->viewangles + localplayer->GetAimPunch() * 2.f);
-			for (auto i = 0; i < 12; ++i)
+			if (head_positions[i][t].simtime > localplayer->GetSimulationTime() - 1)
 			{
-				float temp_fov = distance_point_to_line(head_positions[best_target][i].hitbox_pos, localplayer->GetEyePosition(), view_dir);
-				if (temp > temp_fov && head_positions[best_target][i].simtime > localplayer->GetSimulationTime() - 1)
+				Vector out;
+				if (!g_debug_overlay->ScreenPosition(head_positions[i][t].headpos, out))
 				{
-					temp = temp_fov;
-					best_target_simtime = head_positions[best_target][i].simtime;
+					g_surface->DrawSetColor(Color::Red);
+					g_surface->DrawOutlinedRect((int)out.x, (int)out.y, (int)out.x + 2, (int)out.y + 2);
 				}
 			}
 		}

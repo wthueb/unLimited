@@ -7,7 +7,7 @@ class Vector;
 class IVDebugOverlay
 {
 public:
-	bool ScreenPosition(const Vector& point, Vector& screen)
+	bool ScreenPosition(const Vector &point, Vector &screen)
 	{
 		using oScreenPosition = bool(__thiscall*)(void*, const Vector&, Vector&);
 		return get_vfunc<oScreenPosition>(this, 13)(this, point, screen);

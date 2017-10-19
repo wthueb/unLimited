@@ -60,8 +60,8 @@ public:
 	virtual void                   SetEmbeddedPanel(VPANEL panel) = 0; // 11
 	virtual void                   PushMakeCurrent(VPANEL panel, bool useInsets) = 0; // 12
 	virtual void                   PopMakeCurrent(VPANEL panel) = 0; // 13
-	virtual void                   DrawSetColor(Color col) = 0; // 14
-	virtual void                   DrawSetColor(int r, int g, int b, int a) = 0; // 15
+	virtual void                   DrawSetColor(int r, int g, int b, int a) = 0; // 14
+	virtual void                   DrawSetColor(Color col) = 0; // 15
 	virtual void                   DrawFilledRect(int x0, int y0, int x1, int y1) = 0; // 16
 	virtual void                   DrawFilledRectArray(IntRect* pRects, int numRects) = 0; // 17
 	virtual void                   DrawOutlinedRect(int x0, int y0, int x1, int y1) = 0; // 18

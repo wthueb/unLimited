@@ -9,6 +9,7 @@ namespace hooks
 {
 	vmt_hook* d3d_device_hook = nullptr;
 	vmt_hook* client_mode_hook = nullptr;
+	vmt_hook* panel_hook = nullptr;
 
 	void init()
 	{
@@ -16,15 +17,19 @@ namespace hooks
 
 		d3d_device_hook = new vmt_hook(d3d_device);
 		client_mode_hook = new vmt_hook(g_client_mode);
+		panel_hook = new vmt_hook(g_panel);
 
 		d3d_device_hook->hook(hk_end_scene, index::end_scene);
 		d3d_device_hook->hook(hk_reset, index::reset);
 
 		client_mode_hook->hook(hk_create_move, index::create_move);
+		panel_hook->hook(hk_paint_traverse, index::paint_traverse);
 	}
 
 	void unload()
 	{
 		delete d3d_device_hook;
+		delete client_mode_hook;
+		delete panel_hook;
 	}
 }
