@@ -198,6 +198,9 @@
       <Filter>features</Filter>
     </ClInclude>
     <ClInclude Include="options.hpp" />
+    <ClInclude Include="features\esp.hpp">
+      <Filter>features</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="hooks">

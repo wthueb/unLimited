@@ -84,7 +84,7 @@ void backtracking::create_move(CUserCmd* cmd)
 
 void backtracking::paint_traverse()
 {
-	if (!options::misc::backtracking || !options::misc::backtracking_vis)
+	if (!options::misc::backtracking && !options::misc::backtracking_vis)
 		return;
 
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)

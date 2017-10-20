@@ -63,8 +63,6 @@ BOOL WINAPI DllMain(HINSTANCE dll, DWORD reason, LPVOID reserved)
 		break;
 
 	case DLL_PROCESS_DETACH:
-		if (!reserved)
-			utils::unload();
 		return TRUE;
 		break;
 	}

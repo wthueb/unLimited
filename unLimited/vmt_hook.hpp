@@ -23,6 +23,11 @@ public:
 
 	~vmt_hook()
 	{
+		// called when game is exiting, it will free memory for us
+	}
+
+	void shutdown()
+	{
 		*m_class = m_old_vmt;
 		delete[] m_new_vmt;
 	}

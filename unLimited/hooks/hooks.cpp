@@ -28,8 +28,8 @@ namespace hooks
 
 	void unload()
 	{
-		delete d3d_device_hook;
-		delete client_mode_hook;
-		delete panel_hook;
+		d3d_device_hook->shutdown();
+		client_mode_hook->shutdown();
+		panel_hook->shutdown();
 	}
 }

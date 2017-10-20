@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="features\backtracking.hpp" />
+    <ClInclude Include="features\esp.hpp" />
     <ClInclude Include="features\legitaim.hpp" />
     <ClInclude Include="gui.hpp" />
     <ClInclude Include="hooks\hooks.hpp" />
