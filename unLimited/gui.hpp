@@ -2,9 +2,11 @@
 
 #include <imgui.h>
 
+#include "options.hpp"
+
 namespace gui
 {
-	void draw_gui()
+	static void draw_gui()
 	{
 		ImGui::SetNextWindowSize(ImVec2(850, 500));
 
@@ -14,6 +16,9 @@ namespace gui
 			ImGuiWindowFlags_NoSavedSettings))
 		{
 			// FIXMEW: do some dope stuff here
+
+			ImGui::Checkbox("backtracking", &options::misc::backtracking);
+			ImGui::Checkbox("bactracking visual", &options::misc::backtracking_vis);
 
 			ImGui::Columns(1);
 
@@ -25,7 +30,7 @@ namespace gui
 		}
 	}
 
-	void setup_style()
+	static void setup_style()
 	{
 		auto &style = ImGui::GetStyle();
 

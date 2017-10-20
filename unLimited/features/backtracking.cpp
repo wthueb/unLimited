@@ -17,7 +17,7 @@ backtrack_data head_positions[64][12];
 
 void backtracking::create_move(CUserCmd* cmd)
 {
-	if (!options::aim::backtracking)
+	if (!options::misc::backtracking)
 		return;
 	
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
@@ -84,7 +84,7 @@ void backtracking::create_move(CUserCmd* cmd)
 
 void backtracking::paint_traverse()
 {
-	if (!options::aim::backtracking)
+	if (!options::misc::backtracking || !options::misc::backtracking_vis)
 		return;
 
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)

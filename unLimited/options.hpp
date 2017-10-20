@@ -4,8 +4,9 @@ namespace options
 {
 	void init();
 
-	namespace aim
+	namespace misc
 	{
 		extern bool backtracking;
+		extern bool backtracking_vis;
 	}
 }

@@ -7,8 +7,9 @@ namespace options
 		// FIXMEW: config
 	}
 
-	namespace aim
+	namespace misc
 	{
 		bool backtracking = true;
+		bool backtracking_vis = true;
 	}
 }
