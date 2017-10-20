@@ -57,12 +57,22 @@ namespace math
 	{
 		auto point_dir = point - line_origin;
 
-		auto temp = point_dir.Dot(dir) / (dir.x*dir.x + dir.y*dir.y + dir.z*dir.z);
+		auto temp = point_dir.Dot(dir) / dir.LengthSqr();
 		if (temp < 0.000001f)
 			return FLT_MAX;
 
-		auto perpendicular = line_origin + (dir * temp);
+		auto perpendicular = line_origin + dir * temp;
 
 		return (point - perpendicular).Length();
+	}
+
+	static float get_fov(const QAngle &view_angle, const QAngle &aim_angle)
+	{
+		Vector aim, ang;
+
+		AngleVectors(view_angle, &aim);
+		AngleVectors(aim_angle, &ang);
+
+		return RAD2DEG(acos(aim.Dot(ang) / aim.LengthSqr()));
 	}
 }

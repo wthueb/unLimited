@@ -57,34 +57,33 @@ void backtracking::create_move(CUserCmd* cmd)
 		}
 	}
 
-	float best_target_simtime;
-
 	if (best_target != -1)
 	{
-		float temp = FLT_MAX;
+		float best_fov = FLT_MAX;
+		float best_target_simtime;
 
-		Vector viewdir;
-		math::AngleVectors(cmd->viewangles + localplayer->GetAimPunch() * 2.f, &viewdir);
+		Vector view_forward;
+		math::AngleVectors(cmd->viewangles + localplayer->GetAimPunch() * 2.f, &view_forward);
 
 		for (auto i = 0; i < 12; ++i)
 		{
-			float temp_fov = math::distance_point_to_line(head_positions[best_target][i].headpos, localplayer->GetEyePosition(), viewdir);
+			float fov = math::distance_point_to_line(head_positions[best_target][i].headpos, localplayer->GetEyePosition(), view_forward);
 
-			if (temp > temp_fov && head_positions[best_target][i].simtime > localplayer->GetSimulationTime() - 1)
+			if (fov < best_fov && head_positions[best_target][i].simtime > localplayer->GetSimulationTime() - 1)
 			{
-				temp = temp_fov;
+				best_fov = fov;
 				best_target_simtime = head_positions[best_target][i].simtime;
 			}
 		}
 
-		if (cmd->buttons & IN_ATTACK)
+		if (cmd->buttons & IN_ATTACK && best_fov != FLT_MAX)
 			cmd->tick_count = TIME_TO_TICKS(best_target_simtime);
 	}
 }
 
 void backtracking::paint_traverse()
 {
-	if (!options::misc::backtracking && !options::misc::backtracking_vis)
+	if (!options::misc::backtracking || !options::misc::backtracking_vis)
 		return;
 
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
