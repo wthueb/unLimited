@@ -1,5 +1,7 @@
 #include "options.hpp"
 
+#include <Windows.h>
+
 namespace options
 {
 	void init()

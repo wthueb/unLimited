@@ -4,6 +4,7 @@
 
 class IPanel;
 class C_BaseEntity;
+class KeyValues;
 
 enum class ClearFlags_t
 {
