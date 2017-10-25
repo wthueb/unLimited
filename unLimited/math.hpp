@@ -4,6 +4,7 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <algorithm>
 
 #define RAD2DEG(x) (static_cast<float>(x) * static_cast<float>(180.f / M_PI))
 #define DEG2RAD(x) (static_cast<float>(x) * static_cast<float>(M_PI / 180.f))
@@ -74,5 +75,44 @@ namespace math
 		AngleVectors(aim_angle, &ang);
 
 		return RAD2DEG(acos(aim.Dot(ang) / aim.LengthSqr()));
+	}
+
+	static void correct_movement(CUserCmd* cmd, QAngle old_angle, float old_forward, float old_side)
+	{
+		// side/forward move correction
+		float delta;
+		float f1;
+		float f2;
+
+		if (old_angle.yaw < 0.f)
+			f1 = 360.0f + old_angle.yaw;
+		else
+			f1 = old_angle.yaw;
+
+		if (cmd->viewangles.yaw < 0.0f)
+			f2 = 360.0f + cmd->viewangles.yaw;
+		else
+			f2 = cmd->viewangles.yaw;
+
+		if (f2 < f1)
+			delta = abs(f2 - f1);
+		else
+			delta = 360.0f - abs(f1 - f2);
+
+		delta = 360.0f - delta;
+
+		cmd->forwardmove = cos(DEG2RAD(delta)) * old_forward + cos(DEG2RAD(delta + 90.f)) * old_side;
+		cmd->sidemove = sin(DEG2RAD(delta)) * old_forward + sin(DEG2RAD(delta + 90.f)) * old_side;
+	}
+
+	static void clamp_angle(QAngle &angle)
+	{
+		for (auto i = 0; i < 3; ++i)
+			if (!std::isfinite(angle[i])) // if it is infinite or NaN
+				angle[i] = 0.f;
+
+		angle.pitch = std::clamp(std::remainderf(angle.pitch, 180.f), -89.f, 89.f);
+		angle.yaw = std::clamp(std::remainderf(angle.yaw, 360.f), -180.f, 180.f);
+		angle.roll = 0.f;
 	}
 }

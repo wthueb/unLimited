@@ -59,7 +59,7 @@ void backtracking::create_move(CUserCmd* cmd)
 
 	if (best_target != -1)
 	{
-		float best_fov = FLT_MAX;
+		float best_dist = FLT_MAX;
 		float best_target_simtime;
 
 		Vector view_forward;
@@ -67,16 +67,16 @@ void backtracking::create_move(CUserCmd* cmd)
 
 		for (auto i = 0; i < 12; ++i)
 		{
-			float fov = math::distance_point_to_line(head_positions[best_target][i].headpos, localplayer->GetEyePosition(), view_forward);
+			float dist = math::distance_point_to_line(head_positions[best_target][i].headpos, localplayer->GetEyePosition(), view_forward);
 
-			if (fov < best_fov && head_positions[best_target][i].simtime > localplayer->GetSimulationTime() - 1)
+			if (dist < best_dist && head_positions[best_target][i].simtime > localplayer->GetSimulationTime() - 1)
 			{
-				best_fov = fov;
+				best_dist = dist;
 				best_target_simtime = head_positions[best_target][i].simtime;
 			}
 		}
 
-		if (cmd->buttons & IN_ATTACK && best_fov != FLT_MAX)
+		if (cmd->buttons & IN_ATTACK && best_dist != FLT_MAX)
 			cmd->tick_count = TIME_TO_TICKS(best_target_simtime);
 	}
 }

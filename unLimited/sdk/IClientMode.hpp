@@ -47,8 +47,8 @@ class IClientMode
 public:
 	virtual             ~IClientMode() {} // 0
 	virtual int         ClientModeCSNormal(void*) = 0;
-	virtual void        Init() = 0;
 	virtual void        InitViewport() = 0;
+	virtual void        Init() = 0;
 	virtual void        Shutdown() = 0;
 	virtual void        Enable() = 0; // 5
 	virtual void        Disable() = 0;
@@ -57,16 +57,33 @@ public:
 	virtual void*       GetViewportAnimationController() = 0;
 	virtual void        ProcessInput(bool bActive) = 0; // 10
 	virtual bool        ShouldDrawDetailObjects() = 0;
-	virtual bool        ShouldDrawEntity(C_BaseEntity *pEnt) = 0;
-	virtual bool        ShouldDrawLocalPlayer(C_BaseEntity *pPlayer) = 0;
+	virtual bool        ShouldDrawEntity(C_BaseEntity* pEnt) = 0;
+	virtual bool        ShouldDrawLocalPlayer(C_BaseEntity* pPlayer) = 0;
 	virtual bool        ShouldDrawParticles() = 0;
-	virtual bool        ShouldDrawFog(void) = 0; // 15
-	virtual void        OverrideView(CViewSetup *pSetup) = 0; // 16
-	virtual int         KeyInput(int down, int keynum, const char *pszCurrentBinding) = 0; // 17
+	virtual bool        ShouldDrawFog() = 0; // 15
+	virtual void        OverrideView(CViewSetup* pSetup) = 0; // 16
+	virtual int         KeyInput(int down, int keynum, const char* pszCurrentBinding) = 0; // 17
 	virtual void        StartMessageMode(int iMessageModeType) = 0; // 18
 	virtual IPanel*     GetMessagePanel() = 0; // 19
-	virtual void        OverrideMouseInput(float *x, float *y) = 0; // 20
+	virtual void        OverrideMouseInput(float* x, float* y) = 0; // 20
 	virtual bool        CreateMove(float flInputSampleTime, void* usercmd) = 0; // 21
-	virtual void        LevelInit(const char *newmap) = 0;
-	virtual void        LevelShutdown(void) = 0;
+	virtual void        LevelInit(const char* newmap) = 0;
+	virtual void        LevelShutdown() = 0;
+	virtual bool	    ShouldDrawViewModel() = 0;
+	virtual bool	    ShouldDrawCrosshair() = 0; // 25
+	virtual void	    AdjustEngineViewport(int &x, int &y, int &width, int &height) = 0;
+	virtual void	    PreRender(CViewSetup* pSetup) = 0;
+	virtual void	    PostRender() = 0;
+	virtual void	    PostRenderVGui() = 0;
+	virtual void	    ActivateInGameVGuiContext(IPanel* pPanel) = 0; // 30
+	virtual void	    DeactivateInGameVGuiContext() = 0;
+	virtual float	    GetViewModelFOV() = 0;
+	virtual bool	    CanRecordDemo(char* errorMsg, int length) const = 0;
+	virtual void	    ComputeVguiResConditions(KeyValues* pkvConditions) = 0;
+	virtual wchar_t*    GetServerName() = 0; // 35
+	virtual void        SetServerName(wchar_t* name) = 0;
+	virtual wchar_t*    GetMapName() = 0;
+	virtual void        SetMapName(wchar_t* name) = 0;
+	virtual bool	    DoPostScreenSpaceEffects(const CViewSetup* pSetup) = 0; // 39
+	virtual void	    DisplayReplayMessage(const char* pLocalizeName, float flDuration, bool bUrgent, const char* pSound, bool bDlg) = 0; // 40
 };

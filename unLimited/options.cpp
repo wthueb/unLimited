@@ -11,5 +11,8 @@ namespace options
 	{
 		bool backtracking = true;
 		bool backtracking_vis = true;
+
+		bool airstuck = true;
+		int airstuck_key = VK_END;
 	}
 }

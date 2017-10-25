@@ -51,6 +51,9 @@
       <Filter>features</Filter>
     </ClCompile>
     <ClCompile Include="options.cpp" />
+    <ClCompile Include="features\airstuck.cpp">
+      <Filter>features</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="options.hpp" />
     <ClInclude Include="features\esp.hpp">
+      <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="features\airstuck.hpp">
       <Filter>features</Filter>
     </ClInclude>
   </ItemGroup>

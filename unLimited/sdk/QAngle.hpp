@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <algorithm>
 
 class QAngle
 {
@@ -135,6 +136,18 @@ public:
 		return (pitch > -tolerance && pitch < tolerance &&
 			yaw > -tolerance && yaw < tolerance &&
 			roll > -tolerance && roll < tolerance);
+	}
+
+	void Clamp()
+	{
+		for (auto i = 0; i < 3; ++i)
+			if (!std::isfinite((*this)[i])) // if it is infinite or NaN
+				(*this)[i] = 0.f;
+
+
+		pitch = std::clamp(std::remainderf(pitch, 180.f), -89.f, 89.f);
+		yaw = std::clamp(std::remainderf(yaw, 360.f), -180.f, 180.f);
+		roll = 0.f;
 	}
 
 	float pitch;
