@@ -43,6 +43,10 @@ namespace gui
 
 		io.Fonts->AddFontDefault();
 
-		style.WindowTitleAlign = { .5f, .5f };
+		style.WindowTitleAlign = { .5f, .5f }; // center title text
+
+		style.WindowRounding = 3.f;
+
+		style.Colors[ImGuiCol_WindowBg] = ImVec4(.1f, .1f, .1f, 1.f);
 	}
 }
