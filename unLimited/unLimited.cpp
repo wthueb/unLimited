@@ -4,10 +4,6 @@
 #include "interfaces.hpp"
 #include "utils.hpp"
 
-#define VERSION_MAJOR 0
-#define VERSION_MINOR 0
-#define VERSION_PATCH 4
-
 extern void gui_init();
 
 void wait_for_unload()

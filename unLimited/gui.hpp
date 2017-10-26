@@ -5,6 +5,10 @@
 #include "font.hpp"
 #include "options.hpp"
 
+#define VERSION_MAJOR 0
+#define VERSION_MINOR 0
+#define VERSION_PATCH 5
+
 namespace gui
 {
 	static void draw_gui()
@@ -62,15 +66,15 @@ namespace gui
 		style.Colors[ImGuiCol_FrameBgHovered] = style.Colors[ImGuiCol_FrameBg];
 		style.Colors[ImGuiCol_FrameBgActive] = style.Colors[ImGuiCol_FrameBg];
 		style.Colors[ImGuiCol_TitleBg] = theme_color;
-		style.Colors[ImGuiCol_TitleBgActive] = style.Colors[ImGuiCol_TitleBg];
-		style.Colors[ImGuiCol_TitleBgCollapsed] = style.Colors[ImGuiCol_TitleBg];
-		style.Colors[ImGuiCol_MenuBarBg] = style.Colors[ImGuiCol_TitleBg];
-		style.Colors[ImGuiCol_ScrollbarBg] = style.Colors[ImGuiCol_TitleBg];
+		style.Colors[ImGuiCol_TitleBgActive] = theme_color;
+		style.Colors[ImGuiCol_TitleBgCollapsed] = theme_color;
+		style.Colors[ImGuiCol_MenuBarBg] = theme_color;
+		style.Colors[ImGuiCol_ScrollbarBg] = theme_color;
 		style.Colors[ImGuiCol_ScrollbarGrab] = style.Colors[ImGuiCol_WindowBg];
 		style.Colors[ImGuiCol_ScrollbarGrabHovered] = style.Colors[ImGuiCol_ScrollbarGrab];
 		style.Colors[ImGuiCol_ScrollbarGrabActive] = style.Colors[ImGuiCol_ScrollbarGrab];
 		style.Colors[ImGuiCol_ComboBg] = style.Colors[ImGuiCol_FrameBg];
-		style.Colors[ImGuiCol_CheckMark] = style.Colors[ImGuiCol_TitleBg];
+		style.Colors[ImGuiCol_CheckMark] = theme_color;
 		// FIXMEW: finish style setup, this is boring lol
 	}
 }
