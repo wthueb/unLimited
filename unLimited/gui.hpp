@@ -10,13 +10,12 @@ namespace gui
 	{
 		ImGui::SetNextWindowSize(ImVec2(850, 500));
 
-		if (ImGui::Begin("unLimited", nullptr, ImGuiWindowFlags_NoResize |
+		if (ImGui::Begin("unLimited", nullptr,
+			ImGuiWindowFlags_NoResize |
 			ImGuiWindowFlags_NoCollapse |
 			ImGuiWindowFlags_AlwaysAutoResize |
 			ImGuiWindowFlags_NoSavedSettings))
 		{
-			// FIXMEW: do some dope stuff here
-
 			ImGui::Checkbox("backtracking", &options::misc::backtracking);
 			ImGui::Checkbox("bactracking visual", &options::misc::backtracking_vis);
 
@@ -47,6 +46,10 @@ namespace gui
 
 		style.WindowRounding = 3.f;
 
-		style.Colors[ImGuiCol_WindowBg] = ImVec4(.1f, .1f, .1f, 1.f);
+		style.Colors[ImGuiCol_WindowBg] = ImVec4(.85f, .85f, .85f, 1.f);
+		style.Colors[ImGuiCol_TitleBgActive] = ImVec4(1.f, 1.f, 1.f, 1.f);
+		style.Colors[ImGuiCol_Text] = ImVec4(.1f, .1f, .1f, 1.f);
+		style.Colors[ImGuiCol_FrameBg] = ImVec4(.2f, .2f, .2f, 1.f);
+		style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(.5f, .5f, .5f, 1.f);
 	}
 }

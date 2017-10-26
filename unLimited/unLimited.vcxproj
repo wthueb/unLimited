@@ -71,12 +71,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetExt>.dll</TargetExt>
-    <IncludePath>$(DXSDK_DIR)\Include;$(ProjectDir)\imgui;$(IncludePath)</IncludePath>
+    <IncludePath>$(DXSDK_DIR)\Include;$(SolutionDir)\deps\imgui;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetExt>.dll</TargetExt>
-    <IncludePath>$(DXSDK_DIR)\Include;$(ProjectDir)\imgui;$(IncludePath)</IncludePath>
+    <IncludePath>$(DXSDK_DIR)\Include;$(SolutionDir)\deps\imgui;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
