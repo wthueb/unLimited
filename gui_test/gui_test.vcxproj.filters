@@ -3,8 +3,22 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\unLimited\options.cpp" />
+    <ClCompile Include="..\deps\imgui\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\examples\directx9_example\imgui_impl_dx9.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\unLimited\options.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{006b158b-d444-4f13-b1c0-6d67e2b84904}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

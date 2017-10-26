@@ -16,7 +16,7 @@ extern uintptr_t d3d_device;
 
 LRESULT __stdcall hk_wndproc(HWND hwnd, UINT message, WPARAM w_param, LPARAM l_param);
 
-extern LRESULT ImGui_ImplDX9_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 void gui_init()
 {
@@ -109,7 +109,7 @@ bool handle_input(UINT message, WPARAM w_param, LPARAM l_param)
 		gui_open = !gui_open;
 
 	if (gui_open)
-		return ImGui_ImplDX9_WndProcHandler(hwnd, message, w_param, l_param) != 0;
+		return ImGui_ImplWin32_WndProcHandler(hwnd, message, w_param, l_param) != 0;
 
 	return false;
 }

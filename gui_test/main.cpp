@@ -14,7 +14,7 @@
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
 
-extern LRESULT ImGui_ImplDX9_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 void init(HWND hwnd, LPDIRECT3DDEVICE9 device)
 {
@@ -155,7 +155,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE prev_instance, LPSTR cmd_line, 
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
 		{
 			//let the OSHGui handle the input
-			if (!ImGui_ImplDX9_WndProcHandler(window.hwnd, msg.message, msg.wParam, msg.lParam))
+			if (!ImGui_ImplWin32_WndProcHandler(window.hwnd, msg.message, msg.wParam, msg.lParam))
 			{
 				if (msg.message == WM_QUIT)
 					break;

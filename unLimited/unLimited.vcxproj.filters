@@ -45,6 +45,15 @@
     <ClCompile Include="features\airstuck.cpp">
       <Filter>features</Filter>
     </ClCompile>
+    <ClCompile Include="..\deps\imgui\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\examples\directx9_example\imgui_impl_dx9.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />
@@ -187,6 +196,9 @@
     </Filter>
     <Filter Include="features">
       <UniqueIdentifier>{8453b86c-eca0-49be-9149-e564beecfb7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{beb10620-ac77-4aed-ac3e-d91ad5b29ed0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
