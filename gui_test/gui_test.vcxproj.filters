@@ -3,43 +3,8 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\unLimited\options.cpp" />
-    <ClCompile Include="..\unLimited\imgui\imgui.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\unLimited\imgui\imgui_draw.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\unLimited\imgui\imgui_impl_dx9.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="imgui">
-      <UniqueIdentifier>{70d294a0-e6b0-433c-bb5a-1f71555971d1}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\unLimited\imgui\imconfig.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\unLimited\imgui\imgui.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\unLimited\imgui\imgui_impl_dx9.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\unLimited\imgui\imgui_internal.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\unLimited\imgui\stb_rect_pack.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\unLimited\imgui\stb_textedit.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\unLimited\imgui\stb_truetype.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
     <ClInclude Include="..\unLimited\options.hpp" />
   </ItemGroup>
 </Project>

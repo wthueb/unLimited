@@ -13,15 +13,6 @@
     <ClCompile Include="hooks\directx.cpp">
       <Filter>hooks</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\imgui.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui\imgui_draw.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui\imgui_impl_dx9.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
     <ClCompile Include="netvars.cpp" />
     <ClCompile Include="sdk\Color.cpp">
       <Filter>sdk</Filter>
@@ -94,27 +85,6 @@
     </ClInclude>
     <ClInclude Include="sdk\IHandleEntity.hpp">
       <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imconfig.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imgui.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imgui_impl_dx9.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imgui_internal.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\stb_textedit.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\stb_rect_pack.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\stb_truetype.h">
-      <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="gui.hpp" />
     <ClInclude Include="netvars.hpp" />
@@ -217,9 +187,6 @@
     </Filter>
     <Filter Include="features">
       <UniqueIdentifier>{8453b86c-eca0-49be-9149-e564beecfb7a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="imgui">
-      <UniqueIdentifier>{ebc244fb-7634-48fe-b3b6-b8a1e698ad37}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

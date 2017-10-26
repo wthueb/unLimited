@@ -119,20 +119,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\unLimited\imgui\imgui.cpp" />
-    <ClCompile Include="..\unLimited\imgui\imgui_draw.cpp" />
-    <ClCompile Include="..\unLimited\imgui\imgui_impl_dx9.cpp" />
     <ClCompile Include="..\unLimited\options.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\unLimited\imgui\imconfig.h" />
-    <ClInclude Include="..\unLimited\imgui\imgui.h" />
-    <ClInclude Include="..\unLimited\imgui\imgui_impl_dx9.h" />
-    <ClInclude Include="..\unLimited\imgui\imgui_internal.h" />
-    <ClInclude Include="..\unLimited\imgui\stb_rect_pack.h" />
-    <ClInclude Include="..\unLimited\imgui\stb_textedit.h" />
-    <ClInclude Include="..\unLimited\imgui\stb_truetype.h" />
     <ClInclude Include="..\unLimited\options.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

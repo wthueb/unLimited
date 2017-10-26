@@ -133,9 +133,6 @@
     <ClCompile Include="hooks\directx.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
     <ClCompile Include="hooks\paint_traverse.cpp" />
-    <ClCompile Include="imgui\imgui.cpp" />
-    <ClCompile Include="imgui\imgui_draw.cpp" />
-    <ClCompile Include="imgui\imgui_impl_dx9.cpp" />
     <ClCompile Include="interfaces.cpp" />
     <ClCompile Include="netvars.cpp" />
     <ClCompile Include="options.cpp" />
@@ -155,13 +152,6 @@
     <ClInclude Include="features\legitaim.hpp" />
     <ClInclude Include="gui.hpp" />
     <ClInclude Include="hooks\hooks.hpp" />
-    <ClInclude Include="imgui\imconfig.h" />
-    <ClInclude Include="imgui\imgui.h" />
-    <ClInclude Include="imgui\imgui_impl_dx9.h" />
-    <ClInclude Include="imgui\imgui_internal.h" />
-    <ClInclude Include="imgui\stb_rect_pack.h" />
-    <ClInclude Include="imgui\stb_textedit.h" />
-    <ClInclude Include="imgui\stb_truetype.h" />
     <ClInclude Include="interfaces.hpp" />
     <ClInclude Include="math.hpp" />
     <ClInclude Include="netvars.hpp" />
