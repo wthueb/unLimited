@@ -49,11 +49,28 @@ namespace gui
 		style.WindowTitleAlign = { .5f, .5f };
 		style.WindowRounding = 3.f;
 
-		style.Colors[ImGuiCol_WindowBg] = ImVec4(.9f, .9f, .9f, 1.f);
-		style.Colors[ImGuiCol_TitleBgActive] = ImVec4(.65f, .85f, .95f, 1.f);
+		auto theme_color = ImVec4(.65f, .85f, .95f, 1.f);
+
 		style.Colors[ImGuiCol_Text] = ImVec4(.05f, .05f, .05f, 1.f);
+		style.Colors[ImGuiCol_TextDisabled] = style.Colors[ImGuiCol_Text];
+		style.Colors[ImGuiCol_WindowBg] = ImVec4(.9f, .9f, .9f, 1.f);
+		style.Colors[ImGuiCol_ChildWindowBg] = style.Colors[ImGuiCol_WindowBg];
+		style.Colors[ImGuiCol_PopupBg] = ImVec4(.6f, .6f, .6f, 1.f);
+		style.Colors[ImGuiCol_Border] = ImVec4(0.f, 0.f, 0.f, 1.f);
+		style.Colors[ImGuiCol_BorderShadow] = ImVec4(0.f, 0.f, 0.f, 1.f);
 		style.Colors[ImGuiCol_FrameBg] = ImVec4(.2f, .2f, .2f, 1.f);
 		style.Colors[ImGuiCol_FrameBgHovered] = style.Colors[ImGuiCol_FrameBg];
 		style.Colors[ImGuiCol_FrameBgActive] = style.Colors[ImGuiCol_FrameBg];
+		style.Colors[ImGuiCol_TitleBg] = theme_color;
+		style.Colors[ImGuiCol_TitleBgActive] = style.Colors[ImGuiCol_TitleBg];
+		style.Colors[ImGuiCol_TitleBgCollapsed] = style.Colors[ImGuiCol_TitleBg];
+		style.Colors[ImGuiCol_MenuBarBg] = style.Colors[ImGuiCol_TitleBg];
+		style.Colors[ImGuiCol_ScrollbarBg] = style.Colors[ImGuiCol_TitleBg];
+		style.Colors[ImGuiCol_ScrollbarGrab] = style.Colors[ImGuiCol_WindowBg];
+		style.Colors[ImGuiCol_ScrollbarGrabHovered] = style.Colors[ImGuiCol_ScrollbarGrab];
+		style.Colors[ImGuiCol_ScrollbarGrabActive] = style.Colors[ImGuiCol_ScrollbarGrab];
+		style.Colors[ImGuiCol_ComboBg] = style.Colors[ImGuiCol_FrameBg];
+		style.Colors[ImGuiCol_CheckMark] = style.Colors[ImGuiCol_TitleBg];
+		// FIXMEW: finish style setup, this is boring lol
 	}
 }
