@@ -19,7 +19,7 @@ namespace gui
 			ImGuiWindowFlags_NoSavedSettings))
 		{
 			ImGui::Checkbox("backtracking", &options::misc::backtracking);
-			ImGui::Checkbox("bactracking visual", &options::misc::backtracking_vis);
+			ImGui::Checkbox("backtracking visual", &options::misc::backtracking_vis);
 
 			ImGui::Separator();
 
@@ -53,6 +53,7 @@ namespace gui
 		style.Colors[ImGuiCol_TitleBgActive] = ImVec4(.65f, .85f, .95f, 1.f);
 		style.Colors[ImGuiCol_Text] = ImVec4(.05f, .05f, .05f, 1.f);
 		style.Colors[ImGuiCol_FrameBg] = ImVec4(.2f, .2f, .2f, 1.f);
-		style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(.3f, .3f, .3f, 1.f);
+		style.Colors[ImGuiCol_FrameBgHovered] = style.Colors[ImGuiCol_FrameBg];
+		style.Colors[ImGuiCol_FrameBgActive] = style.Colors[ImGuiCol_FrameBg];
 	}
 }
