@@ -154,6 +154,7 @@
     <ClInclude Include="features\backtracking.hpp" />
     <ClInclude Include="features\esp.hpp" />
     <ClInclude Include="features\legitaim.hpp" />
+    <ClInclude Include="font.hpp" />
     <ClInclude Include="gui.hpp" />
     <ClInclude Include="hooks\hooks.hpp" />
     <ClInclude Include="interfaces.hpp" />

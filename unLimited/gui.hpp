@@ -2,6 +2,7 @@
 
 #include <imgui.h>
 
+#include "font.hpp"
 #include "options.hpp"
 
 namespace gui
@@ -42,15 +43,16 @@ namespace gui
 		auto &io = ImGui::GetIO();
 
 		io.Fonts->AddFontDefault();
+		auto font = io.Fonts->AddFontFromMemoryCompressedTTF(RobotoFont_compressed_data, RobotoFont_compressed_size, 14.f);
+		io.FontDefault = font;
 
-		style.WindowTitleAlign = { .5f, .5f }; // center title text
-
+		style.WindowTitleAlign = { .5f, .5f };
 		style.WindowRounding = 3.f;
 
-		style.Colors[ImGuiCol_WindowBg] = ImVec4(.85f, .85f, .85f, 1.f);
-		style.Colors[ImGuiCol_TitleBgActive] = ImVec4(1.f, 1.f, 1.f, 1.f);
-		style.Colors[ImGuiCol_Text] = ImVec4(.1f, .1f, .1f, 1.f);
+		style.Colors[ImGuiCol_WindowBg] = ImVec4(.9f, .9f, .9f, 1.f);
+		style.Colors[ImGuiCol_TitleBgActive] = ImVec4(.65f, .85f, .95f, 1.f);
+		style.Colors[ImGuiCol_Text] = ImVec4(.05f, .05f, .05f, 1.f);
 		style.Colors[ImGuiCol_FrameBg] = ImVec4(.2f, .2f, .2f, 1.f);
-		style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(.5f, .5f, .5f, 1.f);
+		style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(.3f, .3f, .3f, 1.f);
 	}
 }

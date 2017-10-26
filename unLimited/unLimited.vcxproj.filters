@@ -186,6 +186,7 @@
     <ClInclude Include="features\airstuck.hpp">
       <Filter>features</Filter>
     </ClInclude>
+    <ClInclude Include="font.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="hooks">
