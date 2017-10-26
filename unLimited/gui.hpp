@@ -8,6 +8,7 @@ namespace gui
 {
 	static void draw_gui()
 	{
+		ImGui::SetNextWindowPos(ImVec2(10, 10));
 		ImGui::SetNextWindowSize(ImVec2(850, 500));
 
 		if (ImGui::Begin("unLimited", nullptr,

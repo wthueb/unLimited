@@ -58,11 +58,11 @@ public:
 
 		RegisterClass(&wc);
 
-		RECT wnd_size = { 0, 0, 900, 550 };
+		RECT wnd_size = { 0, 0, 890, 560 };
 
 		DWORD style = (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
 
-		hwnd = CreateWindowA("D3D", "unLimited GUI", style, 0, 100, wnd_size.right, wnd_size.bottom, GetDesktopWindow(), 0, wc.hInstance, 0);
+		hwnd = CreateWindowA("D3D", "unLimited GUI", style, 500, 200, wnd_size.right, wnd_size.bottom, GetDesktopWindow(), 0, wc.hInstance, 0);
 	}
 
 	~win32_window()
