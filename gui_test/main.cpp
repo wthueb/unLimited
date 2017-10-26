@@ -99,7 +99,7 @@ public:
 		pp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 		pp.BackBufferFormat = D3DFMT_X8R8G8B8;
 		pp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
-		pp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+		pp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
 		pp.Windowed = TRUE;
 		pp.BackBufferWidth = rect.right;
 		pp.BackBufferHeight = rect.bottom;
