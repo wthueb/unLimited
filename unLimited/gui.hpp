@@ -9,7 +9,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 0
-#define VERSION_PATCH 6
+#define VERSION_PATCH 7
 
 namespace ImGui
 {
@@ -67,7 +67,7 @@ namespace gui
 		ImGui::SetNextWindowPos(ImVec2(10, 10));
 		ImGui::SetNextWindowSize(ImVec2(850, 500));
 
-		if (ImGui::Begin("unLimited", nullptr,
+		if (ImGui::Begin("unLimited by wi1", nullptr,
 			ImGuiWindowFlags_NoResize |
 			ImGuiWindowFlags_NoCollapse |
 			ImGuiWindowFlags_AlwaysAutoResize |
@@ -79,6 +79,7 @@ namespace gui
 
 			ImGui::BetterCheckbox("aimbot", &options::aim::aimbot);
 
+			// FIXMEW: add a fade & null mouse input
 			if (!options::aim::aimbot)
 				ImGui::PushStyleVar(ImGuiStyleVar_Alpha, .4f);
 
@@ -153,8 +154,7 @@ namespace gui
 			ImGui::Columns(1);
 
 			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::CalcTextSize("http://wi1.us.to/").y - 5);
-			ImGui::Text("unLimited by wi1");
-			ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize("http://wi1.us.to/").x - 10);
+			ImGui::SetCursorPosX(ImGui::GetWindowWidth() - ImGui::CalcTextSize("http://wi1.us.to/").x - 10);
 			ImGui::Text("http://wi1.us.to/");
 			
 			ImGui::End();
