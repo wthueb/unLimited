@@ -9,7 +9,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 0
-#define VERSION_PATCH 5
+#define VERSION_PATCH 6
 
 namespace ImGui
 {
@@ -78,6 +78,10 @@ namespace gui
 			ImGui::PushItemWidth(150.f);
 
 			ImGui::BetterCheckbox("aimbot", &options::aim::aimbot);
+
+			if (!options::aim::aimbot)
+				ImGui::PushStyleVar(ImGuiStyleVar_Alpha, .4f);
+
 			ImGui::SliderFloat("fov", &options::aim::fov, 0.f, 180.f, "%.1f", 2.f);
 			ImGui::BetterCheckbox("smooth", &options::aim::smooth);
 			ImGui::SliderFloat("smooth amount", &options::aim::smooth_amount, 1.f, 30.f, "%.1f", 1.f);
@@ -107,15 +111,29 @@ namespace gui
 
 			ImGui::BetterCheckbox("shoot teammates", &options::aim::friendlies);
 			ImGui::BetterCheckbox("visible check", &options::aim::visible_only);
+
+			if (!options::aim::aimbot)
+				ImGui::PopStyleVar();
+
 			ImGui::BetterCheckbox("rcs", &options::aim::rcs);
 			
 			ImGui::NextColumn();
 			ImGui::NextColumn();
 
 			ImGui::BetterCheckbox("backtracking", &options::misc::backtracking);
+
+			if (!options::misc::backtracking)
+				ImGui::PushStyleVar(ImGuiStyleVar_Alpha, .4f);
+
 			ImGui::BetterCheckbox("backtracking visual", &options::misc::backtracking_vis);
 
+			if (!options::misc::backtracking)
+				ImGui::PopStyleVar();
+
 			ImGui::BetterCheckbox("airstuck", &options::misc::airstuck);
+
+			if (!options::misc::airstuck)
+				ImGui::PushStyleVar(ImGuiStyleVar_Alpha, .4f);
 
 			{
 				static int selected = 0;
@@ -126,6 +144,9 @@ namespace gui
 				}, nullptr, options::keys.size(), -1))
 					options::misc::airstuck_key = options::keys.at(selected).num;
 			}
+
+			if (!options::misc::airstuck)
+				ImGui::PopStyleVar();
 
 			ImGui::PopItemWidth();
 
