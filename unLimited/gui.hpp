@@ -9,7 +9,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 0
-#define VERSION_PATCH 7
+#define VERSION_PATCH 8
 
 namespace ImGui
 {
@@ -154,7 +154,7 @@ namespace gui
 			ImGui::Columns(1);
 
 			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::CalcTextSize("http://wi1.us.to/").y - 5);
-			ImGui::SetCursorPosX(ImGui::GetWindowWidth() - ImGui::CalcTextSize("http://wi1.us.to/").x - 10);
+			ImGui::SetCursorPosX(ImGui::GetWindowWidth() - ImGui::CalcTextSize("http://wi1.us.to/").x - 7);
 			ImGui::Text("http://wi1.us.to/");
 			
 			ImGui::End();
