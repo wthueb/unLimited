@@ -1,8 +1,8 @@
 #include "hooks.hpp"
 
+#include "../features/aimbot.hpp"
 #include "../features/airstuck.hpp"
 #include "../features/backtracking.hpp"
-#include "../features/legitaim.hpp"
 
 #include "../math.hpp"
 
@@ -23,9 +23,9 @@ bool __stdcall hooks::hk_create_move(float sample_input_frametime, CUserCmd* cmd
 
 	if (cmd && cmd->command_number)
 	{
+		aimbot::create_move(cmd, send_packet);
 		airstuck::create_move(cmd);
 		backtracking::create_move(cmd);
-		legitaim::create_move(cmd, send_packet);
 	}
 
 	cmd->viewangles.Clamp();

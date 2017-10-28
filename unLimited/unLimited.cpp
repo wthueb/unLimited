@@ -2,6 +2,7 @@
 
 #include "hooks/hooks.hpp"
 #include "interfaces.hpp"
+#include "options.hpp"
 #include "utils.hpp"
 
 extern void gui_init();
@@ -44,6 +45,8 @@ void attach(HMODULE dll)
 	netvar_sys::get().dump();
 	utils::console_print("finished dumping netvars...\n\n\n");
 #endif
+
+	options::init();
 
 	wait_for_unload();
 }

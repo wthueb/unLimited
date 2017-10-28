@@ -27,6 +27,8 @@ void init(HWND hwnd, LPDIRECT3DDEVICE9 device)
 		initialized = true;
 
 	gui::setup_style();
+
+	options::init();
 }
 
 void render(LPDIRECT3DDEVICE9 device)

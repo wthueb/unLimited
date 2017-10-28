@@ -35,6 +35,16 @@ public:
 		return ((float*)this)[i];
 	}
 
+
+	bool operator==(const QAngle &v)
+	{
+		return pitch == v.pitch && yaw == v.yaw && roll == v.roll;
+	}
+	bool operator!=(const QAngle &v)
+	{
+		return !operator==(v);
+	}
+
 	QAngle& operator+=(const QAngle& v)
 	{
 		pitch += v.pitch; yaw += v.yaw; roll += v.roll;

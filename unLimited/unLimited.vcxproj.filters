@@ -38,9 +38,6 @@
     <ClCompile Include="hooks\paint_traverse.cpp">
       <Filter>hooks</Filter>
     </ClCompile>
-    <ClCompile Include="features\legitaim.cpp">
-      <Filter>features</Filter>
-    </ClCompile>
     <ClCompile Include="options.cpp" />
     <ClCompile Include="features\airstuck.cpp">
       <Filter>features</Filter>
@@ -53,6 +50,9 @@
     </ClCompile>
     <ClCompile Include="..\deps\imgui\examples\directx9_example\imgui_impl_dx9.cpp">
       <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="features\aimbot.cpp">
+      <Filter>features</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -176,9 +176,6 @@
       <Filter>features</Filter>
     </ClInclude>
     <ClInclude Include="math.hpp" />
-    <ClInclude Include="features\legitaim.hpp">
-      <Filter>features</Filter>
-    </ClInclude>
     <ClInclude Include="options.hpp" />
     <ClInclude Include="features\esp.hpp">
       <Filter>features</Filter>
@@ -187,6 +184,9 @@
       <Filter>features</Filter>
     </ClInclude>
     <ClInclude Include="font.hpp" />
+    <ClInclude Include="features\aimbot.hpp">
+      <Filter>features</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="hooks">

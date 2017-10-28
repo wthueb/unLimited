@@ -10,7 +10,7 @@ void airstuck::create_move(CUserCmd* cmd)
 	if (cmd->buttons & IN_ATTACK || cmd->buttons & IN_ATTACK2)
 		return;
 
-	if (GetAsyncKeyState(options::misc::airstuck_key))
+	if (options::misc::airstuck_key && GetAsyncKeyState(options::misc::airstuck_key))
 	{
 		cmd->tick_count = 16777216;
 	}

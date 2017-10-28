@@ -130,9 +130,9 @@
     <ClCompile Include="..\deps\imgui\examples\directx9_example\imgui_impl_dx9.cpp" />
     <ClCompile Include="..\deps\imgui\imgui.cpp" />
     <ClCompile Include="..\deps\imgui\imgui_draw.cpp" />
+    <ClCompile Include="features\aimbot.cpp" />
     <ClCompile Include="features\airstuck.cpp" />
     <ClCompile Include="features\backtracking.cpp" />
-    <ClCompile Include="features\legitaim.cpp" />
     <ClCompile Include="hooks\create_move.cpp" />
     <ClCompile Include="hooks\directx.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
@@ -150,10 +150,10 @@
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="features\aimbot.hpp" />
     <ClInclude Include="features\airstuck.hpp" />
     <ClInclude Include="features\backtracking.hpp" />
     <ClInclude Include="features\esp.hpp" />
-    <ClInclude Include="features\legitaim.hpp" />
     <ClInclude Include="font.hpp" />
     <ClInclude Include="gui.hpp" />
     <ClInclude Include="hooks\hooks.hpp" />
