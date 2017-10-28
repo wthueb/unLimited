@@ -31,8 +31,8 @@ namespace options
 	{
 		bool enabled = true;
 
-		bool aimbot = true;
-		float fov = 180.f;
+		bool aimbot = false;
+		float fov = 1.f;
 		bool smooth = true;
 		float smooth_amount = 5.f;
 		int bone = 8;
@@ -47,10 +47,10 @@ namespace options
 
 	namespace misc
 	{
-		bool backtracking = true;
+		bool backtracking = false;
 		bool backtracking_vis = true;
 
-		bool airstuck = true;
+		bool airstuck = false;
 		int airstuck_key = VK_XBUTTON2;
 	}
 }
