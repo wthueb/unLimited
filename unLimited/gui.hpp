@@ -4,12 +4,14 @@
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include <imgui_internal.h>
 
+#include <algorithm>
+
 #include "font.hpp"
 #include "options.hpp"
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 0
-#define VERSION_PATCH 8
+#define VERSION_PATCH 9
 
 namespace ImGui
 {
@@ -79,9 +81,15 @@ namespace gui
 
 			ImGui::BetterCheckbox("aimbot", &options::aim::aimbot);
 
-			// FIXMEW: add a fade & null mouse input
+			// FIXMEW: null mouse input
+			static float aimbot_alpha = 0.f;
+			
 			if (!options::aim::aimbot)
-				ImGui::PushStyleVar(ImGuiStyleVar_Alpha, .4f);
+				aimbot_alpha = std::max(aimbot_alpha - .02f, .3f);
+			else
+				aimbot_alpha = std::min(1.f, aimbot_alpha + .02f);
+
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, aimbot_alpha);
 
 			ImGui::SliderFloat("fov", &options::aim::fov, 0.f, 180.f, "%.1f", 2.f);
 			ImGui::BetterCheckbox("smooth", &options::aim::smooth);
@@ -113,8 +121,7 @@ namespace gui
 			ImGui::BetterCheckbox("shoot teammates", &options::aim::friendlies);
 			ImGui::BetterCheckbox("visible check", &options::aim::visible_only);
 
-			if (!options::aim::aimbot)
-				ImGui::PopStyleVar();
+			ImGui::PopStyleVar();
 
 			ImGui::BetterCheckbox("rcs", &options::aim::rcs);
 			
@@ -123,18 +130,29 @@ namespace gui
 
 			ImGui::BetterCheckbox("backtracking", &options::misc::backtracking);
 
+			static float backtracking_alpha = 0.f;
+
 			if (!options::misc::backtracking)
-				ImGui::PushStyleVar(ImGuiStyleVar_Alpha, .4f);
+				backtracking_alpha = std::max(backtracking_alpha - .02f, .3f);
+			else
+				backtracking_alpha = std::min(1.f, backtracking_alpha + .02f);
+
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, backtracking_alpha);
 
 			ImGui::BetterCheckbox("backtracking visual", &options::misc::backtracking_vis);
 
-			if (!options::misc::backtracking)
-				ImGui::PopStyleVar();
+			ImGui::PopStyleVar();
 
 			ImGui::BetterCheckbox("airstuck", &options::misc::airstuck);
 
+			static float airstuck_alpha = 0.f;
+
 			if (!options::misc::airstuck)
-				ImGui::PushStyleVar(ImGuiStyleVar_Alpha, .4f);
+				airstuck_alpha = std::max(airstuck_alpha - .02f, .3f);
+			else
+				airstuck_alpha = std::min(1.f, airstuck_alpha + .02f);
+
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, airstuck_alpha);
 
 			{
 				static int selected = 0;
@@ -146,8 +164,7 @@ namespace gui
 					options::misc::airstuck_key = options::keys.at(selected).num;
 			}
 
-			if (!options::misc::airstuck)
-				ImGui::PopStyleVar();
+			ImGui::PopStyleVar();
 
 			ImGui::PopItemWidth();
 
@@ -164,7 +181,7 @@ namespace gui
 	static void setup_style()
 	{
 		auto &style = ImGui::GetStyle();
-
+		
 		auto &io = ImGui::GetIO();
 
 		io.Fonts->AddFontDefault();
@@ -196,7 +213,6 @@ namespace gui
 		style.Colors[ImGuiCol_ScrollbarGrabActive] = style.Colors[ImGuiCol_ScrollbarGrab];
 		style.Colors[ImGuiCol_ComboBg] = theme_color;
 		style.Colors[ImGuiCol_CheckMark] = theme_color;
-		// FIXMEW: fix slider text color
 		style.Colors[ImGuiCol_SliderGrab] = theme_color;
 		style.Colors[ImGuiCol_SliderGrabActive] = style.Colors[ImGuiCol_SliderGrab];
 		style.Colors[ImGuiCol_Button] = theme_color;
