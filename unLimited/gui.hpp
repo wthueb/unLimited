@@ -11,7 +11,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 0
-#define VERSION_PATCH 9
+#define VERSION_PATCH 10
 
 namespace ImGui
 {
@@ -69,6 +69,8 @@ namespace gui
 		ImGui::SetNextWindowPos(ImVec2(10, 10));
 		ImGui::SetNextWindowSize(ImVec2(850, 500));
 
+		static auto &style = ImGui::GetStyle();
+
 		if (ImGui::Begin("unLimited by wi1", nullptr,
 			ImGuiWindowFlags_NoResize |
 			ImGuiWindowFlags_NoCollapse |
@@ -89,7 +91,7 @@ namespace gui
 			else
 				aimbot_alpha = std::min(1.f, aimbot_alpha + .02f);
 
-			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, aimbot_alpha);
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, std::min(style.Alpha, aimbot_alpha));
 
 			ImGui::SliderFloat("fov", &options::aim::fov, 0.f, 180.f, "%.1f", 2.f);
 			ImGui::BetterCheckbox("smooth", &options::aim::smooth);
@@ -137,7 +139,7 @@ namespace gui
 			else
 				backtracking_alpha = std::min(1.f, backtracking_alpha + .02f);
 
-			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, backtracking_alpha);
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, std::min(style.Alpha, backtracking_alpha));
 
 			ImGui::BetterCheckbox("backtracking visual", &options::misc::backtracking_vis);
 
@@ -152,7 +154,7 @@ namespace gui
 			else
 				airstuck_alpha = std::min(1.f, airstuck_alpha + .02f);
 
-			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, airstuck_alpha);
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, std::min(style.Alpha, airstuck_alpha));
 
 			{
 				static int selected = 0;

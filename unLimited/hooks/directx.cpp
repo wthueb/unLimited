@@ -55,6 +55,9 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 
 	static bool mouse_enabled = true;
 	
+	static float alpha = 0.f;
+	static auto &style = ImGui::GetStyle();
+
 	if (gui_open)
 	{
 		if (mouse_enabled)
@@ -68,6 +71,10 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 
 		ImGui_ImplDX9_NewFrame();
 
+		alpha = std::min(1.f, alpha + .005f);
+		
+		style.Alpha = alpha;
+
 		gui::draw_gui();
 
 		ImGui::Render();
@@ -78,6 +85,22 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 		{
 			g_engine->ClientCmd_Unrestricted("cl_mouseenable 1");
 			mouse_enabled = true;
+		}
+
+		// FIXMEW: this is dependent on framerate which probably isn't the best idea...
+		if (alpha > .005f)
+		{
+			ImGui::GetIO().MouseDrawCursor = false;
+
+			ImGui_ImplDX9_NewFrame();
+
+			alpha = std::max(.001f, alpha - .005f);
+			
+			style.Alpha = alpha;
+
+			gui::draw_gui();
+
+			ImGui::Render();
 		}
 	}
 
