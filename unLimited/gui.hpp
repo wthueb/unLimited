@@ -11,7 +11,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 0
-#define VERSION_PATCH 13
+#define VERSION_PATCH 14
 
 namespace ImGui
 {
@@ -155,7 +155,7 @@ namespace gui
 				airstuck_alpha = std::min(1.f, airstuck_alpha + .02f);
 
 			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, std::min(style.Alpha, airstuck_alpha));
-
+			
 			{
 				static int selected = 0;
 				if (ImGui::Combo("airstuck key", &selected, [](void* data, int idx, const char** out_text)
@@ -172,11 +172,14 @@ namespace gui
 
 			ImGui::Columns(1);
 
-			// go to bottom line
 			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::CalcTextSize("http://wi1.us.to/").y - 10);
 
-			static bool dark_mode;
-			if (ImGui::BetterCheckbox("dark mode", &dark_mode))
+			static bool dark_mode = false;
+			ImGui::BetterCheckbox("dark mode", &dark_mode);
+
+			static bool old_dark_mode = false;
+
+			if (dark_mode != old_dark_mode)
 			{
 				for (auto i = 0; i < ImGuiCol_COUNT; ++i)
 				{
@@ -190,6 +193,8 @@ namespace gui
 
 					ImGui::ColorConvertHSVtoRGB(hue, saturation, value, col.x, col.y, col.z);
 				}
+
+				old_dark_mode = dark_mode;
 			}
 
 			ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize("http://wi1.us.to/").x - 10);
