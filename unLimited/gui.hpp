@@ -11,7 +11,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 0
-#define VERSION_PATCH 10
+#define VERSION_PATCH 11
 
 namespace ImGui
 {
@@ -66,7 +66,7 @@ namespace gui
 {
 	static void draw_gui()
 	{
-		ImGui::SetNextWindowPos(ImVec2(10, 10));
+		ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(850, 500));
 
 		static auto &style = ImGui::GetStyle();
@@ -185,7 +185,7 @@ namespace gui
 		auto &style = ImGui::GetStyle();
 		
 		auto &io = ImGui::GetIO();
-
+		
 		io.Fonts->AddFontDefault();
 		auto font = io.Fonts->AddFontFromMemoryCompressedTTF(RobotoFont_compressed_data, RobotoFont_compressed_size, 14.f);
 		io.FontDefault = font;
