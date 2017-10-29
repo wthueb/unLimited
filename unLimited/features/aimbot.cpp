@@ -98,7 +98,7 @@ void find_target()
 	{
 		auto potential = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
 		if (!potential)
-			return;
+			continue;
 
 		if (!potential->IsValid() || potential == localplayer)
 			continue;
@@ -186,8 +186,7 @@ void correct_aim()
 
 	dst.Clamp();
 
-	if (dst != cmd->viewangles)
-		cmd->viewangles = dst;
+	cmd->viewangles = dst;
 }
 
 bool is_visible(C_BasePlayer* player)
