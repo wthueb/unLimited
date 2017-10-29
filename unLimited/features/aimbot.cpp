@@ -118,7 +118,7 @@ void find_target()
 		QAngle angle;
 		math::VectorAngles(relative, angle);
 
-		auto fov = math::get_fov(cmd->viewangles, angle);
+		auto fov = math::get_fov(cmd->viewangles + localplayer->GetAimPunch() * 2.f, angle);
 
 		if (fov <= best_fov)
 		{
@@ -168,7 +168,7 @@ void correct_aim()
 	QAngle dst;
 	math::VectorAngles(relative, dst);
 
-	if (math::get_fov(cmd->viewangles, dst) > options::aim::fov)
+	if (math::get_fov(cmd->viewangles + localplayer->GetAimPunch() * 2.f, dst) > options::aim::fov)
 		return;
 
 	if (!active_weapon->IsSniper() && !active_weapon->IsPistol() && !active_weapon->IsShotgun())
