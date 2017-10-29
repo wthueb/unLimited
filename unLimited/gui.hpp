@@ -11,7 +11,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 0
-#define VERSION_PATCH 12
+#define VERSION_PATCH 13
 
 namespace ImGui
 {
@@ -172,8 +172,28 @@ namespace gui
 
 			ImGui::Columns(1);
 
-			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::CalcTextSize("http://wi1.us.to/").y - 5);
-			ImGui::SetCursorPosX(ImGui::GetWindowWidth() - ImGui::CalcTextSize("http://wi1.us.to/").x - 7);
+			// go to bottom line
+			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::CalcTextSize("http://wi1.us.to/").y - 10);
+
+			static bool dark_mode;
+			if (ImGui::BetterCheckbox("dark mode", &dark_mode))
+			{
+				for (auto i = 0; i < ImGuiCol_COUNT; ++i)
+				{
+					ImVec4 &col = style.Colors[i];
+
+					float hue, saturation, value;
+					ImGui::ColorConvertRGBtoHSV(col.x, col.y, col.z, hue, saturation, value);
+
+					if (saturation < .1f)
+						value = 1.f - value;
+
+					ImGui::ColorConvertHSVtoRGB(hue, saturation, value, col.x, col.y, col.z);
+				}
+			}
+
+			ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize("http://wi1.us.to/").x - 10);
+
 			ImGui::Text("http://wi1.us.to/");
 			
 			ImGui::End();
