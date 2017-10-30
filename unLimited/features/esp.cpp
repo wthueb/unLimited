@@ -29,7 +29,7 @@ void esp::do_post_screen_space_effects()
 			continue;
 
 		auto class_id = entity->GetClientClass()->m_ClassID;
-		auto color = Color{};
+		Color color;
 
 		switch (class_id)
 		{
