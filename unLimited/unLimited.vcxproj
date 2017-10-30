@@ -73,11 +73,13 @@
     <TargetExt>.dll</TargetExt>
     <IncludePath>$(DXSDK_DIR)\Include;$(SolutionDir)\deps\imgui;$(SolutionDir)\deps\imgui\examples\directx9_example;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
+    <CodeAnalysisRuleSet>CppCoreCheckRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetExt>.dll</TargetExt>
     <IncludePath>$(DXSDK_DIR)\Include;$(SolutionDir)\deps\imgui;$(SolutionDir)\deps\imgui\examples\directx9_example;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
+    <CodeAnalysisRuleSet>CppCoreCheckRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

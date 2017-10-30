@@ -33,9 +33,9 @@ void init(HWND hwnd, LPDIRECT3DDEVICE9 device)
 
 void render(LPDIRECT3DDEVICE9 device)
 {
-	device->Clear(0, 0, D3DCLEAR_TARGET, 0, 1.0f, 0);
+	device->Clear(0, 0, D3DCLEAR_TARGET, 0, 1.f, 0);
 	device->BeginScene();
-
+	
 	ImGui_ImplDX9_NewFrame();
 
 	gui::draw_gui();
@@ -156,7 +156,6 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE prev_instance, LPSTR cmd_line, 
 
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
 		{
-			//let the OSHGui handle the input
 			if (!ImGui_ImplWin32_WndProcHandler(window.hwnd, msg.message, msg.wParam, msg.lParam))
 			{
 				if (msg.message == WM_QUIT)

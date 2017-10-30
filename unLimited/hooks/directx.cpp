@@ -71,7 +71,7 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 
 		ImGui_ImplDX9_NewFrame();
 
-		alpha = std::min(1.f, alpha + .005f);
+		alpha = std::min(1.f, alpha + .01f);
 		
 		style.Alpha = alpha;
 
@@ -88,13 +88,13 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 		}
 
 		// FIXMEW: this is dependent on framerate which probably isn't the best idea...
-		if (alpha > .005f)
+		if (alpha > .01f)
 		{
 			ImGui::GetIO().MouseDrawCursor = false;
 
 			ImGui_ImplDX9_NewFrame();
 
-			alpha = std::max(.001f, alpha - .005f);
+			alpha = std::max(.001f, alpha - .01f);
 			
 			style.Alpha = alpha;
 

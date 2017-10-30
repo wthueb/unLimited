@@ -11,7 +11,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 0
-#define VERSION_PATCH 15
+#define VERSION_PATCH 16
 
 namespace ImGui
 {
@@ -64,6 +64,8 @@ namespace ImGui
 
 namespace gui
 {
+	static char version[16];
+
 	static void draw_gui()
 	{
 		ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Once);
@@ -71,7 +73,7 @@ namespace gui
 
 		static auto &style = ImGui::GetStyle();
 
-		if (ImGui::Begin("unLimited by wi1", nullptr,
+		if (ImGui::Begin("universeL by wi1", nullptr,
 			ImGuiWindowFlags_NoResize |
 			ImGuiWindowFlags_NoCollapse |
 			ImGuiWindowFlags_AlwaysAutoResize |
@@ -197,6 +199,10 @@ namespace gui
 				old_dark_mode = dark_mode;
 			}
 
+			ImGui::SameLine(ImGui::GetWindowWidth() / 2 - ImGui::CalcTextSize(version).x / 2);
+
+			ImGui::Text(version);
+
 			ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize("http://wi1.us.to/").x - 10);
 
 			ImGui::Text("http://wi1.us.to/");
@@ -207,6 +213,8 @@ namespace gui
 
 	static void setup_style()
 	{
+		snprintf(version, sizeof(version), "v%i.%i.%i", VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
+
 		auto &style = ImGui::GetStyle();
 		
 		auto &io = ImGui::GetIO();
