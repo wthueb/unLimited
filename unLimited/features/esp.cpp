@@ -47,7 +47,7 @@ void esp::do_post_screen_space_effects()
 				continue;
 
 			// FIXMEW: add color picker
-			color = player->GetTeam() == localplayer->GetTeam() ? Color::Green : Color::Red;
+			color = player->GetTeam() == localplayer->GetTeam() ? Color{ 0, 255, 0 } : Color{ 255, 0, 0 };
 
 			break;
 		}
@@ -58,7 +58,7 @@ void esp::do_post_screen_space_effects()
 
 			entity->GetShouldGlow() = true;
 
-			color = Color::White;
+			color = Color{ 255, 255, 255 };
 
 			break;
 		}
@@ -67,7 +67,7 @@ void esp::do_post_screen_space_effects()
 			if (!options::esp::defuse_kits)
 				continue;
 
-			color = Color::White;
+			color = Color{ 255, 255, 255 };
 
 			break;
 		}
@@ -76,7 +76,7 @@ void esp::do_post_screen_space_effects()
 			if (!options::esp::c4)
 				continue;
 
-			color = Color::White;
+			color = Color{ 255, 255, 255 };
 
 			break;
 		}
@@ -87,7 +87,7 @@ void esp::do_post_screen_space_effects()
 				if (!options::esp::weapons)
 					continue;
 
-				color = Color::White;
+				color = Color{ 255, 255, 255 };
 			}
 
 			break;

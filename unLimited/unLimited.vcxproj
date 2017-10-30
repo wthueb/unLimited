@@ -146,7 +146,6 @@
     <ClCompile Include="interfaces.cpp" />
     <ClCompile Include="netvars.cpp" />
     <ClCompile Include="options.cpp" />
-    <ClCompile Include="sdk\Color.cpp" />
     <ClCompile Include="sdk\CRC.cpp" />
     <ClCompile Include="sdk\Vector.cpp" />
     <ClCompile Include="sdk\Vector2D.cpp" />

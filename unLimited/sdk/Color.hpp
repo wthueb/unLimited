@@ -1,61 +1,89 @@
 #pragma once
 
-#include <cstdint>
+using clr_t = unsigned char;
 
 class Color
 {
+private:
+	clr_t _r;
+	clr_t _g;
+	clr_t _b;
+	clr_t _a;
+
 public:
-	Color();
-	Color(int _r, int _g, int _b);
-	Color(int _r, int _g, int _b, int _a);
-	Color(float _r, float _g, float _b) : Color(_r, _g, _b, 1.0f) {}
-	Color(float _r, float _g, float _b, float _a)
-		: Color(
-			static_cast<int>(_r * 255.0f),
-			static_cast<int>(_g * 255.0f),
-			static_cast<int>(_b * 255.0f),
-			static_cast<int>(_a * 255.0f))
+	Color()
 	{
+		*reinterpret_cast<unsigned int*>(this) = 0;
 	}
-	explicit Color(float* rgb) : Color(rgb[0], rgb[1], rgb[2], 1.0f) {}
+
+	Color(clr_t r, clr_t g, clr_t b, clr_t a = 255)
+		: _r(r), _g(g), _b(b), _a(a) {}
+
+	explicit Color(unsigned char rgb[4])
+		: _r(rgb[0]), _g(rgb[1]), _b(rgb[2]), _a(rgb[3]) {}
+
 	explicit Color(unsigned long argb)
 	{
-		_CColor[2] = (unsigned char)((argb & 0x000000FF) >> (0 * 8));
-		_CColor[1] = (unsigned char)((argb & 0x0000FF00) >> (1 * 8));
-		_CColor[0] = (unsigned char)((argb & 0x00FF0000) >> (2 * 8));
-		_CColor[3] = (unsigned char)((argb & 0xFF000000) >> (3 * 8));
+		_b = static_cast<unsigned char>((argb & 0x000000FF) >> (0 * 8));
+		_g = static_cast<unsigned char>((argb & 0x0000FF00) >> (1 * 8));
+		_r = static_cast<unsigned char>((argb & 0x00FF0000) >> (2 * 8));
+		_a = static_cast<unsigned char>((argb & 0xFF000000) >> (3 * 8));
 	}
 
-	void    SetRawColor(int color32);
-	int     GetRawColor() const;
-	void    SetColor(int _r, int _g, int _b, int _a = 0);
-	void    SetColor(float _r, float _g, float _b, float _a = 0);
-	void    GetColor(int &_r, int &_g, int &_b, int &_a) const;
-
-	int r() const { return _CColor[0]; }
-	int g() const { return _CColor[1]; }
-	int b() const { return _CColor[2]; }
-	int a() const { return _CColor[3]; }
-
-	unsigned char &operator[](int index)
+	void SetRawColor(int color32)
 	{
-		return _CColor[index];
+		*reinterpret_cast<unsigned int*>(this) = color32;
 	}
-	const unsigned char &operator[](int index) const
+
+	int GetRawColor() const
 	{
-		return _CColor[index];
+		return *reinterpret_cast<unsigned int*>(const_cast<Color*>(this));
 	}
 
-	bool operator==(const Color &rhs) const;
-	bool operator!=(const Color &rhs) const;
-	Color &operator=(const Color &rhs);
+	void SetColor(clr_t r, clr_t g, clr_t b, clr_t a = 255)
+	{
+		_r = r;
+		_g = g;
+		_b = b;
+		_a = a;
+	}
 
-	static Color Black;
-	static Color White;
-	static Color Red;
-	static Color Green;
-	static Color Blue;
+	void GetColor(clr_t &r, clr_t &g, clr_t &b, clr_t &a) const
+	{
+		r = _r;
+		g = _g;
+		b = _b;
+		a = _a;
+	}
 
-private:
-	unsigned char _CColor[4];
+	clr_t r() const { return _r; }
+	clr_t g() const { return _g; }
+	clr_t b() const { return _b; }
+	clr_t a() const { return _a; }
+
+	clr_t& operator[](int index)
+	{
+		return reinterpret_cast<unsigned char*>(this)[index];
+	}
+
+	const clr_t& operator[](int index) const
+	{
+		return operator[](index);
+	}
+
+	bool operator==(const Color &rhs) const
+	{
+		return this->GetRawColor() == rhs.GetRawColor();
+	}
+
+	bool operator!=(const Color &rhs) const
+	{
+		return !operator==(rhs);
+	}
+
+	Color& operator=(const Color &rhs)
+	{
+		SetRawColor(rhs.GetRawColor());
+		return *this;
+	}
 };

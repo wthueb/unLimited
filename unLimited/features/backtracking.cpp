@@ -109,7 +109,7 @@ void backtracking::paint_traverse()
 				Vector out;
 				if (!g_debug_overlay->ScreenPosition(head_positions[i][t].headpos, out))
 				{
-					g_surface->DrawSetColor(Color::Red);
+					g_surface->DrawSetColor(Color{ 255, 0, 0 });
 					g_surface->DrawOutlinedRect((int)out.x, (int)out.y, (int)out.x + 2, (int)out.y + 2);
 				}
 			}
