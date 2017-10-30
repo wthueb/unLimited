@@ -1,8 +1,5 @@
 #pragma once
 
-#include "CGlobalVarsBase.hpp"
-#include "ClientClass.hpp"
-
 enum ClientFrameStage_t
 {
 	FRAME_UNDEFINED = -1,
@@ -26,6 +23,9 @@ enum RenderViewInfo_t
 
 using CreateInterfaceFn = void*(*)(const char* pName, int* pReturnCode);
 
+class CGlobalVarsBase;
+class ClientClass;
+
 class IBaseClientDLL
 {
 public:
@@ -39,3 +39,5 @@ public:
 	virtual void             LevelShutdown() = 0;
 	virtual ClientClass*     GetAllClasses() = 0;
 };
+
+extern IBaseClientDLL* g_client;

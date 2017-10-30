@@ -54,6 +54,12 @@
     <ClCompile Include="features\aimbot.cpp">
       <Filter>features</Filter>
     </ClCompile>
+    <ClCompile Include="features\esp.cpp">
+      <Filter>features</Filter>
+    </ClCompile>
+    <ClCompile Include="hooks\override_view.cpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />

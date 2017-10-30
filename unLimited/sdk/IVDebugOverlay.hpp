@@ -19,3 +19,5 @@ public:
 		return get_vfunc<oScreenPosition>(this, 14)(this, flXPos, flYPos, screen);
 	}
 };
+
+extern IVDebugOverlay* g_debug_overlay;

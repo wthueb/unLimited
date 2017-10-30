@@ -482,6 +482,8 @@ public:
 	virtual bool                            UsesStaticLighting(const model_t* model) const = 0;
 };
 
+extern IVModelInfo* g_model_info;
+
 class IVModelInfoClient : public IVModelInfo
 {
 public:

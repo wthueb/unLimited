@@ -19,3 +19,5 @@ public:
 		return get_vfunc<oGetClassName>(this, 37)(this, vguiPanel);
 	}
 };
+
+extern IPanel* g_panel;

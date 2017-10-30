@@ -52,5 +52,7 @@ namespace options
 
 		bool airstuck = false;
 		int airstuck_key = VK_XBUTTON2;
+
+		float fov = 90.f;
 	}
 }

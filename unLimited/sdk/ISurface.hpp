@@ -154,3 +154,5 @@ public:
 	virtual void                   DrawTexturedSubRect(int x0, int y0, int x1, int y1, float texs0, float text0, float texs1, float text1) = 0; // 105
 	virtual void                   DrawTexturedPolygon(int n, Vertex_t* pVertice, bool bClipVertices = true) = 0; // 106
 };
+
+extern ISurface* g_surface;

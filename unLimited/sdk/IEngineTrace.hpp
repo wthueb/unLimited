@@ -390,3 +390,5 @@ public:
 	virtual void        ClipRayToCollideable(const Ray_t &ray, unsigned int fMask, ICollideable* pCollide, CGameTrace* pTrace) = 0;
 	virtual void        TraceRay(const Ray_t &ray, unsigned int fMask, ITraceFilter* pTraceFilter, CGameTrace* pTrace) = 0;
 };
+
+extern IEngineTrace* g_engine_trace;

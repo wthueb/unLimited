@@ -508,3 +508,5 @@ public:
 	virtual void                       ConsoleDPrintf(const char* pFormat, ...) const = 0; // 27
 	virtual void                       RevertFlaggedConVars(int nFlag) = 0; // 28
 };
+
+extern ICvar* g_cvar;

@@ -62,9 +62,9 @@ public:
 	virtual bool        ShouldDrawLocalPlayer(C_BaseEntity* pPlayer) = 0;
 	virtual bool        ShouldDrawParticles() = 0;
 	virtual bool        ShouldDrawFog() = 0; // 15
-	virtual void        OverrideView(CViewSetup* pSetup) = 0; // 16
-	virtual int         KeyInput(int down, int keynum, const char* pszCurrentBinding) = 0; // 17
-	virtual void        StartMessageMode(int iMessageModeType) = 0; // 18
+	virtual int         KeyInput(int down, int keynum, const char* pszCurrentBinding) = 0; // 16
+	virtual void        StartMessageMode(int iMessageModeType) = 0; // 17
+	virtual void        OverrideView(CViewSetup* pSetup) = 0; // 18
 	virtual IPanel*     GetMessagePanel() = 0; // 19
 	virtual void        OverrideMouseInput(float* x, float* y) = 0; // 20
 	virtual bool        CreateMove(float flInputSampleTime, void* usercmd) = 0; // 21
@@ -88,3 +88,5 @@ public:
 	virtual bool	    DoPostScreenSpaceEffects(const CViewSetup* pSetup) = 0; // 39
 	virtual void	    DisplayReplayMessage(const char* pLocalizeName, float flDuration, bool bUrgent, const char* pSound, bool bDlg) = 0; // 40
 };
+
+extern IClientMode* g_client_mode;

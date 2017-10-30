@@ -30,3 +30,5 @@ public:
 	virtual const char*				GetNameByIndex(LocalizeStringIndex_t index) = 0;
 	virtual wchar_t*				GetValueByIndex(LocalizeStringIndex_t index) = 0;
 };
+
+extern ILocalize* g_localize;

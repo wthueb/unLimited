@@ -22,7 +22,9 @@ namespace hooks
 		d3d_device_hook->hook(hk_end_scene, index::end_scene);
 		d3d_device_hook->hook(hk_reset, index::reset);
 
+		client_mode_hook->hook(hk_override_view, index::override_view);
 		client_mode_hook->hook(hk_create_move, index::create_move);
+
 		panel_hook->hook(hk_paint_traverse, index::paint_traverse);
 	}
 

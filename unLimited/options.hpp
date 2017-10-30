@@ -40,5 +40,7 @@ namespace options
 
 		extern bool airstuck;
 		extern int airstuck_key;
+
+		extern float fov;
 	}
 }

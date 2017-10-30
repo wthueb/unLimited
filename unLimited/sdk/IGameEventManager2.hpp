@@ -70,3 +70,5 @@ public:
 	virtual IGameEvent*  UnserializeEvent(bf_read* buffer) = 0; // 13
 	virtual KeyValues*   GetEventDataTypes(IGameEvent* event) = 0; // 14
 };
+
+extern IGameEventManager2* g_game_event_manager;

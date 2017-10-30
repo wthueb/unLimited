@@ -64,3 +64,5 @@ public:
 	CUtlVector<GlowObjectDefinition_t> m_GlowObjectDefinitions;
 	int m_nFirstFreeSlot;
 };
+
+extern CGlowObjectManager* g_glow_manager;

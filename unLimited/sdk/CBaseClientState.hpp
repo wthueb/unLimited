@@ -10,3 +10,5 @@ public:
 		*reinterpret_cast<int*>(uintptr_t(this) + 0x174) = -1;
 	};
 };
+
+extern CBaseClientState* g_client_state;
