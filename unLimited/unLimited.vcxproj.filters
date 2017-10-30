@@ -63,6 +63,9 @@
     <ClCompile Include="features\nightmode.cpp">
       <Filter>features</Filter>
     </ClCompile>
+    <ClCompile Include="hooks\do_post_screen_space_effects.cpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />

@@ -19,6 +19,7 @@ namespace hooks
 
 	void __stdcall hk_override_view(CViewSetup* view);
 	bool __stdcall hk_create_move(float sample_input_frametime, CUserCmd* cmd);
+	bool __stdcall hk_do_post_screen_space_effects(CViewSetup* view);
 
 	void __fastcall hk_paint_traverse(void* thisptr, void* edx, VPANEL panel, bool force_repaint, bool allow_force);
 
@@ -33,6 +34,7 @@ namespace hooks
 
 		constexpr size_t override_view = 18;
 		constexpr size_t create_move = 24;
+		constexpr size_t do_post_screen_space_effects = 44;
 
 		constexpr size_t paint_traverse = 41;
 	}

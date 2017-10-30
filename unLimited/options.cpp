@@ -38,11 +38,27 @@ namespace options
 		int bone = 8;
 		bool on_shoot = true;
 		bool reaim = true;
-		int aim_key = VK_XBUTTON1;
+		int aim_key = 0;
 		bool friendlies = false;
 		bool visible_only = true;
 
 		bool rcs = false;
+	}
+
+	namespace esp
+	{
+		bool enabled = true;
+
+		bool glow = true;
+		float glow_alpha = 1.f;
+		int glow_style = 2;
+
+		bool players = true;
+		bool friendlies = true;
+		bool chickens = false;
+		bool defuse_kits = false;
+		bool c4 = false;
+		bool weapons = false;
 	}
 
 	namespace misc
@@ -51,7 +67,7 @@ namespace options
 		bool backtracking_vis = true;
 
 		bool airstuck = false;
-		int airstuck_key = VK_XBUTTON2;
+		int airstuck_key = 0;
 
 		float fov = 90.f;
 

@@ -139,6 +139,7 @@
     <ClCompile Include="features\nightmode.cpp" />
     <ClCompile Include="hooks\create_move.cpp" />
     <ClCompile Include="hooks\directx.cpp" />
+    <ClCompile Include="hooks\do_post_screen_space_effects.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
     <ClCompile Include="hooks\override_view.cpp" />
     <ClCompile Include="hooks\paint_traverse.cpp" />

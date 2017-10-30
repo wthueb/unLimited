@@ -33,6 +33,22 @@ namespace options
 		extern bool rcs;
 	}
 
+	namespace esp
+	{
+		extern bool enabled;
+
+		extern bool glow;
+		extern float glow_alpha;
+		extern int glow_style;
+
+		extern bool players;
+		extern bool friendlies;
+		extern bool chickens;
+		extern bool defuse_kits;
+		extern bool c4;
+		extern bool weapons;
+	}
+
 	namespace misc
 	{
 		extern bool backtracking;

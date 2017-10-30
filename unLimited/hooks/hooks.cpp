@@ -24,6 +24,7 @@ namespace hooks
 
 		client_mode_hook->hook(hk_override_view, index::override_view);
 		client_mode_hook->hook(hk_create_move, index::create_move);
+		client_mode_hook->hook(hk_do_post_screen_space_effects, index::do_post_screen_space_effects);
 
 		panel_hook->hook(hk_paint_traverse, index::paint_traverse);
 	}

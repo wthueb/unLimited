@@ -209,11 +209,17 @@ public:
 	NETVAR(GetModelIndex, int, "DT_BaseEntity", "m_nModelIndex");
 	NETVAR(GetTeam, Team_t, "DT_BaseEntity", "m_iTeamNum");
 	NETVAR(GetOwnerEntity, CHandle<C_BaseEntity>, "DT_BaseEntity", "m_hOwnerEntity");
+	NETVAR(GetShouldGlow, bool, "DT_DynamicProp", "m_bShouldGlow");
 
 	void SetModelIndex(int index)
 	{
 		using oSetModelIndex = void(__thiscall*)(void*, int);
 		return get_vfunc<oSetModelIndex>(this, 75)(this, index);
+	}
+
+	bool IsWeapon()
+	{
+		return get_vfunc<bool(__thiscall*)(C_BaseEntity*)>(this, 160)(this);
 	}
 };
 

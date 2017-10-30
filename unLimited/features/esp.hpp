@@ -3,5 +3,5 @@
 namespace esp
 {
 	void paint_traverse();
-	void render_view();
+	void do_post_screen_space_effects();
 }
