@@ -13,6 +13,8 @@
 #include "IEngineTrace.hpp"
 #include "IGameEventManager2.hpp"
 #include "ILocalize.hpp"
+#include "IMaterial.hpp"
+#include "IMaterialSystem.hpp"
 #include "IPanel.hpp"
 #include "ISurface.hpp"
 #include "IVDebugOverlay.hpp"

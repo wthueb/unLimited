@@ -54,5 +54,7 @@ namespace options
 		int airstuck_key = VK_XBUTTON2;
 
 		float fov = 90.f;
+
+		bool nightmode = false;
 	}
 }

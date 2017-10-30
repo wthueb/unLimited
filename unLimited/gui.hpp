@@ -11,7 +11,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 0
-#define VERSION_PATCH 18
+#define VERSION_PATCH 19
 
 namespace ImGui
 {
@@ -172,6 +172,8 @@ namespace gui
 
 			if (ImGui::InputFloat("view fov", &options::misc::fov, 1.f, 0.f, 0))
 				options::misc::fov = std::clamp(options::misc::fov, 5.f, 179.f);
+
+			ImGui::BetterCheckbox("nightmode", &options::misc::nightmode);
 
 			ImGui::PopItemWidth();
 

@@ -60,6 +60,9 @@
     <ClCompile Include="hooks\override_view.cpp">
       <Filter>hooks</Filter>
     </ClCompile>
+    <ClCompile Include="features\nightmode.cpp">
+      <Filter>features</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />
@@ -192,6 +195,15 @@
     <ClInclude Include="font.hpp" />
     <ClInclude Include="features\aimbot.hpp">
       <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="features\misc.hpp">
+      <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\IMaterialSystem.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\IMaterial.hpp">
+      <Filter>sdk</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

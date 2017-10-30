@@ -17,6 +17,7 @@ ICvar* g_cvar = nullptr;
 IEngineTrace* g_engine_trace = nullptr;
 IGameEventManager2* g_game_event_manager = nullptr;
 ILocalize* g_localize = nullptr;
+IMaterialSystem* g_material_system = nullptr;
 IPanel* g_panel = nullptr;
 ISurface* g_surface = nullptr;
 IVDebugOverlay* g_debug_overlay = nullptr;
@@ -51,6 +52,7 @@ void interfaces::init()
 	g_engine_trace = capture_interface<IEngineTrace>("engine.dll", "EngineTraceClient004");
 	g_game_event_manager = capture_interface<IGameEventManager2>("engine.dll", "GAMEEVENTSMANAGER002");
 	g_localize = capture_interface<ILocalize>("localize.dll", "Localize_001");
+	g_material_system = capture_interface<IMaterialSystem>("materialsystem.dll", "VMaterialSystem080");
 	g_panel = capture_interface<IPanel>("vgui2.dll", "VGUI_Panel009");
 	g_surface = capture_interface<ISurface>("vguimatsurface.dll", "VGUI_Surface031");
 	g_debug_overlay = capture_interface<IVDebugOverlay>("engine.dll", "VDebugOverlay004");

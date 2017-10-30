@@ -136,6 +136,7 @@
     <ClCompile Include="features\airstuck.cpp" />
     <ClCompile Include="features\backtracking.cpp" />
     <ClCompile Include="features\esp.cpp" />
+    <ClCompile Include="features\nightmode.cpp" />
     <ClCompile Include="hooks\create_move.cpp" />
     <ClCompile Include="hooks\directx.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="features\airstuck.hpp" />
     <ClInclude Include="features\backtracking.hpp" />
     <ClInclude Include="features\esp.hpp" />
+    <ClInclude Include="features\misc.hpp" />
     <ClInclude Include="font.hpp" />
     <ClInclude Include="gui.hpp" />
     <ClInclude Include="hooks\hooks.hpp" />
@@ -187,6 +189,8 @@
     <ClInclude Include="sdk\IGameEventManager2.hpp" />
     <ClInclude Include="sdk\IHandleEntity.hpp" />
     <ClInclude Include="sdk\ILocalize.hpp" />
+    <ClInclude Include="sdk\IMaterial.hpp" />
+    <ClInclude Include="sdk\IMaterialSystem.hpp" />
     <ClInclude Include="sdk\IPanel.hpp" />
     <ClInclude Include="sdk\ISurface.hpp" />
     <ClInclude Include="sdk\IVDebugOverlay.hpp" />
