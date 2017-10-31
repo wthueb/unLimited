@@ -285,7 +285,7 @@ namespace gui
 
 			ImGui::Columns(1);
 
-			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::CalcTextSize("http://wi1.xyz/").y - 10);
+			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::CalcTextSize("").y - 10);
 
 			ImGui::BetterCheckbox("dark mode", &dark_mode);
 			{
