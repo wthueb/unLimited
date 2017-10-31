@@ -11,7 +11,23 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 0
-#define VERSION_PATCH 24
+#define VERSION_PATCH 25
+
+#define PFADE(var, time) {                                                                              \
+	static float alpha = .3f;                                                                           \
+	static bool old = var;                                                                              \
+	static float start_alpha = alpha;                                                                   \
+	static float start_time = ImGui::GetTime();                                                         \
+	if (var != old) {                                                                                   \
+		start_alpha = alpha;                                                                            \
+		start_time = ImGui::GetTime();                                                                  \
+		old = var;                                                                                      \
+	}                                                                                                   \
+	if (!var)                                                                                           \
+		alpha = std::clamp(start_alpha - .7f * (ImGui::GetTime() - start_time) / time, .3f, 1.f);       \
+	else                                                                                                \
+		alpha = std::clamp(start_alpha + .7f * (ImGui::GetTime() - start_time) / time, .3f, 1.f);       \
+	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, std::min(style.Alpha, alpha)); }
 
 namespace ImGui
 {
@@ -137,26 +153,12 @@ namespace gui
 
 			ImGui::BetterCheckbox("aim", &options::aim::enabled);
 			{
-				static float aim_alpha = 0.f;
-
-				if (!options::aim::enabled)
-					aim_alpha = std::max(aim_alpha - .02f, .3f);
-				else
-					aim_alpha = std::min(1.f, aim_alpha + .02f);
-
-				ImGui::PushStyleVar(ImGuiStyleVar_Alpha, std::min(style.Alpha, aim_alpha));
+				// FIXMEW: null mouse input
+				PFADE(options::aim::enabled, .5f);
 
 				ImGui::BetterCheckbox("aimbot", &options::aim::aimbot);
 				{
-					// FIXMEW: null mouse input
-					static float aimbot_alpha = 0.f;
-
-					if (!options::aim::aimbot)
-						aimbot_alpha = std::max(aimbot_alpha - .02f, .3f);
-					else
-						aimbot_alpha = std::min(1.f, aimbot_alpha + .02f);
-
-					ImGui::PushStyleVar(ImGuiStyleVar_Alpha, std::min(style.Alpha, aimbot_alpha));
+					PFADE(options::aim::aimbot, .5f);
 
 					ImGui::SliderFloat("fov", &options::aim::fov, .1f, 180.f, "%.1f", 2.f);
 					ImGui::BetterCheckbox("smooth", &options::aim::smooth);
@@ -200,25 +202,11 @@ namespace gui
 
 			ImGui::BetterCheckbox("esp", &options::esp::enabled);
 			{
-				static float esp_alpha = 0.f;
-
-				if (!options::esp::enabled)
-					esp_alpha = std::max(esp_alpha - .02f, .3f);
-				else
-					esp_alpha = std::min(1.f, esp_alpha + .02f);
-
-				ImGui::PushStyleVar(ImGuiStyleVar_Alpha, std::min(style.Alpha, esp_alpha));
+				PFADE(options::esp::enabled, .5f);
 
 				ImGui::BetterCheckbox("glow", &options::esp::glow);
 				{
-					static float glow_alpha = 0.f;
-
-					if (!options::esp::glow)
-						glow_alpha = std::max(glow_alpha - .02f, .3f);
-					else
-						glow_alpha = std::min(1.f, glow_alpha + .02f);
-
-					ImGui::PushStyleVar(ImGuiStyleVar_Alpha, std::min(style.Alpha, glow_alpha));
+					PFADE(options::esp::glow, .5f);
 
 					if (ImGui::InputFloat("glow alpha", &options::esp::glow_alpha, .1f, 0.f, 1))
 						options::esp::glow_alpha = std::clamp(options::esp::glow_alpha, .1f, 1.f);
@@ -236,14 +224,7 @@ namespace gui
 
 			ImGui::BetterCheckbox("backtracking", &options::misc::backtracking);
 			{
-				static float backtracking_alpha = 0.f;
-
-				if (!options::misc::backtracking)
-					backtracking_alpha = std::max(backtracking_alpha - .02f, .3f);
-				else
-					backtracking_alpha = std::min(1.f, backtracking_alpha + .02f);
-
-				ImGui::PushStyleVar(ImGuiStyleVar_Alpha, std::min(style.Alpha, backtracking_alpha));
+				PFADE(options::misc::backtracking, .5f);
 
 				ImGui::BetterCheckbox("backtracking visual", &options::misc::backtracking_vis);
 
@@ -252,14 +233,7 @@ namespace gui
 
 			ImGui::BetterCheckbox("airstuck", &options::misc::airstuck);
 			{
-				static float airstuck_alpha = 0.f;
-
-				if (!options::misc::airstuck)
-					airstuck_alpha = std::max(airstuck_alpha - .02f, .3f);
-				else
-					airstuck_alpha = std::min(1.f, airstuck_alpha + .02f);
-
-				ImGui::PushStyleVar(ImGuiStyleVar_Alpha, std::min(style.Alpha, airstuck_alpha));
+				PFADE(options::misc::airstuck, .5f);
 
 				{
 					static int selected = 0;
@@ -282,9 +256,9 @@ namespace gui
 			ImGui::BetterCheckbox("show ranks", &options::misc::show_ranks);
 
 			ImGui::PopItemWidth();
-
+			
 			ImGui::Columns(1);
-
+			
 			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::CalcTextSize("").y - 10);
 
 			ImGui::BetterCheckbox("dark mode", &dark_mode);

@@ -41,7 +41,6 @@ void gui_shutdown()
 
 	gui_open = false;
 
-	// restore wndproc
 	SetWindowLongA(hwnd, GWLP_WNDPROC, LONG_PTR(o_wndproc));
 
 	ImGui_ImplDX9_Shutdown();
@@ -53,26 +52,32 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 {
 	static auto o_end_scene = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*)>(index::end_scene);
 
-	static bool mouse_enabled = true;
-	
-	static float alpha = 0.f;
+	static auto cl_mouseenable = g_cvar->FindVar("cl_mouseenable");
+
 	static auto &style = ImGui::GetStyle();
+
+	static float alpha = .01f;
+	static float start_alpha = alpha;
+	static float start_time = ImGui::GetTime();
+	static bool old_state = false;
+
+	if (gui_open != old_state)
+	{
+		start_time = ImGui::GetTime();
+		old_state = gui_open;
+	}
 
 	if (gui_open)
 	{
-		if (mouse_enabled)
-		{
-			// FIXMEW: use the cvar
-			g_engine->ClientCmd_Unrestricted("cl_mouseenable 0");
-			mouse_enabled = false;
-		}
+		if (cl_mouseenable->GetBool())
+			cl_mouseenable->SetValue(0);
 
 		ImGui::GetIO().MouseDrawCursor = true;
 
 		ImGui_ImplDX9_NewFrame();
 
-		alpha = std::min(1.f, alpha + .01f);
-		
+		alpha = std::clamp(start_alpha + .7f * (ImGui::GetTime() - start_time) / .5f, .01f, 1.f);
+
 		style.Alpha = alpha;
 
 		gui::draw_gui();
@@ -81,21 +86,17 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 	}
 	else
 	{
-		if (!mouse_enabled)
-		{
-			g_engine->ClientCmd_Unrestricted("cl_mouseenable 1");
-			mouse_enabled = true;
-		}
+		if (!cl_mouseenable->GetBool())
+			cl_mouseenable->SetValue(1);
 
-		// FIXMEW: this is dependent on framerate which probably isn't the best idea...
 		if (alpha > .01f)
 		{
 			ImGui::GetIO().MouseDrawCursor = false;
 
 			ImGui_ImplDX9_NewFrame();
 
-			alpha = std::max(.001f, alpha - .01f);
-			
+			alpha = std::clamp(start_alpha - .7f * (ImGui::GetTime() - start_time) / .5f, .01f, 1.f);
+
 			style.Alpha = alpha;
 
 			gui::draw_gui();
