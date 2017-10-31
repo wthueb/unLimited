@@ -52,8 +52,6 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 {
 	static auto o_end_scene = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*)>(index::end_scene);
 
-	static auto cl_mouseenable = g_cvar->FindVar("cl_mouseenable");
-
 	static auto &style = ImGui::GetStyle();
 
 	static float alpha = .01f;
@@ -69,9 +67,6 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 
 	if (gui_open)
 	{
-		if (cl_mouseenable->GetBool())
-			cl_mouseenable->SetValue(0);
-
 		ImGui::GetIO().MouseDrawCursor = true;
 
 		ImGui_ImplDX9_NewFrame();
@@ -86,9 +81,6 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 	}
 	else
 	{
-		if (!cl_mouseenable->GetBool())
-			cl_mouseenable->SetValue(1);
-
 		if (alpha > .01f)
 		{
 			ImGui::GetIO().MouseDrawCursor = false;
@@ -130,7 +122,13 @@ bool handle_input(UINT message, WPARAM w_param, LPARAM l_param)
 		return false;
 
 	if (message == WM_KEYUP && w_param == VK_INSERT)
+	{
+		static auto cl_mouseenable = g_cvar->FindVar("cl_mouseenable");
+		
 		gui_open = !gui_open;
+
+		cl_mouseenable->SetValue(!gui_open);
+	}
 
 	if (gui_open)
 		return ImGui_ImplWin32_WndProcHandler(hwnd, message, w_param, l_param) != 0;
