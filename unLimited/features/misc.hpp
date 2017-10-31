@@ -6,4 +6,5 @@ namespace misc
 {
 	void airstuck(CUserCmd* cmd);
 	void nightmode();
+	void show_ranks(CUserCmd* cmd);
 }
