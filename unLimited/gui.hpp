@@ -11,7 +11,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 0
-#define VERSION_PATCH 25
+#define VERSION_PATCH 26
 
 #define PFADE(var, time) {                                                                              \
 	static float alpha = .3f;                                                                           \
