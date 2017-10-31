@@ -63,6 +63,9 @@
     <ClCompile Include="hooks\do_post_screen_space_effects.cpp">
       <Filter>hooks</Filter>
     </ClCompile>
+    <ClCompile Include="features\rank_reveal.cpp">
+      <Filter>features</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />

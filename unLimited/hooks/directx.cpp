@@ -31,7 +31,7 @@ void gui_init()
 	if (ImGui_ImplDX9_Init(hwnd, reinterpret_cast<IDirect3DDevice9*>(d3d_device)))
 		initialized = true;
 
-	gui::setup_style();
+	gui::init();
 }
 
 void gui_shutdown()

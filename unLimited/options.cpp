@@ -49,9 +49,9 @@ namespace options
 	{
 		bool enabled = true;
 
-		bool glow = true;
+		bool glow = false;
 		float glow_alpha = 1.f;
-		int glow_style = 2;
+		int glow_style = 0;
 
 		bool players = true;
 		bool friendlies = true;
@@ -72,5 +72,7 @@ namespace options
 		float fov = 90.f;
 
 		bool nightmode = false;
+
+		bool show_ranks = false;
 	}
 }

@@ -11,7 +11,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 0
-#define VERSION_PATCH 22
+#define VERSION_PATCH 24
 
 namespace ImGui
 {
@@ -64,7 +64,59 @@ namespace ImGui
 
 namespace gui
 {
-	static char version[16];
+	static char title[64];
+	static bool dark_mode = false;
+
+	static void setup_style(const ImVec4 &theme_color)
+	{
+		static auto &style = ImGui::GetStyle();
+
+		style.Colors[ImGuiCol_Text] = ImVec4{ .05f, .05f, .05f, 1.f };
+		style.Colors[ImGuiCol_TextDisabled] = style.Colors[ImGuiCol_Text];
+		style.Colors[ImGuiCol_WindowBg] = ImVec4{ .9f, .9f, .9f, 1.f };
+		style.Colors[ImGuiCol_ChildWindowBg] = style.Colors[ImGuiCol_WindowBg];
+		style.Colors[ImGuiCol_PopupBg] = ImVec4{ .6f, .6f, .6f, 1.f };
+		style.Colors[ImGuiCol_Border] = ImVec4{ 0.f, 0.f, 0.f, 1.f };
+		style.Colors[ImGuiCol_BorderShadow] = ImVec4{ 0.f, 0.f, 0.f, 1.f };
+		style.Colors[ImGuiCol_FrameBg] = ImVec4{ .6f, .6f, .6f, 1.f };
+		style.Colors[ImGuiCol_FrameBgHovered] = style.Colors[ImGuiCol_FrameBg];
+		style.Colors[ImGuiCol_FrameBgActive] = style.Colors[ImGuiCol_FrameBg];
+		style.Colors[ImGuiCol_TitleBg] = theme_color;
+		style.Colors[ImGuiCol_TitleBgActive] = theme_color;
+		style.Colors[ImGuiCol_TitleBgCollapsed] = theme_color;
+		style.Colors[ImGuiCol_MenuBarBg] = theme_color;
+		style.Colors[ImGuiCol_ScrollbarBg] = theme_color;
+		style.Colors[ImGuiCol_ScrollbarGrab] = style.Colors[ImGuiCol_WindowBg];
+		style.Colors[ImGuiCol_ScrollbarGrabHovered] = style.Colors[ImGuiCol_ScrollbarGrab];
+		style.Colors[ImGuiCol_ScrollbarGrabActive] = style.Colors[ImGuiCol_ScrollbarGrab];
+		style.Colors[ImGuiCol_ComboBg] = theme_color;
+		style.Colors[ImGuiCol_CheckMark] = theme_color;
+		style.Colors[ImGuiCol_SliderGrab] = theme_color;
+		style.Colors[ImGuiCol_SliderGrabActive] = style.Colors[ImGuiCol_SliderGrab];
+		style.Colors[ImGuiCol_Button] = theme_color;
+		style.Colors[ImGuiCol_ButtonHovered] = style.Colors[ImGuiCol_Button];
+		style.Colors[ImGuiCol_ButtonActive] = style.Colors[ImGuiCol_Button];
+		style.Colors[ImGuiCol_Header] = style.Colors[ImGuiCol_FrameBg];
+		style.Colors[ImGuiCol_HeaderHovered] = style.Colors[ImGuiCol_WindowBg];
+		style.Colors[ImGuiCol_HeaderActive] = style.Colors[ImGuiCol_HeaderHovered];
+		// FIXMEW: finish style setup, this is boring lol
+
+		if (dark_mode)
+		{
+			for (auto i = 0; i < ImGuiCol_COUNT; ++i)
+			{
+				ImVec4 &col = style.Colors[i];
+
+				float hue, saturation, value;
+				ImGui::ColorConvertRGBtoHSV(col.x, col.y, col.z, hue, saturation, value);
+
+				if (saturation < .1f)
+					value = 1.f - value;
+
+				ImGui::ColorConvertHSVtoRGB(hue, saturation, value, col.x, col.y, col.z);
+			}
+		}
+	}
 
 	static void draw_gui()
 	{
@@ -73,7 +125,7 @@ namespace gui
 
 		static auto &style = ImGui::GetStyle();
 
-		if (ImGui::Begin("universeL by wi1", nullptr,
+		if (ImGui::Begin(title, nullptr,
 			ImGuiWindowFlags_NoResize |
 			ImGuiWindowFlags_NoCollapse |
 			ImGuiWindowFlags_AlwaysAutoResize |
@@ -227,13 +279,14 @@ namespace gui
 
 			ImGui::BetterCheckbox("nightmode", &options::misc::nightmode);
 
+			ImGui::BetterCheckbox("show ranks", &options::misc::show_ranks);
+
 			ImGui::PopItemWidth();
 
 			ImGui::Columns(1);
 
-			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::CalcTextSize("http://wi1.us.to/").y - 10);
+			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::CalcTextSize("http://wi1.xyz/").y - 10);
 
-			static bool dark_mode = false;
 			ImGui::BetterCheckbox("dark mode", &dark_mode);
 			{
 				static bool old_dark_mode = false;
@@ -257,63 +310,35 @@ namespace gui
 				}
 			}
 
-			ImGui::SameLine(ImGui::GetWindowWidth() / 2 - ImGui::CalcTextSize(version).x / 2);
+			ImGui::SameLine();
 
-			ImGui::Text(version);
+			static float theme_color[3] = { .65f, .85f, .95f };
+			if (ImGui::ColorEdit3("gui theme color", theme_color))
+				setup_style(ImVec4{ theme_color[0], theme_color[1], theme_color[2], 1.f });
+			
+			ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize("http://wi1.xyz/").x - 10);
 
-			ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize("http://wi1.us.to/").x - 10);
-
-			ImGui::Text("http://wi1.us.to/");
+			ImGui::Text("http://wi1.xyz/");
 			
 			ImGui::End();
 		}
 	}
 
-	static void setup_style()
+	static void init()
 	{
-		snprintf(version, sizeof(version), "v%i.%i.%i", VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
+		snprintf(title, sizeof(title), "universeL by wi1 | v%i.%i.%i", VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
 
-		auto &style = ImGui::GetStyle();
-		
 		auto &io = ImGui::GetIO();
 		
 		io.Fonts->AddFontDefault();
 		auto font = io.Fonts->AddFontFromMemoryCompressedTTF(RobotoFont_compressed_data, RobotoFont_compressed_size, 14.f);
 		io.FontDefault = font;
 
+		auto &style = ImGui::GetStyle();
+
 		style.WindowTitleAlign = { .5f, .5f };
 		style.WindowRounding = 3.f;
 
-		auto theme_color = ImVec4(.65f, .85f, .95f, 1.f);
-
-		style.Colors[ImGuiCol_Text] = ImVec4(.05f, .05f, .05f, 1.f);
-		style.Colors[ImGuiCol_TextDisabled] = style.Colors[ImGuiCol_Text];
-		style.Colors[ImGuiCol_WindowBg] = ImVec4(.9f, .9f, .9f, 1.f);
-		style.Colors[ImGuiCol_ChildWindowBg] = style.Colors[ImGuiCol_WindowBg];
-		style.Colors[ImGuiCol_PopupBg] = ImVec4(.6f, .6f, .6f, 1.f);
-		style.Colors[ImGuiCol_Border] = ImVec4(0.f, 0.f, 0.f, 1.f);
-		style.Colors[ImGuiCol_BorderShadow] = ImVec4(0.f, 0.f, 0.f, 1.f);
-		style.Colors[ImGuiCol_FrameBg] = ImVec4(.6f, .6f, .6f, 1.f);
-		style.Colors[ImGuiCol_FrameBgHovered] = style.Colors[ImGuiCol_FrameBg];
-		style.Colors[ImGuiCol_FrameBgActive] = style.Colors[ImGuiCol_FrameBg];
-		style.Colors[ImGuiCol_TitleBg] = theme_color;
-		style.Colors[ImGuiCol_TitleBgActive] = theme_color;
-		style.Colors[ImGuiCol_TitleBgCollapsed] = theme_color;
-		style.Colors[ImGuiCol_MenuBarBg] = theme_color;
-		style.Colors[ImGuiCol_ScrollbarBg] = theme_color;
-		style.Colors[ImGuiCol_ScrollbarGrab] = style.Colors[ImGuiCol_WindowBg];
-		style.Colors[ImGuiCol_ScrollbarGrabHovered] = style.Colors[ImGuiCol_ScrollbarGrab];
-		style.Colors[ImGuiCol_ScrollbarGrabActive] = style.Colors[ImGuiCol_ScrollbarGrab];
-		style.Colors[ImGuiCol_ComboBg] = theme_color;
-		style.Colors[ImGuiCol_CheckMark] = theme_color;
-		style.Colors[ImGuiCol_SliderGrab] = theme_color;
-		style.Colors[ImGuiCol_SliderGrabActive] = style.Colors[ImGuiCol_SliderGrab];
-		style.Colors[ImGuiCol_Button] = theme_color;
-		style.Colors[ImGuiCol_ButtonHovered] = style.Colors[ImGuiCol_Button];
-		style.Colors[ImGuiCol_ButtonActive] = style.Colors[ImGuiCol_Button];
-		style.Colors[ImGuiCol_Header] = style.Colors[ImGuiCol_FrameBg];
-		style.Colors[ImGuiCol_HeaderHovered] = style.Colors[ImGuiCol_WindowBg];
-		style.Colors[ImGuiCol_HeaderActive] = style.Colors[ImGuiCol_HeaderHovered];
-		// FIXMEW: finish style setup, this is boring lol
+		setup_style(ImVec4{ .65f, .85f, .95f, 1.f });
 	}
 }

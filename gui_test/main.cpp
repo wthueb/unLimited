@@ -26,7 +26,7 @@ void init(HWND hwnd, LPDIRECT3DDEVICE9 device)
 	if (ImGui_ImplDX9_Init(hwnd, reinterpret_cast<IDirect3DDevice9*>(device)))
 		initialized = true;
 
-	gui::setup_style();
+	gui::init();
 
 	options::init();
 }

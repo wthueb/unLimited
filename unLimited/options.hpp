@@ -60,5 +60,7 @@ namespace options
 		extern float fov;
 
 		extern bool nightmode;
+
+		extern bool show_ranks;
 	}
 }
