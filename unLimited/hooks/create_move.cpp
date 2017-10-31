@@ -24,7 +24,7 @@ bool __stdcall hooks::hk_create_move(float sample_input_frametime, CUserCmd* cmd
 	aimbot::create_move(cmd, send_packet);
 	airstuck::create_move(cmd);
 	backtracking::create_move(cmd);
-	misc::nightmode(); // doesn't matter where we call this
+	misc::nightmode(); // doesn't matter where we call this, as long as it's called somewhat regularly
 
 	cmd->viewangles.Clamp();
 
