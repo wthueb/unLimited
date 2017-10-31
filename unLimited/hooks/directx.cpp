@@ -4,6 +4,8 @@
 
 #include <imgui_impl_dx9.h>
 
+#include <intrin.h>
+
 static bool initialized = false;
 static bool gui_open = false;
 
@@ -41,6 +43,8 @@ void gui_shutdown()
 
 	gui_open = false;
 
+	Sleep(1000);
+
 	SetWindowLongA(hwnd, GWLP_WNDPROC, LONG_PTR(o_wndproc));
 
 	ImGui_ImplDX9_Shutdown();
@@ -52,31 +56,38 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 {
 	static auto o_end_scene = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*)>(index::end_scene);
 
-	static auto &style = ImGui::GetStyle();
+	static auto ret = _ReturnAddress();
 
+	// stupid double rendering
+	if (_ReturnAddress() != ret)
+		return o_end_scene(d3d_device);
+	
+	static auto &style = ImGui::GetStyle();
+	
 	static float alpha = .01f;
 	static float start_alpha = alpha;
 	static float start_time = ImGui::GetTime();
-	static bool old_state = false;
-
-	if (gui_open != old_state)
+	static bool old_gui_open = gui_open;
+	
+	if (gui_open != old_gui_open)
 	{
+		start_alpha = alpha;
 		start_time = ImGui::GetTime();
-		old_state = gui_open;
+		old_gui_open = gui_open;
 	}
 
 	if (gui_open)
 	{
 		ImGui::GetIO().MouseDrawCursor = true;
-
+		
 		ImGui_ImplDX9_NewFrame();
 
-		alpha = std::clamp(start_alpha + .7f * (ImGui::GetTime() - start_time) / .5f, .01f, 1.f);
-
+		alpha = std::clamp(start_alpha + 1.f * (ImGui::GetTime() - start_time) / 1.f, .01f, 1.f);
+		
 		style.Alpha = alpha;
 
 		gui::draw_gui();
-
+		
 		ImGui::Render();
 	}
 	else
@@ -87,7 +98,7 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 
 			ImGui_ImplDX9_NewFrame();
 
-			alpha = std::clamp(start_alpha - .7f * (ImGui::GetTime() - start_time) / .5f, .01f, 1.f);
+			alpha = std::clamp(start_alpha - 1.f * (ImGui::GetTime() - start_time) / 1.f, .01f, 1.f);
 
 			style.Alpha = alpha;
 
