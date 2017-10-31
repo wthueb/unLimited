@@ -1,7 +1,6 @@
 #include "hooks.hpp"
 
 #include "../features/aimbot.hpp"
-#include "../features/airstuck.hpp"
 #include "../features/backtracking.hpp"
 #include "../features/misc.hpp"
 
@@ -22,7 +21,7 @@ bool __stdcall hooks::hk_create_move(float sample_input_frametime, CUserCmd* cmd
 	float old_side = cmd->sidemove;
 
 	aimbot::create_move(cmd, send_packet);
-	airstuck::create_move(cmd);
+	misc::airstuck(cmd);
 	backtracking::create_move(cmd);
 	misc::nightmode(); // doesn't matter where we call this, as long as it's called somewhat regularly
 

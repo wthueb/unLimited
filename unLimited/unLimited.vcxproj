@@ -156,7 +156,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="features\aimbot.hpp" />
-    <ClInclude Include="features\airstuck.hpp" />
     <ClInclude Include="features\backtracking.hpp" />
     <ClInclude Include="features\esp.hpp" />
     <ClInclude Include="features\misc.hpp" />

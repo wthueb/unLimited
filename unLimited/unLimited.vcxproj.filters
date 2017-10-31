@@ -189,9 +189,6 @@
     <ClInclude Include="features\esp.hpp">
       <Filter>features</Filter>
     </ClInclude>
-    <ClInclude Include="features\airstuck.hpp">
-      <Filter>features</Filter>
-    </ClInclude>
     <ClInclude Include="font.hpp" />
     <ClInclude Include="features\aimbot.hpp">
       <Filter>features</Filter>

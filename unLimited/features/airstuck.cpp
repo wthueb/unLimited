@@ -1,8 +1,8 @@
-#include "airstuck.hpp"
+#include "misc.hpp"
 
 #include "../options.hpp"
 
-void airstuck::create_move(CUserCmd* cmd)
+void misc::airstuck(CUserCmd* cmd)
 {
 	if (!options::misc::airstuck)
 		return;
