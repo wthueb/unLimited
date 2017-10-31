@@ -47,7 +47,7 @@ bool get_latest_ver(CURL* &curl, std::string &latest_version)
 	cyan;
 	std::cout << "getting latest version number...\n\n";
 
-	std::string url = "http://wi1.us.to/latest-unLimited.txt";
+	std::string url = "http://wi1.xyz/latest-unLimited.txt";
 	
 	curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_string);
@@ -98,7 +98,7 @@ bool get_current_ver(std::string &currentversion)
 
 bool download_version(CURL* &curl, const std::string &version)
 {
-	std::string url = "http://wi1.us.to/unLimited-downloads/";
+	std::string url = "http://wi1.xyz/unLimited-downloads/";
 
 	url.append(version);
 
