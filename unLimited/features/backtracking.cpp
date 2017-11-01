@@ -5,7 +5,7 @@
 #include "../math.hpp"
 
 #define TICK_INTERVAL      (g_global_vars->interval_per_tick)
-#define TIME_TO_TICKS(dt)  ((int)(.5f + (float)(dt) / TICK_INTERVAL))
+#define TIME_TO_TICKS(dt)  (static_cast<int>(.5f + static_cast<float>(dt) / TICK_INTERVAL))
 
 struct backtrack_data
 {

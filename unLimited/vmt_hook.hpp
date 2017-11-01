@@ -7,7 +7,7 @@ class vmt_hook
 {
 public:
 	template <typename fn>
-	vmt_hook(fn class_base)
+	explicit vmt_hook(fn class_base)
 	{
 		m_class = reinterpret_cast<void***>(class_base);
 		m_old_vmt = *m_class;

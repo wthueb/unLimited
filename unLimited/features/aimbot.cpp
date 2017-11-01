@@ -1,5 +1,7 @@
 #include "aimbot.hpp"
 
+#include <algorithm>
+
 #include "../math.hpp"
 #include "../options.hpp"
 

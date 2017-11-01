@@ -1,8 +1,9 @@
 #pragma once
 
-#include "sdk/Recv.hpp"
-
+#include <string>
 #include <vector>
+
+#include "sdk/Recv.hpp"
 
 class netvar_sys
 {

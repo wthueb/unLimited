@@ -1,8 +1,9 @@
 #include "netvars.hpp"
 
-#include "sdk/sdk.hpp"
-
 #include <fstream>
+#include <string>
+
+#include "sdk/sdk.hpp"
 
 void netvar_sys::init()
 {

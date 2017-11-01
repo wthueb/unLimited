@@ -2,6 +2,8 @@
 
 #include <Windows.h>
 
+#include <vector>
+
 #include "sdk/sdk.hpp"
 
 namespace options

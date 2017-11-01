@@ -1,9 +1,11 @@
 #pragma once
 
-#include "netvars.hpp"
-
 #include <Windows.h>
+
 #include <codecvt>
+#include <string>
+
+#include "netvars.hpp"
 
 namespace utils
 {

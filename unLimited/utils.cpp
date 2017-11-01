@@ -1,9 +1,10 @@
 #include "utils.hpp"
 
-#include "hooks/hooks.hpp"
-
 #include <Psapi.h>
 #include <sstream>
+#include <string>
+
+#include "hooks/hooks.hpp"
 
 // gets set in DllMain when dll is attached
 HMODULE utils::dll = NULL;
@@ -20,12 +21,14 @@ void utils::unload()
 	detach_console();
 #endif
 
+	// FIXMEW: disable all options and close menu
+
 	gui_shutdown();
 	Sleep(100);
 
 	hooks::unload();
 	Sleep(500);
-
+	
 	FreeLibraryAndExitThread(dll, 0);
 }
 
