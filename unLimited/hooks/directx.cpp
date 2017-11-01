@@ -69,13 +69,12 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 	static float start_time = ImGui::GetTime();
 	static bool old_gui_open = gui_open;
 	
-	if (gui_open && !old_gui_open)
+	if (gui_open != old_gui_open)
 	{
 		start_alpha = alpha;
 		start_time = ImGui::GetTime();
+		old_gui_open = gui_open;
 	}
-
-	old_gui_open = gui_open;
 
 	if (gui_open)
 	{
@@ -83,7 +82,8 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 		
 		ImGui_ImplDX9_NewFrame();
 
-		// FIXMEW: WHY THE SHIT ISN'T THIS WORKING
+		// FIXMEW: sometimes this just doesn't work because the current time is way after the
+		// start_time and i have no idea why or how to fix it...
 		alpha = std::clamp(start_alpha + 1.f * (ImGui::GetTime() - start_time) / 1.f, .01f, 1.f);
 		
 		style.Alpha = alpha;

@@ -13,20 +13,20 @@
 #define VERSION_MINOR 0
 #define VERSION_PATCH 27
 
-#define PFADE(var, time) {                                                                              \
-	static float alpha = .3f;                                                                           \
-	static bool old = var;                                                                              \
-	static float start_alpha = alpha;                                                                   \
-	static float start_time = ImGui::GetTime();                                                         \
-	if (var != old) {                                                                                   \
-		start_alpha = alpha;                                                                            \
-		start_time = ImGui::GetTime();                                                                  \
-		old = var;                                                                                      \
-	}                                                                                                   \
-	if (!var)                                                                                           \
-		alpha = std::clamp(start_alpha - .7f * (ImGui::GetTime() - start_time) / time, .3f, 1.f);       \
-	else                                                                                                \
-		alpha = std::clamp(start_alpha + .7f * (ImGui::GetTime() - start_time) / time, .3f, 1.f);       \
+#define PFADE(var, time) {                                                                        \
+	static float alpha = .3f;                                                                     \
+	static bool old = var;                                                                        \
+	static float start_alpha = alpha;                                                             \
+	static float start_time = ImGui::GetTime();                                                   \
+	if (var != old) {                                                                             \
+		start_alpha = alpha;                                                                      \
+		start_time = ImGui::GetTime();                                                            \
+		old = var;                                                                                \
+	}                                                                                             \
+	if (!var)                                                                                     \
+		alpha = std::clamp(start_alpha - .7f * (ImGui::GetTime() - start_time) / time, .3f, 1.f); \
+	else                                                                                          \
+		alpha = std::clamp(start_alpha + .7f * (ImGui::GetTime() - start_time) / time, .3f, 1.f); \
 	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, std::min(style.Alpha, alpha)); }
 
 namespace ImGui
