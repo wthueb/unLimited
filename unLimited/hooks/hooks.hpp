@@ -23,9 +23,12 @@ namespace hooks
 
 	void __fastcall hk_paint_traverse(void* thisptr, void* edx, VPANEL panel, bool force_repaint, bool allow_force);
 
+	void __fastcall hk_scene_end(void* thisptr, void* edx);
+
 	extern vmt_hook* d3d_device_hook;
 	extern vmt_hook* client_mode_hook;
 	extern vmt_hook* panel_hook;
+	extern vmt_hook* render_view_hook;
 
 	namespace index
 	{
@@ -37,5 +40,7 @@ namespace hooks
 		constexpr size_t do_post_screen_space_effects = 44;
 
 		constexpr size_t paint_traverse = 41;
+
+		constexpr size_t scene_end = 9;
 	}
 }

@@ -10,6 +10,7 @@ namespace hooks
 	vmt_hook* d3d_device_hook = nullptr;
 	vmt_hook* client_mode_hook = nullptr;
 	vmt_hook* panel_hook = nullptr;
+	vmt_hook* render_view_hook = nullptr;
 
 	void init()
 	{
@@ -18,6 +19,7 @@ namespace hooks
 		d3d_device_hook = new vmt_hook(d3d_device);
 		client_mode_hook = new vmt_hook(g_client_mode);
 		panel_hook = new vmt_hook(g_panel);
+		render_view_hook = new vmt_hook(g_render_view);
 
 		d3d_device_hook->hook(hk_end_scene, index::end_scene);
 		d3d_device_hook->hook(hk_reset, index::reset);
@@ -27,6 +29,8 @@ namespace hooks
 		client_mode_hook->hook(hk_do_post_screen_space_effects, index::do_post_screen_space_effects);
 
 		panel_hook->hook(hk_paint_traverse, index::paint_traverse);
+
+		render_view_hook->hook(hk_scene_end, index::scene_end);
 	}
 
 	void unload()
@@ -34,5 +38,6 @@ namespace hooks
 		d3d_device_hook->shutdown();
 		client_mode_hook->shutdown();
 		panel_hook->shutdown();
+		render_view_hook->shutdown();
 	}
 }

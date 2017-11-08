@@ -20,3 +20,5 @@
 #include "IVDebugOverlay.hpp"
 #include "IVEngineClient.hpp"
 #include "IVModelInfo.hpp"
+#include "IVModelRender.hpp"
+#include "IVRenderView.hpp"

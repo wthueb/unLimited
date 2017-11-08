@@ -71,13 +71,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetExt>.dll</TargetExt>
-    <IncludePath>$(DXSDK_DIR)\Include;$(SolutionDir)\deps\imgui;$(SolutionDir)\deps\imgui\examples\directx9_example;$(IncludePath)</IncludePath>
+    <IncludePath>$(DXSDK_DIR)\Include;$(SolutionDir)\deps\imgui;$(SolutionDir)\deps\imgui\examples\directx9_example;D:\Programming\unLimited\deps\json\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>CppCoreCheckRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetExt>.dll</TargetExt>
-    <IncludePath>$(DXSDK_DIR)\Include;$(SolutionDir)\deps\imgui;$(SolutionDir)\deps\imgui\examples\directx9_example;$(IncludePath)</IncludePath>
+    <IncludePath>$(DXSDK_DIR)\Include;$(SolutionDir)\deps\imgui;$(SolutionDir)\deps\imgui\examples\directx9_example;D:\Programming\unLimited\deps\json\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>CppCoreCheckRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -133,6 +133,8 @@
     <ClCompile Include="..\deps\imgui\examples\directx9_example\imgui_impl_dx9.cpp" />
     <ClCompile Include="..\deps\imgui\imgui.cpp" />
     <ClCompile Include="..\deps\imgui\imgui_draw.cpp" />
+    <ClCompile Include="config.cpp" />
+    <ClCompile Include="engine_drawing.cpp" />
     <ClCompile Include="features\aimbot.cpp" />
     <ClCompile Include="features\airstuck.cpp" />
     <ClCompile Include="features\backtracking.cpp" />
@@ -145,6 +147,7 @@
     <ClCompile Include="hooks\hooks.cpp" />
     <ClCompile Include="hooks\override_view.cpp" />
     <ClCompile Include="hooks\paint_traverse.cpp" />
+    <ClCompile Include="hooks\scene_end.cpp" />
     <ClCompile Include="interfaces.cpp" />
     <ClCompile Include="netvars.cpp" />
     <ClCompile Include="options.cpp" />
@@ -157,6 +160,8 @@
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="config.hpp" />
+    <ClInclude Include="engine_drawing.hpp" />
     <ClInclude Include="features\aimbot.hpp" />
     <ClInclude Include="features\backtracking.hpp" />
     <ClInclude Include="features\esp.hpp" />
@@ -193,6 +198,8 @@
     <ClInclude Include="sdk\IMaterial.hpp" />
     <ClInclude Include="sdk\IMaterialSystem.hpp" />
     <ClInclude Include="sdk\IPanel.hpp" />
+    <ClInclude Include="sdk\IVModelRender.hpp" />
+    <ClInclude Include="sdk\IVRenderView.hpp" />
     <ClInclude Include="sdk\ISurface.hpp" />
     <ClInclude Include="sdk\IVDebugOverlay.hpp" />
     <ClInclude Include="sdk\IVEngineClient.hpp" />

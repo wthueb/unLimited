@@ -66,6 +66,11 @@
     <ClCompile Include="features\rank_reveal.cpp">
       <Filter>features</Filter>
     </ClCompile>
+    <ClCompile Include="config.cpp" />
+    <ClCompile Include="hooks\scene_end.cpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="engine_drawing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />
@@ -205,6 +210,14 @@
     <ClInclude Include="sdk\IMaterial.hpp">
       <Filter>sdk</Filter>
     </ClInclude>
+    <ClInclude Include="config.hpp" />
+    <ClInclude Include="sdk\IVRenderView.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\IVModelRender.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="engine_drawing.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="hooks">

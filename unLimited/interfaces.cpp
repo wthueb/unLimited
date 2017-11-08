@@ -23,6 +23,8 @@ ISurface* g_surface = nullptr;
 IVDebugOverlay* g_debug_overlay = nullptr;
 IVEngineClient* g_engine = nullptr;
 IVModelInfo* g_model_info = nullptr;
+IVRenderView* g_render_view = nullptr;
+IVModelRender* g_model_render = nullptr;
 
 template<typename t>
 t* capture_interface(const std::string &module, const std::string &interface)
@@ -58,6 +60,8 @@ void interfaces::init()
 	g_debug_overlay = capture_interface<IVDebugOverlay>("engine.dll", "VDebugOverlay004");
 	g_engine = capture_interface<IVEngineClient>("engine.dll", "VEngineClient014");
 	g_model_info = capture_interface<IVModelInfo>("engine.dll", "VModelInfoClient004");
+	g_model_render = capture_interface<IVModelRender>("engine.dll", "VEngineModel016");
+	g_render_view = capture_interface<IVRenderView>("engine.dll", "VEngineRenderView014");
 
 	g_client_state = **reinterpret_cast<CBaseClientState***>((*reinterpret_cast<uintptr_t**>(g_engine))[12] + 0x10);
 	g_global_vars = **reinterpret_cast<CGlobalVarsBase***>((*reinterpret_cast<uintptr_t**>(g_client))[0] + 0x1B);
