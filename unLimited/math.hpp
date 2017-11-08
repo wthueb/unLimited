@@ -31,27 +31,28 @@ namespace math
 
 	static void VectorAngles(const Vector &forward, QAngle &angles)
 	{
-		if (forward[1] == 0.0f && forward[0] == 0.0f)
+		if (forward[1] == 0.f && forward[0] == 0.f)
 		{
-			angles[0] = (forward[2] > 0.0f) ? 270.0f : 90.0f; // pitch
-			angles[1] = 0.0f; // yaw
+			angles[0] = forward[2] > 0.0f ? 270.f : 90.f; // pitch
+			angles[1] = 0.f; // yaw
 		}
 		else
 		{
 			// pitch
-			angles[0] = static_cast<vec_t>(atan2(-forward[2], forward.Length2D()) * -180 / M_PI);
-			// yaw
-			angles[1] = static_cast<vec_t>(atan2(forward[1], forward[0]) * 180 / M_PI);
+			angles[0] = static_cast<float>(atan2(-forward[2], forward.Length2D()) * -180 / M_PI);
 
-			if (angles[1] > 90)
-				angles[1] -= 180;
-			else if (angles[1] < 90)
-				angles[1] += 180;
-			else if (angles[1] == 90)
-				angles[1] = 0;
+			// yaw
+			angles[1] = static_cast<float>(atan2(forward[1], forward[0]) * 180 / M_PI);
+
+			if (angles[1] > 90.f)
+				angles[1] -= 180.f;
+			else if (angles[1] < 90.f)
+				angles[1] += 180.f;
+			else if (angles[1] == 90.f)
+				angles[1] = 0.f;
 		}
 
-		angles[2] = 0.0f;
+		angles[2] = 0.f;
 	}
 
 	static float distance_point_to_line(const Vector &point, const Vector &line_origin, const Vector &dir)
@@ -79,27 +80,26 @@ namespace math
 
 	static void correct_movement(CUserCmd* cmd, QAngle old_angle, float old_forward, float old_side)
 	{
-		// side/forward move correction
 		float delta;
 		float f1;
 		float f2;
 
 		if (old_angle.yaw < 0.f)
-			f1 = 360.0f + old_angle.yaw;
+			f1 = 360.f + old_angle.yaw;
 		else
 			f1 = old_angle.yaw;
 
 		if (cmd->viewangles.yaw < 0.0f)
-			f2 = 360.0f + cmd->viewangles.yaw;
+			f2 = 360.f + cmd->viewangles.yaw;
 		else
 			f2 = cmd->viewangles.yaw;
 
 		if (f2 < f1)
 			delta = abs(f2 - f1);
 		else
-			delta = 360.0f - abs(f1 - f2);
+			delta = 360.f - abs(f1 - f2);
 
-		delta = 360.0f - delta;
+		delta = 360.f - delta;
 
 		cmd->forwardmove = cos(DEG2RAD(delta)) * old_forward + cos(DEG2RAD(delta + 90.f)) * old_side;
 		cmd->sidemove = sin(DEG2RAD(delta)) * old_forward + sin(DEG2RAD(delta + 90.f)) * old_side;

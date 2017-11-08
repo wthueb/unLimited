@@ -1,10 +1,10 @@
 #include "hooks.hpp"
 
-#include "../gui.hpp"
-
 #include <imgui_impl_dx9.h>
 
 #include <intrin.h>
+
+#include "../gui.hpp"
 
 static bool initialized = false;
 static bool gui_open = false;
