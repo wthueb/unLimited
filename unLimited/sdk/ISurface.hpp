@@ -10,6 +10,23 @@ enum FontDrawType
 	FONT_DRAW_TYPE_COUNT = 2,
 };
 
+enum FontFlags
+{
+	FONTFLAG_NONE,
+	FONTFLAG_ITALIC = (1 << 0),
+	FONTFLAG_UNDERLINE = (1 << 1),
+	FONTFLAG_STRIKEOUT = (1 << 2),
+	FONTFLAG_SYMBOL = (1 << 3),
+	FONTFLAG_ANTIALIAS = (1 << 4),
+	FONTFLAG_GAUSSIANBLUR = (1 << 5),
+	FONTFLAG_ROTARY = (1 << 6),
+	FONTFLAG_DROPSHADOW = (1 << 7),
+	FONTFLAG_ADDITIVE = (1 << 8),
+	FONTFLAG_OUTLINE = (1 << 9),
+	FONTFLAG_CUSTOM = (1 << 10),
+	FONTFLAG_BITMAP = (1 << 11),
+};
+
 using HFont = unsigned long;
 using VPANEL = unsigned int;
 

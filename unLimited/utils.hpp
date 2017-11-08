@@ -18,6 +18,8 @@ namespace utils
 
 	uint64_t find_signature(const std::string &szModule, const std::string &szSignature);
 
+	std::wstring to_wstring(const std::string &str);
+
 	extern HMODULE dll;
 }
 

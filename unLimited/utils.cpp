@@ -139,3 +139,19 @@ uint64_t utils::find_signature(const std::string &module, const std::string &sig
 
 	return NULL;
 }
+
+std::wstring utils::to_wstring(const std::string &str)
+{
+	static std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
+
+	try
+	{
+		return converter.from_bytes(str);
+	}
+	catch (std::range_error)
+	{
+		std::wostringstream s;
+		s << str.c_str();
+		return s.str();
+	}
+}
