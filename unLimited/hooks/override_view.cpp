@@ -8,7 +8,7 @@ void __stdcall hooks::hk_override_view(CViewSetup* view)
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
 
-	if (localplayer && !localplayer->IsScoped())
+	if (localplayer && localplayer->GetObserverTarget() ? !localplayer->GetObserverTarget()->IsScoped() : !localplayer->IsScoped())
 		view->fov = options::misc::fov;
 
 	o_override_view(g_client_mode, view);

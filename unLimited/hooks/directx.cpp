@@ -1,5 +1,6 @@
 #include "hooks.hpp"
 
+#include <imgui.h>
 #include <imgui_impl_dx9.h>
 
 #include <intrin.h>
@@ -18,7 +19,7 @@ extern uintptr_t d3d_device;
 
 LRESULT __stdcall hk_wndproc(HWND hwnd, UINT message, WPARAM w_param, LPARAM l_param);
 
-extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM w_param, LPARAM l_param);
 
 void gui_init()
 {
@@ -52,7 +53,7 @@ void gui_shutdown()
 	initialized = false;
 }
 
-HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
+HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* device)
 {
 	static auto o_end_scene = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*)>(index::end_scene);
 
@@ -60,9 +61,9 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 
 	// stupid double rendering
 	if (_ReturnAddress() != ret)
-		return o_end_scene(d3d_device);
+		return o_end_scene(device);
 	
-	static auto &style = ImGui::GetStyle();
+	static auto& style = ImGui::GetStyle();
 	
 	static float alpha = .01f;
 	static float start_alpha = alpha;
@@ -84,7 +85,7 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 
 		// FIXMEW: sometimes this just doesn't work because the current time is way after the
 		// start_time and i have no idea why or how to fix it...
-		alpha = std::clamp(start_alpha + 1.f * (ImGui::GetTime() - start_time) / 1.f, .01f, 1.f);
+		alpha = std::clamp(start_alpha + .5f * (ImGui::GetTime() - start_time) / .5f, .01f, 1.f);
 		
 		style.Alpha = alpha;
 
@@ -100,7 +101,7 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 
 			ImGui_ImplDX9_NewFrame();
 
-			alpha = std::clamp(start_alpha - 1.f * (ImGui::GetTime() - start_time) / 1.f, .01f, 1.f);
+			alpha = std::clamp(start_alpha - .5f * (ImGui::GetTime() - start_time) / .5f, .01f, 1.f);
 
 			style.Alpha = alpha;
 
@@ -110,19 +111,19 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* d3d_device)
 		}
 	}
 
-	return o_end_scene(d3d_device);
+	return o_end_scene(device);
 }
 
-HRESULT __stdcall hooks::hk_reset(IDirect3DDevice9* d3d_device, D3DPRESENT_PARAMETERS* presentation_parameters)
+HRESULT __stdcall hooks::hk_reset(IDirect3DDevice9* device, D3DPRESENT_PARAMETERS* presentation_parameters)
 {
 	static auto o_reset = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*, D3DPRESENT_PARAMETERS*)>(index::reset);
 
 	if (!initialized)
-		return o_reset(d3d_device, presentation_parameters);
+		return o_reset(device, presentation_parameters);
 
 	ImGui_ImplDX9_InvalidateDeviceObjects();
 
-	auto ret = o_reset(d3d_device, presentation_parameters);
+	auto ret = o_reset(device, presentation_parameters);
 
 	ImGui_ImplDX9_CreateDeviceObjects();
 

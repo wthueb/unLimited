@@ -61,6 +61,8 @@ namespace options
 		bool defuse_kits = false;
 		bool c4 = false;
 		bool weapons = false;
+
+		bool radar = false;
 	}
 
 	namespace misc

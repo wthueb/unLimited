@@ -47,6 +47,8 @@ namespace options
 		extern bool defuse_kits;
 		extern bool c4;
 		extern bool weapons;
+
+		extern bool radar;
 	}
 
 	namespace misc

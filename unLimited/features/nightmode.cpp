@@ -8,16 +8,16 @@ void misc::nightmode()
 {
 	static bool old = false;
 
-	// already applied, don't do it again
+	// only enable/disable once per setting toggle
 	if (options::misc::nightmode == old)
 		return;
 
-	static auto r_DrawSpecificStaticProp = g_cvar->FindVar("r_DrawSpecificStaticProp");
+	static auto r_drawspecificstaticprop = g_cvar->FindVar("r_drawspecificstaticprop");
 	static auto sv_skyname = g_cvar->FindVar("sv_skyname");
 	
-	r_DrawSpecificStaticProp->SetValue(options::misc::nightmode ? 0 : 1);
+	r_drawspecificstaticprop->SetValue(options::misc::nightmode ? 0 : 1);
 
-	static std::string old_sky;
+	static std::string old_sky{};
 
 	if (options::misc::nightmode)
 		old_sky = sv_skyname->GetString();

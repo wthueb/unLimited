@@ -217,6 +217,8 @@ namespace gui
 					ImGui::PopStyleVar();
 				}
 
+				ImGui::BetterCheckbox("radar", &options::esp::radar);
+
 				ImGui::PopStyleVar();
 			}
 

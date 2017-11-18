@@ -1,10 +1,12 @@
 #pragma once
 
-#include "../sdk/sdk.hpp"
-#include "../vmt_hook.hpp"
+#include <memory>
 
 #include <d3d9.h>
 #include <d3dx9.h>
+
+#include "../sdk/sdk.hpp"
+#include "../vmt_hook.hpp"
 
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
@@ -14,8 +16,8 @@ namespace hooks
 	void init();
 	void unload();
 
-	HRESULT __stdcall hk_reset(IDirect3DDevice9* pDevice, D3DPRESENT_PARAMETERS* pPresentationParameters);
-	HRESULT __stdcall hk_end_scene(IDirect3DDevice9* pDevice);
+	HRESULT __stdcall hk_reset(IDirect3DDevice9* device, D3DPRESENT_PARAMETERS* presentation_parameters);
+	HRESULT __stdcall hk_end_scene(IDirect3DDevice9* device);
 
 	void __stdcall hk_override_view(CViewSetup* view);
 	bool __stdcall hk_create_move(float sample_input_frametime, CUserCmd* cmd);
@@ -25,22 +27,22 @@ namespace hooks
 
 	void __fastcall hk_scene_end(void* thisptr, void* edx);
 
-	extern vmt_hook* d3d_device_hook;
-	extern vmt_hook* client_mode_hook;
-	extern vmt_hook* panel_hook;
-	extern vmt_hook* render_view_hook;
+	extern std::shared_ptr<vmt_hook> d3d_device_hook;
+	extern std::shared_ptr<vmt_hook> client_mode_hook;
+	extern std::shared_ptr<vmt_hook> panel_hook;
+	extern std::shared_ptr<vmt_hook> render_view_hook;
 
 	namespace index
 	{
-		constexpr size_t reset = 16;
-		constexpr size_t end_scene = 42;
+		static constexpr size_t reset = 16;
+		static constexpr size_t end_scene = 42;
 
-		constexpr size_t override_view = 18;
-		constexpr size_t create_move = 24;
-		constexpr size_t do_post_screen_space_effects = 44;
+		static constexpr size_t override_view = 18;
+		static constexpr size_t create_move = 24;
+		static constexpr size_t do_post_screen_space_effects = 44;
 
-		constexpr size_t paint_traverse = 41;
+		static constexpr size_t paint_traverse = 41;
 
-		constexpr size_t scene_end = 9;
+		static constexpr size_t scene_end = 9;
 	}
 }

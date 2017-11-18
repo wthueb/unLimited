@@ -71,6 +71,9 @@
       <Filter>hooks</Filter>
     </ClCompile>
     <ClCompile Include="engine_drawing.cpp" />
+    <ClCompile Include="features\radar.cpp">
+      <Filter>features</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />

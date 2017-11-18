@@ -140,6 +140,7 @@
     <ClCompile Include="features\backtracking.cpp" />
     <ClCompile Include="features\esp.cpp" />
     <ClCompile Include="features\nightmode.cpp" />
+    <ClCompile Include="features\radar.cpp" />
     <ClCompile Include="features\rank_reveal.cpp" />
     <ClCompile Include="hooks\create_move.cpp" />
     <ClCompile Include="hooks\directx.cpp" />

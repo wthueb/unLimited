@@ -26,6 +26,9 @@ bool __stdcall hooks::hk_create_move(float sample_input_frametime, CUserCmd* cmd
 	misc::nightmode(); // doesn't matter where we call this, as long as it's called somewhat regularly
 	misc::show_ranks(cmd);
 
+	// FIXMEW: put in FSN
+	misc::radar();
+
 	cmd->viewangles.Clamp();
 
 	math::correct_movement(cmd, old_angle, old_forward, old_side);
