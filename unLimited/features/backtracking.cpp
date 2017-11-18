@@ -1,4 +1,4 @@
-#include "backtracking.hpp"
+#include "features.hpp"
 
 #include "../options.hpp"
 
@@ -41,7 +41,7 @@ void backtracking::create_move(CUserCmd* cmd)
 			continue;
 
 		float simtime = entity->GetSimulationTime();
-		Vector headpos = entity->GetBonePos(BONE_HEAD);
+		Vector headpos{ entity->GetBonePos(BONE_HEAD) };
 
 		head_positions[i][cmd->command_number % 13] = backtrack_data{ simtime, headpos };
 

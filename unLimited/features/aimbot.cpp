@@ -1,4 +1,4 @@
-#include "aimbot.hpp"
+#include "features.hpp"
 
 #include <algorithm>
 
@@ -18,7 +18,7 @@ static C_BaseCombatWeapon* active_weapon{};
 static CUserCmd* cmd{};
 static int best_target = -1;
 
-void aimbot::create_move(CUserCmd* _cmd, bool &send_packet)
+void aimbot::create_move(CUserCmd* _cmd, bool& send_packet)
 {
 	if (!g_engine->IsInGame() || !options::aim::enabled)
 		return;
@@ -76,9 +76,9 @@ void rcs()
 
 	if (cmd->buttons & IN_ATTACK)
 	{
-		QAngle aim_punch = localplayer->GetAimPunch() * 2.f;
+		QAngle aim_punch{ localplayer->GetAimPunch() * 2.f };
 
-		QAngle dst = cmd->viewangles + old_angle - aim_punch;
+		QAngle dst{ cmd->viewangles + old_angle - aim_punch };
 
 		dst.Clamp();
 
@@ -113,9 +113,9 @@ void find_target()
 			!is_visible(potential))
 			continue;
 
-		Vector target_pos = potential->GetBonePos(static_cast<Bone_t>(options::aim::bone));
-		Vector eye_pos = localplayer->GetEyePosition();
-		Vector relative = eye_pos - target_pos;
+		Vector target_pos{ potential->GetBonePos(static_cast<Bone_t>(options::aim::bone)) };
+		Vector eye_pos{ localplayer->GetEyePosition() };
+		Vector relative{ eye_pos - target_pos };
 
 		QAngle angle;
 		math::VectorAngles(relative, angle);
@@ -163,9 +163,9 @@ void correct_aim()
 		!is_visible(target))
 		return;
 
-	Vector eye_pos = localplayer->GetEyePosition();
-	Vector target_pos = target->GetBonePos(static_cast<Bone_t>(options::aim::bone));
-	Vector relative = eye_pos - target_pos;
+	Vector eye_pos{ localplayer->GetEyePosition() };
+	Vector target_pos{ target->GetBonePos(static_cast<Bone_t>(options::aim::bone)) };
+	Vector relative{ eye_pos - target_pos };
 
 	QAngle dst;
 	math::VectorAngles(relative, dst);
@@ -180,7 +180,7 @@ void correct_aim()
 
 	if (options::aim::smooth)
 	{
-		QAngle delta = dst - cmd->viewangles;
+		QAngle delta{ dst - cmd->viewangles };
 		delta.Clamp();
 		delta /= std::max(1.f, options::aim::smooth_amount);
 		dst = cmd->viewangles + delta;
@@ -198,16 +198,16 @@ bool is_visible(C_BasePlayer* player)
 	static LineGoesThroughSmokeFn LineGoesThroughSmoke =
 		reinterpret_cast<LineGoesThroughSmokeFn>(utils::find_signature("client.dll", "55 8B EC 83 EC 08 8B 15 ? ? ? ? 0F 57 C0"));
 
-	Vector start = localplayer->GetEyePosition();
-	Vector end = player->GetBonePos(static_cast<Bone_t>(options::aim::bone));
+	Vector start{ localplayer->GetEyePosition() };
+	Vector end{ player->GetBonePos(static_cast<Bone_t>(options::aim::bone)) };
 
 	if (LineGoesThroughSmoke(start, end, true))
 		return false;
 
-	Ray_t ray;
+	Ray_t ray{};
 	ray.Init(start, end);
 
-	CTraceFilter filter;
+	CTraceFilter filter{};
 	filter.pSkip = localplayer;
 
 	trace_t tr;
