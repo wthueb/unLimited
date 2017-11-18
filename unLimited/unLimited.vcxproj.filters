@@ -36,9 +36,6 @@
       <Filter>hooks</Filter>
     </ClCompile>
     <ClCompile Include="options.cpp" />
-    <ClCompile Include="features\airstuck.cpp">
-      <Filter>features</Filter>
-    </ClCompile>
     <ClCompile Include="..\deps\imgui\imgui.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
@@ -57,21 +54,15 @@
     <ClCompile Include="hooks\override_view.cpp">
       <Filter>hooks</Filter>
     </ClCompile>
-    <ClCompile Include="features\nightmode.cpp">
-      <Filter>features</Filter>
-    </ClCompile>
     <ClCompile Include="hooks\do_post_screen_space_effects.cpp">
       <Filter>hooks</Filter>
-    </ClCompile>
-    <ClCompile Include="features\rank_reveal.cpp">
-      <Filter>features</Filter>
     </ClCompile>
     <ClCompile Include="config.cpp" />
     <ClCompile Include="hooks\scene_end.cpp">
       <Filter>hooks</Filter>
     </ClCompile>
     <ClCompile Include="engine_drawing.cpp" />
-    <ClCompile Include="features\radar.cpp">
+    <ClCompile Include="features\misc.cpp">
       <Filter>features</Filter>
     </ClCompile>
   </ItemGroup>
@@ -192,21 +183,9 @@
     <ClInclude Include="sdk\CRC.hpp">
       <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="features\backtracking.hpp">
-      <Filter>features</Filter>
-    </ClInclude>
     <ClInclude Include="math.hpp" />
     <ClInclude Include="options.hpp" />
-    <ClInclude Include="features\esp.hpp">
-      <Filter>features</Filter>
-    </ClInclude>
     <ClInclude Include="font.hpp" />
-    <ClInclude Include="features\aimbot.hpp">
-      <Filter>features</Filter>
-    </ClInclude>
-    <ClInclude Include="features\misc.hpp">
-      <Filter>features</Filter>
-    </ClInclude>
     <ClInclude Include="sdk\IMaterialSystem.hpp">
       <Filter>sdk</Filter>
     </ClInclude>
@@ -221,6 +200,9 @@
       <Filter>sdk</Filter>
     </ClInclude>
     <ClInclude Include="engine_drawing.hpp" />
+    <ClInclude Include="features\features.hpp">
+      <Filter>features</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="hooks">

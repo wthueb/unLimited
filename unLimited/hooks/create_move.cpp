@@ -1,8 +1,6 @@
 #include "hooks.hpp"
 
-#include "../features/aimbot.hpp"
-#include "../features/backtracking.hpp"
-#include "../features/misc.hpp"
+#include "../features/features.hpp"
 
 #include "../math.hpp"
 

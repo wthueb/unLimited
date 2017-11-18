@@ -13,10 +13,10 @@ void correct_aim();
 
 bool is_visible(C_BasePlayer* player);
 
-C_BasePlayer* localplayer = nullptr;
-C_BaseCombatWeapon* active_weapon = nullptr;
-CUserCmd* cmd = nullptr;
-int best_target = -1;
+static C_BasePlayer* localplayer{};
+static C_BaseCombatWeapon* active_weapon{};
+static CUserCmd* cmd{};
+static int best_target = -1;
 
 void aimbot::create_move(CUserCmd* _cmd, bool &send_packet)
 {
@@ -94,7 +94,7 @@ void rcs()
 
 void find_target()
 {
-	auto best_fov = options::aim::fov;
+	float best_fov = options::aim::fov;
 
 	for (auto i = 1; i <= g_global_vars->maxClients; ++i)
 	{
@@ -213,5 +213,5 @@ bool is_visible(C_BasePlayer* player)
 	trace_t tr;
 	g_engine_trace->TraceRay(ray, MASK_SHOT_HULL | CONTENTS_HITBOX, &filter, &tr);
 
-	return tr.m_pEnt == player || tr.fraction == 1.f;
+	return tr.m_pEnt == player;
 }

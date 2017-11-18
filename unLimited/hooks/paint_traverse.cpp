@@ -1,6 +1,6 @@
 #include "hooks.hpp"
 
-#include "../features/backtracking.hpp"
+#include "../features/features.hpp"
 
 void __fastcall hooks::hk_paint_traverse(void* thisptr, void* edx, VPANEL panel, bool force_repaint, bool allow_force)
 {

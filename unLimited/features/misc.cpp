@@ -1,8 +1,20 @@
-#include "misc.hpp"
-
-#include "../sdk/sdk.hpp"
+#include "features.hpp"
 
 #include "../options.hpp"
+
+void misc::airstuck(CUserCmd* cmd)
+{
+	if (!options::misc::airstuck)
+		return;
+
+	if (cmd->buttons & IN_ATTACK || cmd->buttons & IN_ATTACK2)
+		return;
+
+	if (options::misc::airstuck_key && GetAsyncKeyState(options::misc::airstuck_key))
+	{
+		cmd->tick_count = 16777216;
+	}
+}
 
 void misc::nightmode()
 {
@@ -14,7 +26,7 @@ void misc::nightmode()
 
 	static auto r_drawspecificstaticprop = g_cvar->FindVar("r_drawspecificstaticprop");
 	static auto sv_skyname = g_cvar->FindVar("sv_skyname");
-	
+
 	r_drawspecificstaticprop->SetValue(options::misc::nightmode ? 0 : 1);
 
 	static std::string old_sky{};
@@ -29,7 +41,7 @@ void misc::nightmode()
 		IMaterial* mat = g_material_system->GetMaterial(i);
 		if (!mat || mat->IsErrorMaterial())
 			continue;
-		
+
 		if (strstr(mat->GetTextureGroupName(), "World") || strstr(mat->GetTextureGroupName(), "StaticProp"))
 		{
 			if (options::misc::nightmode)
@@ -47,4 +59,42 @@ void misc::nightmode()
 	}
 
 	old = options::misc::nightmode;
+}
+
+void misc::radar()
+{
+	if (!options::esp::radar || !g_engine->IsInGame())
+		return;
+
+	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+
+	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
+	{
+		auto entity = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
+		if (!entity)
+			continue;
+
+		if (entity == localplayer || entity->IsDormant() || !entity->IsAlive())
+			continue;
+
+		entity->GetSpotted() = true;
+	}
+}
+
+void misc::show_ranks(CUserCmd* cmd)
+{
+	if (!options::misc::show_ranks)
+		return;
+
+	if (!(cmd->buttons & IN_SCORE))
+		return;
+
+	static int arg[3] = { 0, 0, 0 };
+
+	using MsgFunc_ServerRankRevealAllFn = bool(__cdecl*)(int[3]);
+
+	static MsgFunc_ServerRankRevealAllFn MsgFunc_ServerRankRevealAll =
+		reinterpret_cast<MsgFunc_ServerRankRevealAllFn>(utils::find_signature("client.dll", "55 8B EC 8B 0D ? ? ? ? 68"));
+
+	MsgFunc_ServerRankRevealAll(arg);
 }

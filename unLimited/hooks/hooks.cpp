@@ -1,6 +1,5 @@
 #include "hooks.hpp"
 
-#include "../sdk/sdk.hpp"
 #include "../utils.hpp"
 
 uintptr_t d3d_device{};
