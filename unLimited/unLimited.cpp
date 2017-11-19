@@ -12,6 +12,12 @@ void wait_for_unload()
 	while (true)
 	{
 		if (GetAsyncKeyState(VK_DELETE) & 1)
+		{
+			utils::should_unload = true;
+			utils::console_print("unload called for by pressing delete\n\n");
+		}
+
+		if (utils::should_unload)
 			utils::unload();
 
 		Sleep(500);

@@ -42,11 +42,11 @@ void gui_shutdown()
 	if (!initialized)
 		return;
 
+	SetWindowLongA(hwnd, GWLP_WNDPROC, LONG_PTR(o_wndproc));
+
 	gui_open = false;
 
 	Sleep(2000);
-
-	SetWindowLongA(hwnd, GWLP_WNDPROC, LONG_PTR(o_wndproc));
 
 	ImGui_ImplDX9_Shutdown();
 
@@ -63,6 +63,8 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* device)
 	if (_ReturnAddress() != ret)
 		return o_end_scene(device);
 	
+	// this code is so sloppy i'm actually really dissapointed in myself here
+
 	static auto& style = ImGui::GetStyle();
 	
 	static float alpha = .01f;
@@ -85,7 +87,7 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* device)
 
 		// FIXMEW: sometimes this just doesn't work because the current time is way after the
 		// start_time and i have no idea why or how to fix it...
-		alpha = std::clamp(start_alpha + .5f * (ImGui::GetTime() - start_time) / .5f, .01f, 1.f);
+		alpha = std::clamp(start_alpha + .2f * (ImGui::GetTime() - start_time) / .2f, .01f, 1.f);
 		
 		style.Alpha = alpha;
 
@@ -101,7 +103,7 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* device)
 
 			ImGui_ImplDX9_NewFrame();
 
-			alpha = std::clamp(start_alpha - .5f * (ImGui::GetTime() - start_time) / .5f, .01f, 1.f);
+			alpha = std::clamp(start_alpha - .2f * (ImGui::GetTime() - start_time) / .2f, .01f, 1.f);
 
 			style.Alpha = alpha;
 

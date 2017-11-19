@@ -9,9 +9,13 @@
 #include "font.hpp"
 #include "options.hpp"
 
+#ifndef GUI_TEST
+	#include "utils.hpp"
+#endif
+
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 0
-#define VERSION_PATCH 27
+#define VERSION_PATCH 29
 
 #define PFADE(var, time) {                                                                        \
 	static float alpha = .3f;                                                                     \
@@ -139,7 +143,7 @@ namespace gui
 		ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(850, 500));
 
-		static auto &style = ImGui::GetStyle();
+		static auto& style = ImGui::GetStyle();
 
 		if (ImGui::Begin(title, nullptr,
 			ImGuiWindowFlags_NoResize |
@@ -154,11 +158,11 @@ namespace gui
 			ImGui::BetterCheckbox("aim", &options::aim::enabled);
 			{
 				// FIXMEW: null mouse input
-				PFADE(options::aim::enabled, .5f);
+				PFADE(options::aim::enabled, .2f);
 
 				ImGui::BetterCheckbox("aimbot", &options::aim::aimbot);
 				{
-					PFADE(options::aim::aimbot, .5f);
+					PFADE(options::aim::aimbot, .2f);
 
 					ImGui::SliderFloat("fov", &options::aim::fov, .1f, 180.f, "%.1f", 2.f);
 					ImGui::BetterCheckbox("smooth", &options::aim::smooth);
@@ -202,11 +206,11 @@ namespace gui
 
 			ImGui::BetterCheckbox("esp", &options::esp::enabled);
 			{
-				PFADE(options::esp::enabled, .5f);
+				PFADE(options::esp::enabled, .2f);
 
 				ImGui::BetterCheckbox("glow", &options::esp::glow);
 				{
-					PFADE(options::esp::glow, .5f);
+					PFADE(options::esp::glow, .2f);
 
 					if (ImGui::InputFloat("glow alpha", &options::esp::glow_alpha, .1f, 0.f, 1))
 						options::esp::glow_alpha = std::clamp(options::esp::glow_alpha, .1f, 1.f);
@@ -226,7 +230,7 @@ namespace gui
 
 			ImGui::BetterCheckbox("backtracking", &options::misc::backtracking);
 			{
-				PFADE(options::misc::backtracking, .5f);
+				PFADE(options::misc::backtracking, .2f);
 
 				ImGui::BetterCheckbox("backtracking visual", &options::misc::backtracking_vis);
 
@@ -235,7 +239,7 @@ namespace gui
 
 			ImGui::BetterCheckbox("airstuck", &options::misc::airstuck);
 			{
-				PFADE(options::misc::airstuck, .5f);
+				PFADE(options::misc::airstuck, .2f);
 
 				{
 					static int selected = 0;
@@ -289,9 +293,32 @@ namespace gui
 			ImGui::SameLine();
 
 			static float theme_color[3] = { .65f, .85f, .95f };
-			if (ImGui::ColorEdit3("gui theme color", theme_color))
+			if (ImGui::ColorEdit3("gui theme color", theme_color, ImGuiColorEditFlags_NoOptions | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoTooltip))
 				setup_style(ImVec4{ theme_color[0], theme_color[1], theme_color[2], 1.f });
 			
+			{
+				auto label_size = ImGui::CalcTextSize("unload");
+
+				ImVec2 size{ label_size.x + style.FramePadding.x * 2.f, label_size.y + style.FramePadding.y * 2.f };
+
+				ImGui::SameLine(ImGui::GetWindowWidth() / 2.f - (label_size.x + style.FramePadding.x * 2.f) / 2.f);
+
+				ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ .4f, 0.f, 0.f, 1.f });
+				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ .4f, 0.f, 0.f, 1.f });
+				ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ .4f, 0.f, 0.f, 1.f });
+				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4{ .9f, .9f, .9f, 1.f });
+
+				if (ImGui::Button("unload", size))
+				{
+#ifndef GUI_TEST
+					utils::should_unload = true;
+					utils::console_print("unload called for by pressing menu button\n\n");
+#endif
+				}
+
+				ImGui::PopStyleColor(4);
+			}
+
 			ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize("http://wi1.xyz/").x - 10);
 
 			ImGui::Text("http://wi1.xyz/");
@@ -304,13 +331,13 @@ namespace gui
 	{
 		snprintf(title, sizeof(title), "universeL by wi1 | v%i.%i.%i", VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
 
-		auto &io = ImGui::GetIO();
+		auto& io = ImGui::GetIO();
 		
 		io.Fonts->AddFontDefault();
 		auto font = io.Fonts->AddFontFromMemoryCompressedTTF(RobotoFont_compressed_data, RobotoFont_compressed_size, 14.f);
 		io.FontDefault = font;
 
-		auto &style = ImGui::GetStyle();
+		auto& style = ImGui::GetStyle();
 
 		style.WindowTitleAlign = { .5f, .5f };
 		style.WindowRounding = 3.f;

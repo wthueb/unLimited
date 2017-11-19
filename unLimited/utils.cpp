@@ -16,6 +16,8 @@ HANDLE in{}, old_in{};
 
 extern void gui_shutdown();
 
+bool utils::should_unload = false;
+
 void utils::unload()
 {
 #ifdef _DEBUG

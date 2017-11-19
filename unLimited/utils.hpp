@@ -9,6 +9,8 @@
 
 namespace utils
 {
+	extern bool should_unload;
+
 	void unload();
 
 	void attach_console();
