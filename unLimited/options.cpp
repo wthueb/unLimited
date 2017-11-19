@@ -69,6 +69,7 @@ namespace options
 	{
 		bool backtracking = false;
 		bool backtracking_vis = true;
+		int backtracking_amt = 12;
 
 		bool airstuck = false;
 		int airstuck_key = 0;

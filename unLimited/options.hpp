@@ -55,6 +55,7 @@ namespace options
 	{
 		extern bool backtracking;
 		extern bool backtracking_vis;
+		extern int backtracking_amt;
 
 		extern bool airstuck;
 		extern int airstuck_key;

@@ -5,7 +5,7 @@
 #include "../math.hpp"
 
 #define TICK_INTERVAL      (g_global_vars->interval_per_tick)
-#define TIME_TO_TICKS(dt)  (static_cast<int>(.5f + static_cast<float>(dt) / TICK_INTERVAL))
+#define TIME_TO_TICKS(dt)  (int(.5f + float(dt) / TICK_INTERVAL))
 
 struct backtrack_data
 {
@@ -65,7 +65,7 @@ void backtracking::create_move(CUserCmd* cmd)
 		Vector view_forward;
 		math::AngleVectors(cmd->viewangles + localplayer->GetAimPunch() * 2.f, &view_forward);
 
-		for (auto i = 0; i < 12; ++i)
+		for (auto i = 0; i < options::misc::backtracking_amt; ++i)
 		{
 			float dist = math::distance_point_to_line(head_positions[best_target][i].headpos, localplayer->GetEyePosition(), view_forward);
 
@@ -102,15 +102,15 @@ void backtracking::paint_traverse()
 		if (player == localplayer || player->GetTeam() == localplayer->GetTeam())
 			continue;
 
-		for (auto t = 0; t < 12; ++t)
+		for (auto t = 0; t < options::misc::backtracking_amt; ++t)
 		{
-			if (head_positions[i][t].simtime > localplayer->GetSimulationTime() - 1)
+			if (head_positions[i][t].simtime > localplayer->GetSimulationTime() - 1.f)
 			{
 				Vector out;
 				if (!g_debug_overlay->ScreenPosition(head_positions[i][t].headpos, out))
 				{
 					g_surface->DrawSetColor(Color{ 255, 0, 0 });
-					g_surface->DrawOutlinedRect((int)out.x, (int)out.y, (int)out.x + 2, (int)out.y + 2);
+					g_surface->DrawOutlinedRect(int(out.x), int(out.y), int(out.x + 2.f), int(out.y + 2.f));
 				}
 			}
 		}
