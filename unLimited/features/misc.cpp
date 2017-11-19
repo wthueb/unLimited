@@ -34,6 +34,8 @@ void misc::nightmode()
 	if (options::misc::nightmode)
 		old_sky = sv_skyname->GetString();
 
+	// FIXMEW: use LoadNamedSky (string ref: "skybox/%s%s" in ida) so it works on non-local servers
+	// (spoofing sv_cheats is for losers)
 	sv_skyname->SetValue(options::misc::nightmode ? "sky_csgo_night02" : old_sky.c_str());
 
 	for (auto i = g_material_system->FirstMaterial(); i != g_material_system->InvalidMaterial(); i = g_material_system->NextMaterial(i))
