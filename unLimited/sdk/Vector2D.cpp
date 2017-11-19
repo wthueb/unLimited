@@ -27,8 +27,8 @@ void Vector2D::Init(vec_t ix, vec_t iy)
 
 void Vector2D::Random(float minVal, float maxVal)
 {
-	x = minVal + (static_cast<float>(rand()) / RAND_MAX) * (maxVal - minVal);
-	y = minVal + (static_cast<float>(rand()) / RAND_MAX) * (maxVal - minVal);
+	x = minVal + (float(rand()) / RAND_MAX) * (maxVal - minVal);
+	y = minVal + (float(rand()) / RAND_MAX) * (maxVal - minVal);
 }
 
 void Vector2DClear(Vector2D& a)
@@ -211,7 +211,7 @@ vec_t Vector2DNormalize(Vector2D& v)
 //-----------------------------------------------------------------------------
 vec_t Vector2DLength(const Vector2D& v)
 {
-	return static_cast<vec_t>(sqrt(v.x*v.x + v.y*v.y));
+	return vec_t(sqrt(v.x*v.x + v.y*v.y));
 }
 
 vec_t Vector2D::NormalizeInPlace()

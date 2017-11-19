@@ -181,7 +181,7 @@ inline CBaseHandle::CBaseHandle(int iEntry, int iSerialNumber)
 
 inline void CBaseHandle::Init(int iEntry, int iSerialNumber)
 {
-	m_Index = static_cast<unsigned long>(iEntry | (iSerialNumber << NUM_SERIAL_NUM_SHIFT_BITS));
+	m_Index = unsigned long(iEntry | (iSerialNumber << NUM_SERIAL_NUM_SHIFT_BITS));
 }
 
 inline void CBaseHandle::Term()
@@ -220,7 +220,7 @@ inline int CBaseHandle::GetSerialNumber() const
 
 inline int CBaseHandle::ToInt() const
 {
-	return static_cast<int>(m_Index);
+	return int(m_Index);
 }
 
 inline bool CBaseHandle::operator != (const CBaseHandle &other) const

@@ -9,7 +9,7 @@
 
 void draw::circle(const Vector2D& pos, float points, float radius, const Color& col)
 {
-	auto step = static_cast<float>(M_PI * 2.f / points);
+	auto step = float(M_PI * 2.f / points);
 
 	for (auto a = 0.f; a < M_PI * 2.f; a += step)
 	{
@@ -22,17 +22,17 @@ void draw::circle(const Vector2D& pos, float points, float radius, const Color& 
 void draw::filled_circle(const Vector2D& pos, float points, float radius, const Color& col)
 {
 	std::vector<Vertex_t> vertices;
-	auto step = static_cast<float>(M_PI * 2.f / points);
+	auto step = float(M_PI * 2.f / points);
 
 	for (auto a = 0.f; a < M_PI * 2.f; a += step)
 		vertices.push_back(Vertex_t{ { radius * cosf(a) + pos.x, radius * sinf(a) + pos.y } });
 
-	textured_polygon(static_cast<int>(points), vertices.data(), col);
+	textured_polygon(int(points), vertices.data(), col);
 }
 
 void draw::circle3D(const Vector& pos, float points, float radius, const Color& col)
 {
-	float step = static_cast<float>(M_PI * 2.f / points);
+	float step = float(M_PI * 2.f / points);
 
 	std::vector<Vector> points3d;
 
@@ -57,7 +57,7 @@ void draw::filled_rectangle(int x0, int y0, int x1, int y1, const Color& col)
 
 void draw::filled_rectangle(const Vector2D& start_pos, const Vector2D& end_pos, const Color& col)
 {
-	filled_rectangle(static_cast<int>(start_pos.x), static_cast<int>(start_pos.y), static_cast<int>(end_pos.x), static_cast<int>(end_pos.y), col);
+	filled_rectangle(int(start_pos.x), int(start_pos.y), int(end_pos.x), int(end_pos.y), col);
 }
 
 void draw::outlined_rectangle(int x0, int y0, int x1, int y1, const Color& col)
@@ -68,7 +68,7 @@ void draw::outlined_rectangle(int x0, int y0, int x1, int y1, const Color& col)
 
 void draw::outlined_rectangle(const Vector2D& start_pos, const Vector2D& end_pos, const Color& col)
 {
-	outlined_rectangle(static_cast<int>(start_pos.x), static_cast<int>(start_pos.y), static_cast<int>(end_pos.x), static_cast<int>(end_pos.y), col);
+	outlined_rectangle(int(start_pos.x), int(start_pos.y), int(end_pos.x), int(end_pos.y), col);
 }
 
 void draw::line(int x0, int y0, int x1, int y1, const Color& col)
@@ -79,7 +79,7 @@ void draw::line(int x0, int y0, int x1, int y1, const Color& col)
 
 void draw::line(const Vector2D& start_pos, const Vector2D& end_pos, const Color& col)
 {
-	line(static_cast<int>(start_pos.x), static_cast<int>(start_pos.y), static_cast<int>(end_pos.x), static_cast<int>(end_pos.y), col);
+	line(int(start_pos.x), int(start_pos.y), int(end_pos.x), int(end_pos.y), col);
 }
 
 void draw::poly_line(int* px, int* py, int num_points, const Color& col)
@@ -95,8 +95,8 @@ void draw::poly_line(Vertex_t* vertices, int num_vertices, const Color& col)
 
 	for (auto i = 0; i < num_vertices; ++i)
 	{
-		points_x[i] = static_cast<int>(vertices[i].m_Position.x);
-		points_y[i] = static_cast<int>(vertices[i].m_Position.y);
+		points_x[i] = int(vertices[i].m_Position.x);
+		points_y[i] = int(vertices[i].m_Position.y);
 	}
 
 	poly_line(points_x, points_y, num_vertices, col);
@@ -130,7 +130,7 @@ void draw::text(int x, int y, const char* text, HFont font, const Color& col)
 
 void draw::text(const Vector2D& pos, const char* text, HFont font, const Color& col)
 {
-	draw::text(static_cast<int>(pos.x), static_cast<int>(pos.y), text, font, col);
+	draw::text(int(pos.x), int(pos.y), text, font, col);
 }
 
 Vector2D draw::get_text_size(const char* text, HFont font)
@@ -141,7 +141,7 @@ Vector2D draw::get_text_size(const char* text, HFont font)
 
 	g_surface->GetTextSize(font, wstr.c_str(), x, y);
 
-	return Vector2D{ static_cast<float>(x), static_cast<float>(y) };
+	return Vector2D{ float(x), float(y) };
 }
 
 HFont draw::create_font(const char* font_name, int size, int flag)

@@ -64,10 +64,10 @@ void Vector4D::Init(vec_t ix, vec_t iy, vec_t iz, vec_t iw)
 
 void Vector4D::Random(vec_t minVal, vec_t maxVal)
 {
-	x = minVal + (static_cast<float>(rand()) / RAND_MAX) * (maxVal - minVal);
-	y = minVal + (static_cast<float>(rand()) / RAND_MAX) * (maxVal - minVal);
-	z = minVal + (static_cast<float>(rand()) / RAND_MAX) * (maxVal - minVal);
-	w = minVal + (static_cast<float>(rand()) / RAND_MAX) * (maxVal - minVal);
+	x = minVal + (float(rand()) / RAND_MAX) * (maxVal - minVal);
+	y = minVal + (float(rand()) / RAND_MAX) * (maxVal - minVal);
+	z = minVal + (float(rand()) / RAND_MAX) * (maxVal - minVal);
+	w = minVal + (float(rand()) / RAND_MAX) * (maxVal - minVal);
 }
 
 // This should really be a single opcode on the PowerPC (move r0 onto the vec reg)

@@ -24,10 +24,10 @@ public:
 
 	explicit Color(unsigned long argb)
 	{
-		_b = static_cast<unsigned char>((argb & 0x000000FF) >> (0 * 8));
-		_g = static_cast<unsigned char>((argb & 0x0000FF00) >> (1 * 8));
-		_r = static_cast<unsigned char>((argb & 0x00FF0000) >> (2 * 8));
-		_a = static_cast<unsigned char>((argb & 0xFF000000) >> (3 * 8));
+		_b = unsigned char((argb & 0x000000FF) >> (0 * 8));
+		_g = unsigned char((argb & 0x0000FF00) >> (1 * 8));
+		_r = unsigned char((argb & 0x00FF0000) >> (2 * 8));
+		_a = unsigned char((argb & 0xFF000000) >> (3 * 8));
 	}
 
 	void SetRawColor(int color32)

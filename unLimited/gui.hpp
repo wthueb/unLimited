@@ -234,6 +234,19 @@ namespace gui
 
 				ImGui::BetterCheckbox("backtracking visual", &options::misc::backtracking_vis);
 
+				{
+					ImGui::PushItemWidth(30.f);
+
+					static float temp = float(options::misc::backtracking_amt);
+
+					// so we don't have the + -, kind of stupid but
+					if (ImGui::InputFloat("backtracking amount (ticks, max 12)", &temp, 0.f, 0.f, 0))
+					{
+						options::misc::backtracking_amt = std::clamp(int(temp), 1, 12);
+					}
+					
+					ImGui::PopItemWidth();
+				}
 				ImGui::PopStyleVar();
 			}
 
@@ -319,7 +332,7 @@ namespace gui
 				ImGui::PopStyleColor(4);
 			}
 
-			ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize("http://wi1.xyz/").x - 10);
+			ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize("http://wi1.xyz/").x - 10.f);
 
 			ImGui::Text("http://wi1.xyz/");
 			

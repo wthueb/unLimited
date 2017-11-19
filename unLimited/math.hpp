@@ -6,8 +6,8 @@
 
 static const auto pi = acos(-1);
 
-#define RAD2DEG(x) (static_cast<float>(x) * static_cast<float>(180.f / pi))
-#define DEG2RAD(x) (static_cast<float>(x) * static_cast<float>(pi / 180.f))
+#define RAD2DEG(x) (float(x) * float(180.f / pi))
+#define DEG2RAD(x) (float(x) * float(pi / 180.f))
 
 namespace math
 {
@@ -39,10 +39,10 @@ namespace math
 		else
 		{
 			// pitch
-			angles[0] = static_cast<float>(atan2(-forward[2], forward.Length2D()) * -180 / pi);
+			angles[0] = float(atan2(-forward[2], forward.Length2D()) * -180 / pi);
 
 			// yaw
-			angles[1] = static_cast<float>(atan2(forward[1], forward[0]) * 180 / pi);
+			angles[1] = float(atan2(forward[1], forward[0]) * 180 / pi);
 
 			if (angles[1] > 90.f)
 				angles[1] -= 180.f;

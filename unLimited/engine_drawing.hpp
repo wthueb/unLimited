@@ -19,5 +19,5 @@ namespace draw
 	void text(int x, int y, const char* text, HFont font, const Color& col);
 	void text(const Vector2D& pos, const char* text, HFont font, const Color& col);
 	Vector2D get_text_size(const char* text, HFont font);
-	HFont create_font(const char* font_name, int size, int flag = static_cast<int>(FONTFLAG_DROPSHADOW));
+	HFont create_font(const char* font_name, int size, int flag = int(FONTFLAG_DROPSHADOW));
 }

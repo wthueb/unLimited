@@ -81,7 +81,7 @@ bool utils::console_print(const char* fmt, ...)
 	_vsnprintf_s(buf, 1024, fmt, va);
 	va_end(va);
 
-	return !!WriteConsoleA(out, buf, static_cast<DWORD>(strlen(buf)), nullptr, nullptr);
+	return !!WriteConsoleA(out, buf, DWORD(strlen(buf)), nullptr, nullptr);
 }
 
 char utils::console_read_key()

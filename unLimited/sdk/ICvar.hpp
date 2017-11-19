@@ -432,7 +432,7 @@ FORCEINLINE_CVAR float ConVar::GetFloat() const
 //-----------------------------------------------------------------------------
 FORCEINLINE_CVAR int ConVar::GetInt() const
 {
-	return static_cast<int>(m_pParent->m_Value.m_nValue ^ reinterpret_cast<int>(this));
+	return int(m_pParent->m_Value.m_nValue ^ int(this));
 }
 
 //-----------------------------------------------------------------------------

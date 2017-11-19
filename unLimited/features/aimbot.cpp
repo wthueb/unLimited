@@ -113,7 +113,7 @@ void find_target()
 			!is_visible(potential))
 			continue;
 
-		Vector target_pos{ potential->GetBonePos(static_cast<Bone_t>(options::aim::bone)) };
+		Vector target_pos{ potential->GetBonePos(Bone_t(options::aim::bone)) };
 		Vector eye_pos{ localplayer->GetEyePosition() };
 		Vector relative{ eye_pos - target_pos };
 
@@ -164,7 +164,7 @@ void correct_aim()
 		return;
 
 	Vector eye_pos{ localplayer->GetEyePosition() };
-	Vector target_pos{ target->GetBonePos(static_cast<Bone_t>(options::aim::bone)) };
+	Vector target_pos{ target->GetBonePos(Bone_t(options::aim::bone)) };
 	Vector relative{ eye_pos - target_pos };
 
 	QAngle dst;
@@ -199,7 +199,7 @@ bool is_visible(C_BasePlayer* player)
 		reinterpret_cast<LineGoesThroughSmokeFn>(utils::find_signature("client.dll", "55 8B EC 83 EC 08 8B 15 ? ? ? ? 0F 57 C0"));
 
 	Vector start{ localplayer->GetEyePosition() };
-	Vector end{ player->GetBonePos(static_cast<Bone_t>(options::aim::bone)) };
+	Vector end{ player->GetBonePos(Bone_t(options::aim::bone)) };
 
 	if (LineGoesThroughSmoke(start, end, true))
 		return false;
