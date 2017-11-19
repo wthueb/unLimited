@@ -268,3 +268,8 @@ inline const CBaseHandle& CBaseHandle::Set(const IHandleEntity* pEntity)
 
 	return *this;
 }
+
+//inline IHandleEntity* CBaseHandle::Get() const
+//{
+//	return g_entity_list->GetClientEntityFromHandle(*this);
+//}

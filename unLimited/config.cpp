@@ -7,7 +7,7 @@
 
 using json = nlohmann::json;
 
-void to_json(json &j, const option &opt)
+void to_json(json& j, const option& opt)
 {
 	j = json
 	{
@@ -16,7 +16,7 @@ void to_json(json &j, const option &opt)
 	};
 }
 
-void from_json(const json &j, option &opt)
+void from_json(const json& j, option& opt)
 {
 	opt.name = j.at("name").get<std::string>();
 	//*opt.value = j.at("value").get<>();
@@ -24,14 +24,14 @@ void from_json(const json &j, option &opt)
 
 void config::save()
 {
-	std::ofstream("unLimited.json") << std::setw(4) << json(options);
+	std::ofstream{ "unLimited.json" } << std::setw(4) << json(options);
 }
 
 void config::load()
 {
 	try
 	{
-		json::parse(std::ifstream("unLimited.json")).get<std::vector<option>>();
+		json::parse(std::ifstream{ "unLimited.json" }).get<std::vector<option>>();
 	}
 	catch (const std::exception&)
 	{

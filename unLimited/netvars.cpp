@@ -53,7 +53,7 @@ void netvar_sys::dump()
 	dump(stream);
 }
 
-void netvar_sys::dump(std::ofstream &stream)
+void netvar_sys::dump(std::ofstream& stream)
 {
 	for (const auto &table : tables)
 	{
@@ -68,17 +68,17 @@ void netvar_sys::dump(std::ofstream &stream)
 	stream << std::endl;
 }
 
-void netvar_sys::dump_table(std::ofstream &stream, const netvar_table &table, int indent)
+void netvar_sys::dump_table(std::ofstream& stream, const netvar_table& table, int indent)
 {
 	char buffer[1024];
 
-	for (const auto &prop : table.child_props)
+	for (const auto& prop : table.child_props)
 	{
 		sprintf_s(buffer, "%*c%*s: 0x%08X", indent * 4, ' ', -(50 - indent * 4), prop->m_pVarName, table.offset + prop->m_Offset);
 		stream << buffer << '\n';
 	}
 
-	for (const auto &child : table.child_tables)
+	for (const auto& child : table.child_tables)
 	{
 		sprintf_s(buffer, "%*c%*s: 0x%08X", indent * 4, ' ', -(50 - indent * 4), child.prop->m_pVarName, table.offset + child.offset);
 		stream << buffer << '\n';
@@ -86,7 +86,7 @@ void netvar_sys::dump_table(std::ofstream &stream, const netvar_table &table, in
 	}
 }
 
-uint32_t netvar_sys::get_offset(const std::string &table_name, const std::string &prop_name)
+uint32_t netvar_sys::get_offset(const std::string& table_name, const std::string& prop_name)
 {
 	auto result = 0u;
 
@@ -103,14 +103,14 @@ uint32_t netvar_sys::get_offset(const std::string &table_name, const std::string
 	return 0;
 }
 
-uint32_t netvar_sys::get_offset(const netvar_table &table, const std::string &prop_name)
+uint32_t netvar_sys::get_offset(const netvar_table& table, const std::string& prop_name)
 {
-	for (const auto &prop : table.child_props) {
+	for (const auto& prop : table.child_props) {
 		if (!strncmp(prop->m_pVarName, prop_name.data(), prop_name.size()))
 			return table.offset + prop->m_Offset;
 	}
 
-	for (const auto &child : table.child_tables) {
+	for (const auto& child : table.child_tables) {
 		auto prop_offset = get_offset(child, prop_name);
 		if (prop_offset)
 			return table.offset + prop_offset;
@@ -124,11 +124,11 @@ uint32_t netvar_sys::get_offset(const netvar_table &table, const std::string &pr
 	return 0;
 }
 
-RecvProp* netvar_sys::get_prop(const std::string &table_name, const std::string &prop_name)
+RecvProp* netvar_sys::get_prop(const std::string& table_name, const std::string& prop_name)
 {
-	RecvProp* result = nullptr;
+	RecvProp* result{};
 
-	for (const auto &table : tables)
+	for (const auto& table : tables)
 	{
 		if (table.name == table_name)
 			result = get_prop(table, prop_name);
@@ -137,22 +137,22 @@ RecvProp* netvar_sys::get_prop(const std::string &table_name, const std::string 
 	return result;
 }
 
-RecvProp* netvar_sys::get_prop(const netvar_table &table, const std::string &prop_name)
+RecvProp* netvar_sys::get_prop(const netvar_table& table, const std::string& prop_name)
 {
-	for (const auto &prop : table.child_props)
+	for (const auto& prop : table.child_props)
 	{
 		if (!strncmp(prop->m_pVarName, prop_name.data(), prop_name.size()))
 			return prop;
 	}
 
-	for (const auto &child : table.child_tables)
+	for (const auto& child : table.child_tables)
 	{
 		auto prop = get_prop(child, prop_name);
 		if (prop)
 			return prop;
 	}
 
-	for (const auto &child : table.child_tables)
+	for (const auto& child : table.child_tables)
 	{
 		if (!strncmp(child.prop->m_pVarName, prop_name.data(), prop_name.size()))
 			return child.prop;

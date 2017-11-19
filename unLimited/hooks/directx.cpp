@@ -44,7 +44,7 @@ void gui_shutdown()
 
 	gui_open = false;
 
-	Sleep(1000);
+	Sleep(2000);
 
 	SetWindowLongA(hwnd, GWLP_WNDPROC, LONG_PTR(o_wndproc));
 

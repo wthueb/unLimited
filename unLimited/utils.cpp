@@ -1,17 +1,18 @@
 #include "utils.hpp"
 
-#include <Psapi.h>
 #include <sstream>
 #include <string>
+
+#include <Psapi.h>
 
 #include "hooks/hooks.hpp"
 
 // gets set in DllMain when dll is attached
-HMODULE utils::dll = NULL;
+HMODULE utils::dll{};
 
-HANDLE out = NULL, old_out = NULL;
-HANDLE err = NULL, old_err = NULL;
-HANDLE in = NULL, old_in = NULL;
+HANDLE out{}, old_out{};
+HANDLE err{}, old_err{};
+HANDLE in{}, old_in{};
 
 extern void gui_shutdown();
 
@@ -86,16 +87,16 @@ char utils::console_read_key()
 	if (!in)
 		return false;
 
-	auto key = char{ 0 };
-	auto keysread = DWORD{ 0 };
+	char key{};
+	DWORD keys_read{};
 
-	ReadConsoleA(in, &key, 1, &keysread, nullptr);
+	ReadConsoleA(in, &key, 1, &keys_read, nullptr);
 
 	return key;
 }
 
 // credits: learn_more
-uint64_t utils::find_signature(const std::string &module, const std::string &signature)
+uint64_t utils::find_signature(const std::string& module, const std::string& signature)
 {
 #define INRANGE(x, a, b)  (x >= a && x <= b) 
 #define GET_BITS(x)       (INRANGE((x&(~0x20)),'A','F') ? ((x&(~0x20)) - 'A' + 0xa) : (INRANGE(x,'0','9') ? x - '0' : 0))
@@ -109,7 +110,7 @@ uint64_t utils::find_signature(const std::string &module, const std::string &sig
 
 	const char* pat = signature.c_str();
 
-	DWORD firstMatch = 0;
+	DWORD firstMatch{};
 	for (auto cur = startAddress; cur < endAddress; ++cur)
 	{
 		if (!*pat)
@@ -137,10 +138,10 @@ uint64_t utils::find_signature(const std::string &module, const std::string &sig
 		}
 	}
 
-	return NULL;
+	return 0;
 }
 
-std::wstring utils::to_wstring(const std::string &str)
+std::wstring utils::to_wstring(const std::string& str)
 {
 	static std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
 

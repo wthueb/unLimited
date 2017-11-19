@@ -1,13 +1,13 @@
 #pragma once
 
-#include "sdk/sdk.hpp"
-
-#define _USE_MATH_DEFINES
-#include <math.h>
 #include <algorithm>
 
-#define RAD2DEG(x) (static_cast<float>(x) * static_cast<float>(180.f / M_PI))
-#define DEG2RAD(x) (static_cast<float>(x) * static_cast<float>(M_PI / 180.f))
+#include "sdk/sdk.hpp"
+
+static const auto pi = acos(-1);
+
+#define RAD2DEG(x) (static_cast<float>(x) * static_cast<float>(180.f / pi))
+#define DEG2RAD(x) (static_cast<float>(x) * static_cast<float>(pi / 180.f))
 
 namespace math
 {
@@ -17,7 +17,7 @@ namespace math
 		*cosine = cos(radians);
 	}
 
-	static void AngleVectors(const QAngle &angles, Vector* forward)
+	static void AngleVectors(const QAngle& angles, Vector* forward)
 	{
 		float sp, sy, cp, cy;
 
@@ -29,7 +29,7 @@ namespace math
 		forward->z = -sp;
 	}
 
-	static void VectorAngles(const Vector &forward, QAngle &angles)
+	static void VectorAngles(const Vector& forward, QAngle& angles)
 	{
 		if (forward[1] == 0.f && forward[0] == 0.f)
 		{
@@ -39,10 +39,10 @@ namespace math
 		else
 		{
 			// pitch
-			angles[0] = static_cast<float>(atan2(-forward[2], forward.Length2D()) * -180 / M_PI);
+			angles[0] = static_cast<float>(atan2(-forward[2], forward.Length2D()) * -180 / pi);
 
 			// yaw
-			angles[1] = static_cast<float>(atan2(forward[1], forward[0]) * 180 / M_PI);
+			angles[1] = static_cast<float>(atan2(forward[1], forward[0]) * 180 / pi);
 
 			if (angles[1] > 90.f)
 				angles[1] -= 180.f;
@@ -55,7 +55,7 @@ namespace math
 		angles[2] = 0.f;
 	}
 
-	static float distance_point_to_line(const Vector &point, const Vector &line_origin, const Vector &dir)
+	static float distance_point_to_line(const Vector& point, const Vector& line_origin, const Vector& dir)
 	{
 		auto point_dir = point - line_origin;
 
@@ -68,7 +68,7 @@ namespace math
 		return (point - perpendicular).Length();
 	}
 
-	static float get_fov(const QAngle &view_angle, const QAngle &aim_angle)
+	static float get_fov(const QAngle& view_angle, const QAngle& aim_angle)
 	{
 		Vector aim, ang;
 
@@ -78,7 +78,7 @@ namespace math
 		return RAD2DEG(acos(aim.Dot(ang) / aim.LengthSqr()));
 	}
 
-	static void correct_movement(CUserCmd* cmd, QAngle old_angle, float old_forward, float old_side)
+	static void correct_movement(CUserCmd* cmd, const QAngle &old_angle, float old_forward, float old_side)
 	{
 		float delta;
 		float f1;
