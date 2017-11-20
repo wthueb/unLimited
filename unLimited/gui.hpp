@@ -74,7 +74,9 @@ namespace ImGui
 	}
 }
 
-#define DISABLE(var, fade_time) {                                                                           \
+// this might be the ugliest thing i have ever done holy shit
+#define DISABLE(var, fade_time)                                                                             \
+{                                                                                                           \
 	static float alpha = .3f;                                                                               \
 	static bool old = var;                                                                                  \
 	static float start_alpha = alpha;                                                                       \
@@ -365,9 +367,9 @@ namespace gui
 				ImGui::PopStyleColor(4);
 			}
 
-			ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize("http://wi1.xyz/").x - 10.f);
+			ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize("wi1.xyz").x - 10.f);
 
-			ImGui::Text("http://wi1.xyz/");
+			ImGui::Text("wi1.xyz");
 
 			ImGui::End();
 		}
