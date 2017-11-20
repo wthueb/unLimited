@@ -375,7 +375,7 @@ namespace gui
 
 	static void init()
 	{
-		snprintf(title, sizeof(title), "universeL by wi1 | v%i.%i.%i", VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
+		snprintf(title, sizeof(title), "unLimited by wi1 | v%i.%i.%i", VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
 
 		auto& io = ImGui::GetIO();
 
