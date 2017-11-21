@@ -15,7 +15,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 1
-#define VERSION_PATCH 1
+#define VERSION_PATCH 2
 
 namespace ImGui
 {
@@ -75,7 +75,7 @@ namespace ImGui
 }
 
 // this might be the ugliest thing i have ever done holy shit
-#define DISABLE(var, fade_time)                                                                             \
+#define DISABLE(var, fade_time) \
 {                                                                                                           \
 	static float alpha = .3f;                                                                               \
 	static bool old = var;                                                                                  \
@@ -110,6 +110,9 @@ namespace gui
 	{
 		static auto& style = ImGui::GetStyle();
 
+		style.WindowTitleAlign = { .5f, .5f };
+		style.WindowRounding = 3.f;
+
 		style.Colors[ImGuiCol_Text] = ImVec4{ .05f, .05f, .05f, 1.f };
 		style.Colors[ImGuiCol_TextDisabled] = style.Colors[ImGuiCol_Text];
 		style.Colors[ImGuiCol_WindowBg] = ImVec4{ .9f, .9f, .9f, 1.f };
@@ -138,8 +141,7 @@ namespace gui
 		style.Colors[ImGuiCol_Header] = style.Colors[ImGuiCol_FrameBg];
 		style.Colors[ImGuiCol_HeaderHovered] = style.Colors[ImGuiCol_WindowBg];
 		style.Colors[ImGuiCol_HeaderActive] = style.Colors[ImGuiCol_HeaderHovered];
-		// FIXMEW: finish style setup, this is boring lol
-
+		
 		if (dark_mode)
 		{
 			for (auto i = 0; i < ImGuiCol_COUNT; ++i)
@@ -259,6 +261,9 @@ namespace gui
 
 			ImGui::NextColumn();
 
+			ImGui::BetterCheckbox("bhop", &options::misc::bhop);
+			ImGui::BetterCheckbox("autostrafe", &options::misc::autostrafe);
+
 			ImGui::BetterCheckbox("backtracking", &options::misc::backtracking);
 			{
 				DISABLE(options::misc::backtracking, .2f);
@@ -282,6 +287,10 @@ namespace gui
 				ImGui::BetterPopItemFlag();
 			}
 
+			ImGui::BetterCheckbox("show ranks", &options::misc::show_ranks);
+
+			ImGui::BetterCheckbox("nightmode", &options::misc::nightmode);
+
 			ImGui::BetterCheckbox("airstuck", &options::misc::airstuck);
 			{
 				DISABLE(options::misc::airstuck, .2f);
@@ -304,15 +313,11 @@ namespace gui
 			if (ImGui::InputFloat("view fov", &options::misc::fov, 1.f, 0.f, 0))
 				options::misc::fov = std::clamp(options::misc::fov, 5.f, 179.f);
 
-			ImGui::BetterCheckbox("nightmode", &options::misc::nightmode);
-
-			ImGui::BetterCheckbox("show ranks", &options::misc::show_ranks);
-
 			ImGui::PopItemWidth();
 
 			ImGui::Columns(1);
 
-			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::CalcTextSize("").y - 10);
+			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::CalcTextSize("").y - 10.f);
 
 			ImGui::BetterCheckbox("dark mode", &dark_mode);
 			{
@@ -384,11 +389,6 @@ namespace gui
 		io.Fonts->AddFontDefault();
 		auto font = io.Fonts->AddFontFromMemoryCompressedTTF(RobotoFont_compressed_data, RobotoFont_compressed_size, 14.f);
 		io.FontDefault = font;
-
-		auto& style = ImGui::GetStyle();
-
-		style.WindowTitleAlign = { .5f, .5f };
-		style.WindowRounding = 3.f;
 
 		setup_style(ImVec4{ .65f, .85f, .95f, 1.f });
 	}

@@ -14,22 +14,28 @@ bool __stdcall hooks::hk_create_move(float sample_input_frametime, CUserCmd* cmd
 
 	auto send_packet = *reinterpret_cast<bool*>(*frame_ptr - 0x1C);
 
+	backtracking::process(cmd);
+	aimbot::process(cmd, send_packet);
+	misc::bhop(cmd);
+	misc::autostrafe(cmd);
+	misc::airstuck(cmd);
+	misc::show_ranks(cmd);
+
+	// FIXMEW: put in FSN
+	esp::radar();
+
+	// doesn't matter where we call this, as long as it's called somewhat regularly
+	misc::nightmode();
+
 	QAngle old_angle = cmd->viewangles;
 	float old_forward = cmd->forwardmove;
 	float old_side = cmd->sidemove;
 
-	aimbot::create_move(cmd, send_packet);
-	misc::airstuck(cmd);
-	backtracking::create_move(cmd);
-	misc::nightmode(); // doesn't matter where we call this, as long as it's called somewhat regularly
-	misc::show_ranks(cmd);
-
-	// FIXMEW: put in FSN
-	misc::radar();
-
-	cmd->viewangles.Clamp();
+	// anti-aim
 
 	math::correct_movement(cmd, old_angle, old_forward, old_side);
+
+	cmd->viewangles.Clamp();
 
 	//if (!options::aim::silent && (!options::rage::aa || !options::rage::silent))
 		g_engine->SetViewAngles(cmd->viewangles);

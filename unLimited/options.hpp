@@ -53,17 +53,20 @@ namespace options
 
 	namespace misc
 	{
+		extern bool bhop;
+		extern bool autostrafe;
+
 		extern bool backtracking;
 		extern bool backtracking_vis;
 		extern int backtracking_amt;
+
+		extern bool show_ranks;
+
+		extern bool nightmode;
 
 		extern bool airstuck;
 		extern int airstuck_key;
 
 		extern float fov;
-
-		extern bool nightmode;
-
-		extern bool show_ranks;
 	}
 }

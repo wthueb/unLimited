@@ -4,25 +4,26 @@
 
 namespace aimbot
 {
-	void create_move(CUserCmd* cmd, bool& send_packet);
+	void process(CUserCmd* cmd, bool& send_packet);
 }
 
 namespace backtracking
 {
-	void create_move(CUserCmd* cmd);
-	void paint_traverse();
+	void process(CUserCmd* cmd);
+	void draw();
 }
 
 namespace esp
 {
-	void paint_traverse();
-	void do_post_screen_space_effects();
+	void glow();
+	void radar();
 }
 
 namespace misc
 {
-	void airstuck(CUserCmd* cmd);
-	void nightmode();
-	void radar();
+	void bhop(CUserCmd* cmd);
+	void autostrafe(CUserCmd* cmd);
 	void show_ranks(CUserCmd* cmd);
+	void nightmode();
+	void airstuck(CUserCmd* cmd);
 }

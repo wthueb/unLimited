@@ -20,5 +20,5 @@ void __fastcall hooks::hk_paint_traverse(void* thisptr, void* edx, VPANEL panel,
 	else if (panel != FocusOverlayPanel)
 		return;
 
-	backtracking::paint_traverse();
+	backtracking::draw();
 }

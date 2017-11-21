@@ -15,7 +15,7 @@ struct backtrack_data
 
 backtrack_data head_positions[64][12];
 
-void backtracking::create_move(CUserCmd* cmd)
+void backtracking::process(CUserCmd* cmd)
 {
 	if (!options::misc::backtracking)
 		return;
@@ -81,7 +81,7 @@ void backtracking::create_move(CUserCmd* cmd)
 	}
 }
 
-void backtracking::paint_traverse()
+void backtracking::draw()
 {
 	if (!options::misc::backtracking || !options::misc::backtracking_vis)
 		return;

@@ -4,12 +4,7 @@
 
 #include "../options.hpp"
 
-void esp::paint_traverse()
-{
-
-}
-
-void esp::do_post_screen_space_effects()
+void esp::glow()
 {
 	if (!options::esp::enabled || !options::esp::glow)
 		return;
@@ -20,7 +15,7 @@ void esp::do_post_screen_space_effects()
 
 	for (auto i = 0; i < g_glow_manager->m_GlowObjectDefinitions.m_Size; ++i)
 	{
-		auto &object = g_glow_manager->m_GlowObjectDefinitions[i];
+		auto& object = g_glow_manager->m_GlowObjectDefinitions[i];
 		if (object.IsUnused())
 			continue;
 
@@ -100,5 +95,25 @@ void esp::do_post_screen_space_effects()
 		object.m_bRenderWhenOccluded = true;
 		object.m_bRenderWhenUnoccluded = false;
 		object.m_nGlowStyle = options::esp::glow_style;
+	}
+}
+
+void esp::radar()
+{
+	if (!options::esp::radar || !g_engine->IsInGame())
+		return;
+
+	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+
+	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
+	{
+		auto entity = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
+		if (!entity)
+			continue;
+
+		if (entity == localplayer || entity->IsDormant() || !entity->IsAlive())
+			continue;
+
+		entity->GetSpotted() = true;
 	}
 }

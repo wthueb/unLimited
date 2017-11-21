@@ -2,18 +2,67 @@
 
 #include "../options.hpp"
 
-void misc::airstuck(CUserCmd* cmd)
+void misc::bhop(CUserCmd* cmd)
 {
-	if (!options::misc::airstuck)
+	if (!options::misc::bhop || !g_engine->IsInGame())
 		return;
 
-	if (cmd->buttons & IN_ATTACK || cmd->buttons & IN_ATTACK2)
+	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+	if (!localplayer)
 		return;
 
-	if (options::misc::airstuck_key && GetAsyncKeyState(options::misc::airstuck_key))
+	if (cmd->buttons & IN_JUMP && !(localplayer->GetFlags() & FL_ONGROUND))
 	{
-		cmd->tick_count = 16777216;
+		// release the jump button. whenever you're not in the air (on the ground), jump button gets pressed
+		cmd->buttons &= ~IN_JUMP;
 	}
+}
+
+void misc::autostrafe(CUserCmd* cmd)
+{
+	if (!options::misc::autostrafe || !g_engine->IsInGame())
+		return;
+
+	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+	if (!localplayer)
+		return;
+
+	if (localplayer->GetFlags() & FL_ONGROUND)
+		return;
+
+	if (cmd->mousedy > 1)
+	{
+		cmd->sidemove = 450.f;
+	}
+	else if (cmd->mousedy < -1)
+	{
+		cmd->sidemove = -450.f;
+	}
+	else
+	{
+		cmd->forwardmove = 7200.f / localplayer->GetVelocity().Length2D();
+		if (cmd->forwardmove > 450.f)
+			cmd->forwardmove = 450.f;
+		cmd->sidemove = cmd->command_number % 2 ? 450.f : -450.f;
+	}
+}
+
+void misc::show_ranks(CUserCmd* cmd)
+{
+	if (!options::misc::show_ranks || !g_engine->IsInGame())
+		return;
+
+	if (!(cmd->buttons & IN_SCORE))
+		return;
+
+	static int arg[3] = { 0, 0, 0 };
+
+	using MsgFunc_ServerRankRevealAllFn = bool(__cdecl*)(int[3]);
+
+	static MsgFunc_ServerRankRevealAllFn MsgFunc_ServerRankRevealAll =
+		reinterpret_cast<MsgFunc_ServerRankRevealAllFn>(utils::find_signature("client.dll", "55 8B EC 8B 0D ? ? ? ? 68"));
+
+	MsgFunc_ServerRankRevealAll(arg);
 }
 
 void misc::nightmode()
@@ -63,40 +112,16 @@ void misc::nightmode()
 	old = options::misc::nightmode;
 }
 
-void misc::radar()
+void misc::airstuck(CUserCmd* cmd)
 {
-	if (!options::esp::radar || !g_engine->IsInGame())
+	if (!options::misc::airstuck || !g_engine->IsInGame())
 		return;
 
-	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+	if (cmd->buttons & IN_ATTACK || cmd->buttons & IN_ATTACK2)
+		return;
 
-	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
+	if (options::misc::airstuck_key && GetAsyncKeyState(options::misc::airstuck_key))
 	{
-		auto entity = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
-		if (!entity)
-			continue;
-
-		if (entity == localplayer || entity->IsDormant() || !entity->IsAlive())
-			continue;
-
-		entity->GetSpotted() = true;
+		cmd->tick_count = 16777216;
 	}
-}
-
-void misc::show_ranks(CUserCmd* cmd)
-{
-	if (!options::misc::show_ranks)
-		return;
-
-	if (!(cmd->buttons & IN_SCORE))
-		return;
-
-	static int arg[3] = { 0, 0, 0 };
-
-	using MsgFunc_ServerRankRevealAllFn = bool(__cdecl*)(int[3]);
-
-	static MsgFunc_ServerRankRevealAllFn MsgFunc_ServerRankRevealAll =
-		reinterpret_cast<MsgFunc_ServerRankRevealAllFn>(utils::find_signature("client.dll", "55 8B EC 8B 0D ? ? ? ? 68"));
-
-	MsgFunc_ServerRankRevealAll(arg);
 }

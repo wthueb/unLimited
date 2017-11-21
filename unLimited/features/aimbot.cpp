@@ -18,7 +18,7 @@ static C_BaseCombatWeapon* active_weapon{};
 static CUserCmd* cmd{};
 static int best_target = -1;
 
-void aimbot::create_move(CUserCmd* _cmd, bool& send_packet)
+void aimbot::process(CUserCmd* _cmd, bool& send_packet)
 {
 	if (!g_engine->IsInGame() || !options::aim::enabled)
 		return;

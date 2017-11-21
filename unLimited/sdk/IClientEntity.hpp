@@ -376,7 +376,7 @@ public:
 	NETVAR(GetViewModel, CHandle<C_BaseViewModel>, "DT_BasePlayer", "m_hViewModel[0]");
 	NETVAR(GetVecViewOffset, Vector, "DT_BasePlayer", "m_vecViewOffset[0]");
 	NETVAR(GetTickBase, int, "DT_BasePlayer", "m_nTickBase");
-	NETVAR(GetVecVelocity, Vector, "DT_BasePlayer", "m_vecVelocity[0]");
+	NETVAR(GetVelocity, Vector, "DT_BasePlayer", "m_vecVelocity[0]");
 	NETVAR(GetViewPunch, QAngle, "DT_BasePlayer", "m_viewPunchAngle");
 	NETVAR(GetAimPunch, QAngle, "DT_BasePlayer", "m_aimPunchAngle");
 	NETVAR(GetEyeAngles, QAngle, "DT_CSPlayer", "m_angEyeAngles[0]");

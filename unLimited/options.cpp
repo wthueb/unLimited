@@ -67,17 +67,20 @@ namespace options
 
 	namespace misc
 	{
+		bool bhop = false;
+		bool autostrafe = false;
+
 		bool backtracking = false;
 		bool backtracking_vis = true;
 		int backtracking_amt = 12;
+
+		bool show_ranks = false;
+
+		bool nightmode = false;
 
 		bool airstuck = false;
 		int airstuck_key = 0;
 
 		float fov = 90.f;
-
-		bool nightmode = false;
-
-		bool show_ranks = false;
 	}
 }
