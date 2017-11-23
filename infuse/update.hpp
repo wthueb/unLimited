@@ -2,5 +2,5 @@
 
 #include <string>
 
-bool update();
-bool get_current_ver(std::string &currentversion);
+bool update_unLimited();
+std::string get_current_ver();

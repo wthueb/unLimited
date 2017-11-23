@@ -67,7 +67,7 @@ bool get_latest_ver(CURL* &curl, std::string &latest_version)
 	return true;
 }
 
-bool get_current_ver(std::string &currentversion)
+std::string get_current_ver()
 {
 	HANDLE find;
 	WIN32_FIND_DATA data;
@@ -77,23 +77,25 @@ bool get_current_ver(std::string &currentversion)
 
 	sprintf_s(path, "%s\\unLimited*.dll", path);
 
+	std::string current_ver;
+
 	find = FindFirstFileA(path, &data);
 	if (find != INVALID_HANDLE_VALUE)
 	{
-		currentversion = data.cFileName;
+		current_ver = data.cFileName;
 
 		do
 		{
-			if (currentversion.compare(data.cFileName) < 0)
-				currentversion = data.cFileName;
+			if (current_ver.compare(data.cFileName) < 0)
+				current_ver = data.cFileName;
 		} while (FindNextFileA(find, &data));
 
 		FindClose(find);
 	}
 	else
-		return false;
+		return std::string{};
 
-	return true;
+	return current_ver;
 }
 
 bool download_version(CURL* &curl, const std::string &version)
@@ -186,7 +188,7 @@ void delete_old_versions(const std::string &latest_version)
 	}
 }
 
-bool update()
+bool update_unLimited()
 {
 	CURL* curl = curl_easy_init();
 	if (!curl)
@@ -200,9 +202,9 @@ bool update()
 	cyan;
 	std::cout << "latest version: " << latest_version << "\n\n";
 	
-	std::string current_version;
+	std::string current_version = get_current_ver();
 
-	if (get_current_ver(current_version))
+	if (current_version.length())
 	{
 		cyan;
 		std::cout << "current version: " << current_version << "\n\n";

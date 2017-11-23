@@ -11,177 +11,178 @@
 
 #define exit cyan; std::cout << "press any key to exit...\n"; _getch(); return 0;
 
-DWORD get_pid(const char* ProcessName)
+DWORD find_process(std::string process_name)
 {
+	white;
+	std::cout << "=====================================================================\n\n";
+
+	cyan;
+	std::cout << "attempting to find " << process_name << "...\n\n";
+
+	DWORD pid = 0ul;
+
 	PROCESSENTRY32 pe;
 	pe.dwSize = sizeof(PROCESSENTRY32);
 
-	// handle of the first program
 	HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
-	// iterate through all processes until process is found
-	if (Process32First(snapshot, &pe) == TRUE)
+	if (Process32First(snapshot, &pe))
 	{
-		while (Process32Next(snapshot, &pe) == TRUE)
+		while (Process32Next(snapshot, &pe))
 		{
-			if (strcmp(pe.szExeFile, ProcessName) == 0)
+			if (!strcmp(pe.szExeFile, process_name.c_str()))
 			{
 				CloseHandle(snapshot);
-				return pe.th32ProcessID;
+				pid = pe.th32ProcessID;
 			}
 		}
 	}
 
-	return NULL;
+	// if process id cannot be found (not running/wrong name)
+	if (!pid)
+	{
+		red;
+		std::cout << process_name << " could not be found. is it running?\n\n";
+		exit;
+	}
+
+	green;
+	std::cout << process_name << " has been found! process id: " << pid << "\n\n";
+	white;
+	std::cout << "=====================================================================\n\n";
+
+	return pid;
 }
 
-BOOL inject_dll(DWORD pid, LPCSTR dll_path)
+bool inject_dll(DWORD pid, const char* dll_path)
 {
-	// if process id or dll is null
 	if (!pid || !dll_path)
-		return FALSE;
+		return false;
 
 	HANDLE hproc = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
 
-	// if process cannot be opened
 	if (hproc == INVALID_HANDLE_VALUE)
-		return FALSE;
+		return false;
 
-	// same in every program, so no need to find where it is in other process
-	LPVOID addr_to_loadlib = static_cast<LPVOID>(GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA"));
+	void* addr_to_loadlib = static_cast<void*>(GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA"));
 
-	// allocate memory in other program for dll path to be stored
-	LPVOID addr_to_dll = static_cast<LPVOID>(VirtualAllocEx(hproc, NULL, strlen(dll_path) + 1, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE));
+	void* addr_to_dll_path = static_cast<void*>(VirtualAllocEx(hproc, 0, strlen(dll_path) + 1, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE));
 
-	// write the path of the dll to that memory
-	WriteProcessMemory(hproc, addr_to_dll, static_cast<LPVOID>(const_cast<char*>(dll_path + '\0')), strlen(dll_path) + 1, NULL);
+	WriteProcessMemory(hproc, addr_to_dll_path, static_cast<void*>(const_cast<char*>(dll_path + '\0')), strlen(dll_path) + 1, nullptr);
 
-	// load the dll in the target process by calling the address of the dll
-	HANDLE remote_thread = CreateRemoteThread(hproc, NULL, NULL, static_cast<LPTHREAD_START_ROUTINE>(addr_to_loadlib),
-		static_cast<LPVOID>(addr_to_dll), NULL, NULL);
+	HANDLE remote_thread = CreateRemoteThread(hproc, 0, 0, static_cast<LPTHREAD_START_ROUTINE>(addr_to_loadlib),
+		static_cast<void*>(addr_to_dll_path), 0, 0);
 
 	if (remote_thread != INVALID_HANDLE_VALUE)
 	{
-		// wait 10000 milliseconds for the dll to be loaded, else exit
 		if (WaitForSingleObject(remote_thread, 10000) == WAIT_OBJECT_0)
 		{
-			// always close handles and unallocate memory
-			VirtualFreeEx(hproc, addr_to_dll, strlen(dll_path) + 1, MEM_FREE);
+			VirtualFreeEx(hproc, addr_to_dll_path, strlen(dll_path) + 1, MEM_FREE);
 			CloseHandle(remote_thread);
 			CloseHandle(hproc);
 
-			return TRUE;
+			return true;
 		}
 		else
 		{
-			// always close handles and unallocate memory
-			VirtualFreeEx(hproc, addr_to_dll, strlen(dll_path) + 1, MEM_FREE);
+			VirtualFreeEx(hproc, addr_to_dll_path, strlen(dll_path) + 1, MEM_FREE);
 			CloseHandle(remote_thread);
 			CloseHandle(hproc);
 
-			return FALSE;
+			return false;
 		}
 	}
 
-	return FALSE;
+	return false;
 }
 
 void wait_for_exit();
 
-int main()
+int main(int argc, char* argv[])
 {
-	using namespace std;
-
 	white;
-	cout << "=====================================================================\n\n";
+	std::cout << "=====================================================================\n\n";
 	cyan;
-	cout << "                    unLimited csgo cheat loader\n";
-	cout << "                            made by wi1\n\n";
+	std::cout << "                    infuse, a csgo cheat loader                      \n";
+	std::cout << "                            made by wi1                              \n";
+	std::cout << "                              wi1.xyz                                \n\n";
 	white;
-	cout << "=====================================================================\n\n";
+	std::cout << "=====================================================================\n\n";
 
+	std::string dll_name{};
+	std::string dll_path{};
+
+	// file dragged on, manual inject
+	if (argc == 2)
+	{
+		dll_path = std::string{ argv[1] };
+
+		dll_name = dll_path.substr(dll_path.find_last_of("\\") + 1);
+
+		cyan;
+		std::cout << "using " << dll_name << ", absolute path: " << dll_path << "\n\n";
+	}
+	else
+	{
 #ifndef _DEBUG
-	if (!update())
+		if (!update_unLimited())
+		{
+			red;
+			std::cout << "unable to update. assuming current version works\n\n";
+		}
 #endif
-	{
-		red;
-		cout << "unable to update. assuming current version works\n\n";
+
+		dll_name = get_current_ver();
+
+		char dll_path[MAX_PATH];
+		GetFullPathNameA(dll_name.c_str(), MAX_PATH, dll_path, 0);
+
+		if (GetFileAttributesA(dll_path) == INVALID_FILE_ATTRIBUTES || GetFileAttributesA(dll_path) & FILE_ATTRIBUTE_DIRECTORY)
+		{
+			red;
+			std::cout << dll_name << " is not in the same directory as this injector\n"
+				"did you rename it?\n\n";
+			exit;
+		}
+
+		green;
+		std::cout << "using " << dll_name << ", absolute path: " << dll_path << "\n\n";
 	}
 
-	white;
-	cout << "=====================================================================\n\n";
+	std::string process_name{ "csgo.exe" };
+
+	DWORD pid = find_process(process_name);
 
 	cyan;
-	cout << "attempting to load...\n\n";
-
-	// default to csgo cause what else would they use a basic injector for anyways?
-	string processname = "csgo";
-
-	// add .exe if they did not
-	if (processname.length() < 5 || processname.substr(processname.length() - 4) != ".exe")
-		processname += ".exe";
-
-	DWORD processid = get_pid(processname.c_str());
-
-	// if process id cannot be found (not running/wrong name)
-	if (!processid)
-	{
-		red;
-		cout << "csgo.exe could not be found. is it running?\n\n";
-		exit;
-	}
-
-	green;
-	cout << processname << " has been found! process id: " << processid << "\n\n";
-
-	string dllname;
-	get_current_ver(dllname);
-
-	// get absolute path of dll file
-	char dllpath[MAX_PATH];
-	GetFullPathNameA(dllname.c_str(), MAX_PATH, dllpath, NULL);
-
-	// if path does not exist or is a directory
-	if (GetFileAttributesA(dllpath) == INVALID_FILE_ATTRIBUTES || GetFileAttributesA(dllpath) & FILE_ATTRIBUTE_DIRECTORY)
-	{
-		red;
-		cout << dllname << " is not in the same directory as this injector\n"
-			           "did you rename it?\n\n";
-		exit;
-	}
-
-	green;
-	cout << dllname << " found! absolute path: " << dllpath << "\n\n";
-
-	cyan;
-	cout << "press any key to inject...\n";
+	std::cout << "press any key to inject...\n";
 	_getch();
 
 	cyan;
-	cout << "\nattempting to inject...\n\n";
+	std::cout << "\nattempting to inject...\n\n";
 
-	if (!inject_dll(processid, dllpath))
+	if (!inject_dll(pid, dll_path.c_str()))
 	{
 		red;
-		cout << "injection failed. make sure that cs:go is running and\n"
+		std::cout << "injection failed. make sure that cs:go is running and\n"
 			    "that the .dll is in the same directory as this injector\n\n";
 		exit;
 	}
 	
 	white;
-	cout << "=====================================================================\n\n";
+	std::cout << "=====================================================================\n\n";
 	green;
-	cout << "successfully injected " << dllname << " into " << processname << "!\n\n";
+	std::cout << "successfully injected " << dll_name << " into " << process_name << "!\n\n";
 	white;
-	cout << "=====================================================================\n\n";
+	std::cout << "=====================================================================\n\n";
 	
 	cyan;
-	cout << "press any key to exit...\n\n";
-	cout << "automatically exiting in 5 seconds...\n";
+	std::cout << "press any key to exit...\n";
+	std::cout << "automatically exiting in 5 seconds...\n";
 
 	CreateThread(0, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(wait_for_exit), 0, 0, 0);
 
 	_getch();
+
 	return 0;
 }
 
