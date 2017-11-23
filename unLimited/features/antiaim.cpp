@@ -43,6 +43,7 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 	//if (localplayer->GetMoveType() == MOVETYPE_LADDER)
 	//	return;
 
+
 	if (options::antiaim::type != options::antiaim::LEGIT)
 	{
 		if (choked_ticks < 15)
@@ -69,6 +70,23 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 
 	switch (options::antiaim::type)
 	{
+	case options::antiaim::LEGIT:
+	{
+		static bool swap = false;
+
+		if (!send_packet)
+		{
+			if (swap)
+				cmd->viewangles.yaw += 90.f;
+			else
+				cmd->viewangles.yaw -= 90.f;
+
+			swap = !swap;
+		}
+
+		break;
+	}
+
 	case options::antiaim::RAGE: // fake sideways, emotion; real backwards, emotion
 	{
 		if (send_packet)
@@ -81,7 +99,7 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		break;
 	}
 
-	case options::antiaim::LBY_SIDEWAYS: // fake backwards, emotion; real sideways depending on lby, emotion
+	case options::antiaim::LBY_SIDEWAYS: // fake backwards, emotion; real sideways opposite lby, emotion
 	{
 		static float old_lby = 0.f;
 		static bool swap = false;
@@ -111,21 +129,22 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		break;
 	}
 
-	case options::antiaim::LEGIT:
+	case options::antiaim::SPIN_SLOW:
 	{
-		static bool swap = false;
+		float curtime = g_global_vars->get_realtime(cmd);
 
-		if (!send_packet)
-		{
-			if (swap)
-				cmd->viewangles.yaw += 90.f;
-			else
-				cmd->viewangles.yaw -= 90.f;
+		cmd->viewangles.yaw = fmodf(curtime / 300.f, 360.f);
 
-			swap = !swap;
-		}
+		cmd->viewangles.pitch = 89.f;
+	}
 
-		break;
+	case options::antiaim::SPIN_FAST:
+	{
+		float curtime = g_global_vars->get_realtime(cmd);
+
+		cmd->viewangles.yaw = fmodf(curtime * 7200.f, 360.f);
+
+		cmd->viewangles.pitch = 89.f;
 	}
 
 	default:

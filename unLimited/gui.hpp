@@ -15,7 +15,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 2
-#define VERSION_PATCH 0
+#define VERSION_PATCH 1
 
 namespace ImGui
 {
@@ -295,6 +295,10 @@ namespace gui
 				{
 					switch (idx)
 					{
+					case options::antiaim::aa_type::LEGIT:
+						*out_text = "legit";
+						break;
+
 					case options::antiaim::aa_type::RAGE:
 						*out_text = "rage";
 						break;
@@ -303,8 +307,12 @@ namespace gui
 						*out_text = "lby";
 						break;
 
-					case options::antiaim::aa_type::LEGIT:
-						*out_text = "legit";
+					case options::antiaim::aa_type::SPIN_SLOW:
+						*out_text = "slow spin";
+						break;
+
+					case options::antiaim::aa_type::SPIN_FAST:
+						*out_text = "fast spin";
 						break;
 
 					default:

@@ -37,9 +37,11 @@ namespace options
 	{
 		enum aa_type
 		{
+			LEGIT,
 			RAGE,
 			LBY_SIDEWAYS,
-			LEGIT,
+			SPIN_SLOW,
+			SPIN_FAST,
 			AA_COUNT
 		};
 
