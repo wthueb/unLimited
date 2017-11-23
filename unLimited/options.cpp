@@ -47,7 +47,15 @@ namespace options
 		bool rcs = false;
 	}
 
-	namespace esp
+	namespace antiaim
+	{
+		bool enabled = false;
+		bool text = true;
+
+		int type = LEGIT;
+	}
+
+	namespace visuals
 	{
 		bool enabled = true;
 
@@ -63,6 +71,8 @@ namespace options
 		bool weapons = false;
 
 		bool radar = false;
+
+		bool thirdperson = false;
 	}
 
 	namespace misc

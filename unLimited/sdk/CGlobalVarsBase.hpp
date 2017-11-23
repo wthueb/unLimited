@@ -1,5 +1,12 @@
 #pragma once
 
+#include <stdexcept>
+
+#include "CInput.hpp"
+#include "IClientEntity.hpp"
+#include "IClientEntityList.hpp"
+#include "IVEngineClient.hpp"
+
 class CGlobalVarsBase
 {
 public:
@@ -18,6 +25,30 @@ public:
 	void*     pSaveData;                    // 0x0030
 	bool      m_bClient;                    // 0x0031
 	bool      m_bRemoteClient;              // 0x0032
+
+	float get_realtime(CUserCmd* cmd) {
+		static int tick = 0;
+		static CUserCmd* last_cmd{};
+
+		// shouldn't be calling this more than once per tick;
+		if (cmd == last_cmd)
+			return tick * interval_per_tick;
+
+		auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+		if (!localplayer)
+			throw std::runtime_error("localplayer should be exist");
+
+		if (!last_cmd || last_cmd->hasbeenpredicted)
+			tick = localplayer->GetTickBase();
+		else
+			++tick;
+
+		last_cmd = cmd;
+
+		float realtime = tick * interval_per_tick;
+
+		return realtime;
+	}
 
 private:
 	// 100 (i.e., tickcount is rounded down to this base and then the "delta" from this base is networked

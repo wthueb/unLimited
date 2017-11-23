@@ -31,20 +31,11 @@ void misc::autostrafe(CUserCmd* cmd)
 		return;
 
 	if (cmd->mousedy > 1)
-	{
 		cmd->sidemove = 450.f;
-	}
 	else if (cmd->mousedy < -1)
-	{
 		cmd->sidemove = -450.f;
-	}
 	else
-	{
-		cmd->forwardmove = 7200.f / localplayer->GetVelocity().Length2D();
-		if (cmd->forwardmove > 450.f)
-			cmd->forwardmove = 450.f;
 		cmd->sidemove = cmd->command_number % 2 ? 450.f : -450.f;
-	}
 }
 
 void misc::show_ranks(CUserCmd* cmd)

@@ -136,6 +136,7 @@
     <ClCompile Include="config.cpp" />
     <ClCompile Include="engine_drawing.cpp" />
     <ClCompile Include="features\aimbot.cpp" />
+    <ClCompile Include="features\antiaim.cpp" />
     <ClCompile Include="features\backtracking.cpp" />
     <ClCompile Include="features\esp.cpp" />
     <ClCompile Include="features\misc.cpp" />

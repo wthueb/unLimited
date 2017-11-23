@@ -2,6 +2,14 @@
 
 using clr_t = unsigned char;
 
+struct clr_int
+{
+	int r;
+	int g;
+	int b;
+	int a;
+};
+
 class Color
 {
 private:
@@ -19,7 +27,7 @@ public:
 	Color(clr_t r, clr_t g, clr_t b, clr_t a = 255)
 		: _r(r), _g(g), _b(b), _a(a) {}
 
-	explicit Color(unsigned char rgb[4])
+	explicit Color(clr_t rgb[4])
 		: _r(rgb[0]), _g(rgb[1]), _b(rgb[2]), _a(rgb[3]) {}
 
 	explicit Color(unsigned long argb)
@@ -48,12 +56,17 @@ public:
 		_a = a;
 	}
 
-	void GetColor(clr_t &r, clr_t &g, clr_t &b, clr_t &a) const
+	void GetColor(clr_t& r, clr_t& g, clr_t& b, clr_t& a) const
 	{
 		r = _r;
 		g = _g;
 		b = _b;
 		a = _a;
+	}
+
+	clr_int to_int() const
+	{
+		return clr_int{ _r, _g, _b, _a };
 	}
 
 	clr_t r() const { return _r; }
@@ -71,17 +84,17 @@ public:
 		return operator[](index);
 	}
 
-	bool operator==(const Color &rhs) const
+	bool operator==(const Color& rhs) const
 	{
 		return this->GetRawColor() == rhs.GetRawColor();
 	}
 
-	bool operator!=(const Color &rhs) const
+	bool operator!=(const Color& rhs) const
 	{
 		return !operator==(rhs);
 	}
 
-	Color& operator=(const Color &rhs)
+	Color& operator=(const Color& rhs)
 	{
 		SetRawColor(rhs.GetRawColor());
 		return *this;

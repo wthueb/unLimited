@@ -123,7 +123,7 @@ void draw::text(int x, int y, const char* text, HFont font, const Color& col)
 
 	g_surface->DrawSetTextPos(x, y);
 	g_surface->DrawSetTextFont(font);
-	g_surface->DrawSetTextColor(col);
+	g_surface->DrawSetTextColor(col.to_int());
 
 	g_surface->DrawPrintText(wstr.c_str(), wcslen(wstr.c_str()));
 }
@@ -138,7 +138,6 @@ Vector2D draw::get_text_size(const char* text, HFont font)
 	std::wstring wstr = utils::to_wstring(text);
 
 	int x, y;
-
 	g_surface->GetTextSize(font, wstr.c_str(), x, y);
 
 	return Vector2D{ float(x), float(y) };

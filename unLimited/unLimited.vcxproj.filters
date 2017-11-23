@@ -65,6 +65,9 @@
     <ClCompile Include="features\misc.cpp">
       <Filter>features</Filter>
     </ClCompile>
+    <ClCompile Include="features\antiaim.cpp">
+      <Filter>features</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />

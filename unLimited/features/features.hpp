@@ -7,6 +7,12 @@ namespace aimbot
 	void process(CUserCmd* cmd, bool& send_packet);
 }
 
+namespace antiaim
+{
+	void process(CUserCmd* cmd, bool& send_packet);
+	void draw_angles();
+}
+
 namespace backtracking
 {
 	void process(CUserCmd* cmd);

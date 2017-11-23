@@ -6,7 +6,7 @@
 
 void esp::glow()
 {
-	if (!options::esp::enabled || !options::esp::glow)
+	if (!options::visuals::enabled || !options::visuals::glow)
 		return;
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
@@ -30,7 +30,7 @@ void esp::glow()
 		{
 		case ClassId_CCSPlayer:
 		{
-			if (!options::esp::players)
+			if (!options::visuals::players)
 				continue;
 
 			auto player = static_cast<C_BasePlayer*>(entity);
@@ -38,7 +38,7 @@ void esp::glow()
 			if (!player->IsAlive())
 				continue;
 
-			if (!options::esp::friendlies && player->GetTeam() == localplayer->GetTeam())
+			if (!options::visuals::friendlies && player->GetTeam() == localplayer->GetTeam())
 				continue;
 
 			// FIXMEW: add color picker
@@ -48,7 +48,7 @@ void esp::glow()
 		}
 		case ClassId_CChicken:
 		{
-			if (!options::esp::chickens)
+			if (!options::visuals::chickens)
 				continue;
 
 			entity->GetShouldGlow() = true;
@@ -59,7 +59,7 @@ void esp::glow()
 		}
 		case ClassId_CBaseAnimating:
 		{
-			if (!options::esp::defuse_kits)
+			if (!options::visuals::defuse_kits)
 				continue;
 
 			color = Color{ 255, 255, 255 };
@@ -68,7 +68,7 @@ void esp::glow()
 		}
 		case ClassId_CPlantedC4:
 		{
-			if (!options::esp::c4)
+			if (!options::visuals::c4)
 				continue;
 
 			color = Color{ 255, 255, 255 };
@@ -79,7 +79,7 @@ void esp::glow()
 		{
 			if (entity->IsWeapon())
 			{
-				if (!options::esp::weapons)
+				if (!options::visuals::weapons)
 					continue;
 
 				color = Color{ 255, 255, 255 };
@@ -90,17 +90,17 @@ void esp::glow()
 		}
 
 		object.m_vecGlowColor = Vector{ color.r() / 255.f, color.g() / 255.f, color.b() / 255.f };
-		object.m_flGlowAlpha = options::esp::glow_alpha;
+		object.m_flGlowAlpha = options::visuals::glow_alpha;
 		object.m_flBloomAmount = 1.f;
 		object.m_bRenderWhenOccluded = true;
 		object.m_bRenderWhenUnoccluded = false;
-		object.m_nGlowStyle = options::esp::glow_style;
+		object.m_nGlowStyle = options::visuals::glow_style;
 	}
 }
 
 void esp::radar()
 {
-	if (!options::esp::radar || !g_engine->IsInGame())
+	if (!options::visuals::radar || !g_engine->IsInGame())
 		return;
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));

@@ -69,6 +69,8 @@ struct Vertex_t
 class Color;
 class IAppSystem;
 
+struct clr_int;
+
 class ISurface : public IAppSystem
 {
 public:
@@ -87,7 +89,7 @@ public:
 	virtual void                   DrawSetApparentDepth(float f) = 0; // 21
 	virtual void                   DrawClearApparentDepth() = 0; // 22
 	virtual void                   DrawSetTextFont(HFont font) = 0; // 23
-	virtual void                   DrawSetTextColor(Color col) = 0; // 24
+	virtual void                   DrawSetTextColor(clr_int col) = 0; // 24
 	virtual void                   DrawSetTextColor(int r, int g, int b, int a) = 0; // 25
 	virtual void                   DrawSetTextPos(int x, int y) = 0; // 26
 	virtual void                   DrawGetTextPos(int &x, int &y) = 0; // 27

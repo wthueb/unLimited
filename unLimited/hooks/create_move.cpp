@@ -12,7 +12,7 @@ bool __stdcall hooks::hk_create_move(float sample_input_frametime, CUserCmd* cmd
 	uintptr_t* frame_ptr;
 	__asm mov frame_ptr, ebp
 
-	auto send_packet = *reinterpret_cast<bool*>(*frame_ptr - 0x1C);
+	bool& send_packet = *reinterpret_cast<bool*>(*frame_ptr - 0x1C);
 
 	backtracking::process(cmd);
 	aimbot::process(cmd, send_packet);
@@ -31,14 +31,14 @@ bool __stdcall hooks::hk_create_move(float sample_input_frametime, CUserCmd* cmd
 	float old_forward = cmd->forwardmove;
 	float old_side = cmd->sidemove;
 
-	// anti-aim
+	antiaim::process(cmd, send_packet);
 
 	math::correct_movement(cmd, old_angle, old_forward, old_side);
 
 	cmd->viewangles.Clamp();
 
 	//if (!options::aim::silent && (!options::rage::aa || !options::rage::silent))
-		g_engine->SetViewAngles(cmd->viewangles);
+	//	g_engine->SetViewAngles(cmd->viewangles);
 
 	return false;
 }

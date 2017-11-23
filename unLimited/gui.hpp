@@ -15,7 +15,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 1
-#define VERSION_PATCH 2
+#define VERSION_PATCH 3
 
 namespace ImGui
 {
@@ -235,25 +235,25 @@ namespace gui
 
 			ImGui::NextColumn();
 
-			ImGui::BetterCheckbox("esp", &options::esp::enabled);
+			ImGui::BetterCheckbox("esp", &options::visuals::enabled);
 			{
-				DISABLE(options::esp::enabled, .2f);
+				DISABLE(options::visuals::enabled, .2f);
 
-				ImGui::BetterCheckbox("glow", &options::esp::glow);
+				ImGui::BetterCheckbox("glow", &options::visuals::glow);
 				{
-					DISABLE(options::esp::glow, .2f);
+					DISABLE(options::visuals::glow, .2f);
 
-					if (ImGui::InputFloat("glow alpha", &options::esp::glow_alpha, .1f, 0.f, 1))
-						options::esp::glow_alpha = std::clamp(options::esp::glow_alpha, .1f, 1.f);
+					if (ImGui::InputFloat("glow alpha", &options::visuals::glow_alpha, .1f, 0.f, 1))
+						options::visuals::glow_alpha = std::clamp(options::visuals::glow_alpha, .1f, 1.f);
 
-					if (ImGui::InputInt("glow style", &options::esp::glow_style))
-						options::esp::glow_style = std::clamp(options::esp::glow_style, 0, 3);
+					if (ImGui::InputInt("glow style", &options::visuals::glow_style))
+						options::visuals::glow_style = std::clamp(options::visuals::glow_style, 0, 3);
 
 					ImGui::PopStyleVar();
 					ImGui::BetterPopItemFlag();
 				}
 
-				ImGui::BetterCheckbox("radar", &options::esp::radar);
+				ImGui::BetterCheckbox("radar", &options::visuals::radar);
 
 				ImGui::PopStyleVar();
 				ImGui::BetterPopItemFlag();
@@ -262,7 +262,7 @@ namespace gui
 			ImGui::NextColumn();
 
 			ImGui::BetterCheckbox("bhop", &options::misc::bhop);
-			ImGui::BetterCheckbox("autostrafe", &options::misc::autostrafe);
+			//ImGui::BetterCheckbox("autostrafe", &options::misc::autostrafe);
 
 			ImGui::BetterCheckbox("backtracking", &options::misc::backtracking);
 			{
@@ -282,6 +282,39 @@ namespace gui
 
 					ImGui::PopItemWidth();
 				}
+
+				ImGui::PopStyleVar();
+				ImGui::BetterPopItemFlag();
+			}
+
+			ImGui::BetterCheckbox("anti-aim", &options::antiaim::enabled);
+			{
+				DISABLE(options::antiaim::enabled, .2f);
+
+				ImGui::Combo("aa type", &options::antiaim::type, [](void* data, int idx, const char** out_text)
+				{
+					switch (idx)
+					{
+					case options::antiaim::aa_type::RAGE:
+						*out_text = "rage";
+						break;
+
+					case options::antiaim::aa_type::LBY_SIDEWAYS:
+						*out_text = "lby";
+						break;
+
+					case options::antiaim::aa_type::LEGIT:
+						*out_text = "legit";
+						break;
+
+					default:
+						return false;
+						break;
+					}
+
+					return true;
+				}, nullptr, options::antiaim::aa_type::AA_COUNT, -1);
+				ImGui::BetterCheckbox("show angles/choke", &options::antiaim::text);
 
 				ImGui::PopStyleVar();
 				ImGui::BetterPopItemFlag();

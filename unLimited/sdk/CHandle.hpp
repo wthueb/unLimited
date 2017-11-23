@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IHandleEntity.hpp"
+#include "IClientEntityList.hpp"
 
 #define NUM_ENT_ENTRY_BITS           (11 + 2)
 #define NUM_ENT_ENTRIES              (1 << NUM_ENT_ENTRY_BITS)
@@ -46,6 +47,11 @@ public:
 protected:
 	unsigned long  m_Index;
 };
+
+inline IHandleEntity* CBaseHandle::Get() const
+{
+	return reinterpret_cast<IHandleEntity*>(g_entity_list->GetClientEntityFromHandle(*this));
+}
 
 template<class T>
 class CHandle : public CBaseHandle

@@ -33,7 +33,23 @@ namespace options
 		extern bool rcs;
 	}
 
-	namespace esp
+	namespace antiaim
+	{
+		enum aa_type
+		{
+			RAGE,
+			LBY_SIDEWAYS,
+			LEGIT,
+			AA_COUNT
+		};
+
+		extern bool enabled;
+		extern bool text;
+
+		extern int type;
+	}
+
+	namespace visuals
 	{
 		extern bool enabled;
 
@@ -49,6 +65,8 @@ namespace options
 		extern bool weapons;
 
 		extern bool radar;
+
+		extern bool thirdperson;
 	}
 
 	namespace misc
