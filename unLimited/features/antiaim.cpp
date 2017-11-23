@@ -44,7 +44,7 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 	//	return;
 
 
-	if (options::antiaim::type != options::antiaim::LEGIT)
+	if (options::antiaim::fakelag)
 	{
 		if (choked_ticks < 15)
 		{
@@ -59,14 +59,15 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 
 		choking = !send_packet;
 	}
-	else
+	else if (options::antiaim::type != options::antiaim::SPIN_SLOW && options::antiaim::type != options::antiaim::SPIN_FAST)
 	{
-
 		static bool flip = false;
 		flip = !flip;
 
 		send_packet = flip;
 	}
+	else
+		send_packet = true;
 
 	switch (options::antiaim::type)
 	{
@@ -133,9 +134,11 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 	{
 		float curtime = g_global_vars->get_realtime(cmd);
 
-		cmd->viewangles.yaw = fmodf(curtime / 300.f, 360.f);
+		cmd->viewangles.yaw = fmodf(curtime * 300.f, 360.f);
 
 		cmd->viewangles.pitch = 89.f;
+
+		break;
 	}
 
 	case options::antiaim::SPIN_FAST:
@@ -145,6 +148,8 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		cmd->viewangles.yaw = fmodf(curtime * 7200.f, 360.f);
 
 		cmd->viewangles.pitch = 89.f;
+
+		break;
 	}
 
 	default:

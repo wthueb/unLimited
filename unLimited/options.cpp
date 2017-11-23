@@ -53,6 +53,7 @@ namespace options
 		bool text = true;
 
 		int type = LEGIT;
+		bool fakelag = false;
 	}
 
 	namespace visuals

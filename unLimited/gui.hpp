@@ -15,7 +15,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 2
-#define VERSION_PATCH 1
+#define VERSION_PATCH 2
 
 namespace ImGui
 {
@@ -322,6 +322,7 @@ namespace gui
 
 					return true;
 				}, nullptr, options::antiaim::aa_type::AA_COUNT, -1);
+				ImGui::BetterCheckbox("fakelag", &options::antiaim::fakelag);
 				ImGui::BetterCheckbox("show angles/choke", &options::antiaim::text);
 
 				ImGui::PopStyleVar();

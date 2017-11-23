@@ -49,6 +49,7 @@ namespace options
 		extern bool text;
 
 		extern int type;
+		extern bool fakelag;
 	}
 
 	namespace visuals
