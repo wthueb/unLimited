@@ -1,3 +1,5 @@
+// credit to namazso - https://github.com/namazso/nSkinz
+
 #include "kit_parser.hpp"
 
 #include <algorithm>
