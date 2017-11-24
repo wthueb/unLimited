@@ -1,14 +1,16 @@
 #include "hooks.hpp"
 
 #include "../features/features.hpp"
-
 #include "../math.hpp"
+#include "../vmt_hook.hpp"
 
 bool __stdcall hooks::hk_create_move(float sample_input_frametime, CUserCmd* cmd)
 {
-	if (!cmd || !cmd->command_number)
-		return true;
+	static auto o_create_move = client_mode_hook->get_original<bool(__thiscall*)(void*, float, CUserCmd*)>(index::create_move);
 
+	if (!cmd || !cmd->command_number)
+		return o_create_move(g_client_mode, sample_input_frametime, cmd);
+	
 	uintptr_t* frame_ptr;
 	__asm mov frame_ptr, ebp
 
