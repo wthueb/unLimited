@@ -228,7 +228,7 @@ using cstr_32 = char[32];
 class C_BaseAttributableItem : public C_BaseEntity
 {
 public:
-	NETVAR(GetItemDefinitionIndex, ItemDefinitionIndex, "DT_BaseAttributableItem", "m_iItemDefinitionIndex");
+	NETVAR(GetItemDefinitionIndex, int, "DT_BaseAttributableItem", "m_iItemDefinitionIndex");
 	NETVAR(GetFallbackPaintKit, int, "DT_BaseAttributableItem", "m_nFallbackPaintKit");
 	NETVAR(GetFallbackSeed, int, "DT_BaseAttributableItem", "m_nFallbackSeed");
 	NETVAR(GetFallbackWear, float, "DT_BaseAttributableItem", "m_flFallbackWear");

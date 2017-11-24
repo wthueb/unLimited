@@ -23,20 +23,23 @@ namespace hooks
 	// client
 	void __stdcall hk_frame_stage_notify(ClientFrameStage_t stage);
 	
-	// clientmode
+	// client mode
 	void __stdcall hk_override_view(CViewSetup* view);
 	bool __stdcall hk_create_move(float sample_input_frametime, CUserCmd* cmd);
 	bool __stdcall hk_do_post_screen_space_effects(CViewSetup* view);
 
+	// game event manager in events.hpp
+
 	// panel
 	void __fastcall hk_paint_traverse(void* thisptr, void* edx, VPANEL panel, bool force_repaint, bool allow_force);
 
-	// renderview
+	// render view
 	void __fastcall hk_scene_end(void* thisptr, void* edx);
 
 	extern std::shared_ptr<vmt_hook> d3d_device_hook;
 	extern std::shared_ptr<vmt_hook> client_hook;
 	extern std::shared_ptr<vmt_hook> client_mode_hook;
+	extern std::shared_ptr<vmt_hook> game_event_manager_hook;
 	extern std::shared_ptr<vmt_hook> panel_hook;
 	extern std::shared_ptr<vmt_hook> render_view_hook;
 
@@ -53,6 +56,9 @@ namespace hooks
 		static constexpr size_t override_view = 18;
 		static constexpr size_t create_move = 24;
 		static constexpr size_t do_post_screen_space_effects = 44;
+
+		// game event manager
+		static constexpr size_t fire_event_client_side = 9;
 
 		// panel
 		static constexpr size_t paint_traverse = 41;

@@ -144,6 +144,7 @@
     <ClCompile Include="hooks\create_move.cpp" />
     <ClCompile Include="hooks\directx.cpp" />
     <ClCompile Include="hooks\do_post_screen_space_effects.cpp" />
+    <ClCompile Include="hooks\events.cpp" />
     <ClCompile Include="hooks\frame_stage_notify.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
     <ClCompile Include="hooks\override_view.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="features\features.hpp" />
     <ClInclude Include="font.hpp" />
     <ClInclude Include="gui.hpp" />
+    <ClInclude Include="hooks\events.hpp" />
     <ClInclude Include="hooks\hooks.hpp" />
     <ClInclude Include="interfaces.hpp" />
     <ClInclude Include="kit_parser.hpp" />

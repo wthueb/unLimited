@@ -8,6 +8,7 @@
 using json = nlohmann::json;
 
 std::vector<econ_item_t> config::items;
+std::unordered_map<std::string, std::string> config::icon_overrides;
 
 void to_json(json& j, const sticker_t& sticker)
 {
@@ -93,11 +94,16 @@ void config::load()
 	catch (const std::exception&) {}
 }
 
-econ_item_t* config::get_by_definition_idx(ItemDefinitionIndex idx)
+econ_item_t* config::get_by_definition_idx(int idx)
 {
 	for (auto& item : items)
 		if (item.enabled && item.definition_index == idx)
 			return &item;
 
 	return nullptr;
+}
+
+const char* config::get_icon_override(const std::string& original)
+{
+	return icon_overrides.count(original) ? icon_overrides.at(original).c_str() : nullptr;
 }

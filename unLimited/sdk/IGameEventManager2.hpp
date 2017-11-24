@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 
 #define EVENT_DEBUG_ID_INIT 42
 #define EVENT_DEBUG_ID_SHUTDOWN 13
@@ -69,6 +70,29 @@ public:
 	virtual bool         SerializeEvent(IGameEvent* event, bf_write* buffer) = 0; // 12
 	virtual IGameEvent*  UnserializeEvent(bf_read* buffer) = 0; // 13
 	virtual KeyValues*   GetEventDataTypes(IGameEvent* event) = 0; // 14
+};
+
+class EventListener : public IGameEventListener2
+{
+public:
+	EventListener() = default;
+
+	EventListener(std::string name, std::function<void(IGameEvent*)> lambda)
+		: _name{ name }, _func{ lambda } {}
+
+	void FireGameEvent(IGameEvent* event)
+	{
+		_func(event);
+	}
+
+	int GetEventDebugID()
+	{
+		return 0;
+	}
+
+private:
+	std::string _name;
+	std::function<void(IGameEvent*)> _func;
 };
 
 extern IGameEventManager2* g_game_event_manager;

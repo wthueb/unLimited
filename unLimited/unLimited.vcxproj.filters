@@ -75,6 +75,9 @@
     <ClCompile Include="features\skinchanger.cpp">
       <Filter>features</Filter>
     </ClCompile>
+    <ClCompile Include="hooks\events.cpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />
@@ -214,6 +217,9 @@
       <Filter>features</Filter>
     </ClInclude>
     <ClInclude Include="kit_parser.hpp" />
+    <ClInclude Include="hooks\events.hpp">
+      <Filter>hooks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="hooks">

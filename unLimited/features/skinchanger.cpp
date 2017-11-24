@@ -166,13 +166,13 @@ void apply_config(C_BaseAttributableItem* item, const econ_item_t* config, unsig
 
 	auto& icon_override_map = config::icon_overrides;
 
-	if (config->definition_override_index
-		&& config->definition_override_index != definition_index
-		&& model_info.count(config->definition_override_index))
+	if (config->definition_override_index &&
+		config->definition_override_index != definition_index &&
+		model_info.count(config->definition_override_index))
 	{
-		auto old_definition_index = definition_index;
+		unsigned int old_definition_index = definition_index;
 
-		definition_index = ItemDefinitionIndex(config->definition_override_index);
+		definition_index = config->definition_override_index;
 
 		const auto& replacement_item = model_info.at(config->definition_override_index);
 
@@ -314,9 +314,11 @@ void skinchanger::apply_skins()
 	}
 }
 
-void skinchanger::fix_icons()
+void skinchanger::fix_icons(IGameEvent* event)
 {
-
+	if (g_engine->GetPlayerForUserID(event->GetInt("attacker")) == g_engine->GetLocalPlayer())
+		if (auto icon_override = config::get_icon_override(event->GetString("weapon")))
+			event->SetString("weapon", icon_override);
 }
 
 void skinchanger::unload()

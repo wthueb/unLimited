@@ -22,7 +22,7 @@ namespace backtracking
 namespace skinchanger
 {
 	void apply_skins();
-	void fix_icons();
+	void fix_icons(IGameEvent* event);
 
 	void unload();
 }

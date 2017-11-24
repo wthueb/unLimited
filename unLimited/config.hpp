@@ -36,7 +36,7 @@ struct quality_name_t
 	const char* name;
 };
 
-static const std::map<int, item_t> model_info = {
+static const std::map<size_t, item_t> model_info = {
 	{ WEAPON_KNIFE, { "models/weapons/v_knife_default_ct.mdl", "knife_default_ct" } },
 	{ WEAPON_KNIFE_T, { "models/weapons/v_knife_default_t.mdl", "knife_t" } },
 	{ WEAPON_KNIFE_BAYONET, { "models/weapons/v_knife_bayonet.mdl", "bayonet" } },
@@ -250,8 +250,9 @@ namespace config
 	void save();
 	void load();
 
-	econ_item_t* get_by_definition_idx(ItemDefinitionIndex idx);
+	econ_item_t* get_by_definition_idx(int idx);
+	const char* get_icon_override(const std::string& original);
 
 	extern std::vector<econ_item_t> items;
-	static std::unordered_map<std::string, std::string> icon_overrides;
+	extern std::unordered_map<std::string, std::string> icon_overrides;
 }
