@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
 
 		dll_name = dll_path.substr(dll_path.find_last_of("\\") + 1);
 
-		cyan;
+		green;
 		std::cout << "using " << dll_name << ", absolute path: " << dll_path << "\n\n";
 	}
 	else
