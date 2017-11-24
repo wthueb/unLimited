@@ -134,16 +134,18 @@ int main(int argc, char* argv[])
 
 		dll_name = get_current_ver();
 
-		char dll_path[MAX_PATH];
-		GetFullPathNameA(dll_name.c_str(), MAX_PATH, dll_path, 0);
+		char path[MAX_PATH];
+		GetFullPathNameA(dll_name.c_str(), MAX_PATH, path, 0);
 
-		if (GetFileAttributesA(dll_path) == INVALID_FILE_ATTRIBUTES || GetFileAttributesA(dll_path) & FILE_ATTRIBUTE_DIRECTORY)
+		if (GetFileAttributesA(path) == INVALID_FILE_ATTRIBUTES || GetFileAttributesA(path) & FILE_ATTRIBUTE_DIRECTORY)
 		{
 			red;
 			std::cout << dll_name << " is not in the same directory as this injector\n"
 				"did you rename it?\n\n";
 			exit;
 		}
+
+		dll_path = std::string{ path };
 
 		green;
 		std::cout << "using " << dll_name << ", absolute path: " << dll_path << "\n\n";
