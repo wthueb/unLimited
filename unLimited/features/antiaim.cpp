@@ -7,11 +7,11 @@
 #define TICKS_TO_TIME(t)  (float(t) * g_global_vars->interval_per_tick)
 #define TIME_TO_TICKS(dt) (int(.5f + float(dt) / g_global_vars->interval_per_tick))
 
-static QAngle fake{};
-static QAngle real{};
+static QAngle g_fake{};
+static QAngle g_real{};
 
-static bool choking = false;
-static int choked_ticks = 0;
+static bool g_choking = false;
+static int g_choked_ticks = 0;
 
 void antiaim::process(CUserCmd* cmd, bool& send_packet)
 {
@@ -46,26 +46,28 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 
 	if (options::antiaim::fakelag)
 	{
-		if (choked_ticks < 15)
+		if (g_choked_ticks < 15)
 		{
 			send_packet = false;
-			++choked_ticks;
+			++g_choked_ticks;
 		}
 		else
 		{
 			send_packet = true;
-			choked_ticks = 0;
+			g_choked_ticks = 0;
 		}
 
-		choking = !send_packet;
+		g_choking = !send_packet;
 	}
 	else
 	{
-		choking = false;
-		choked_ticks = 0;
+		g_choking = false;
+		g_choked_ticks = 0;
 
 		if (options::antiaim::type == options::antiaim::SPIN_SLOW && options::antiaim::type == options::antiaim::SPIN_FAST)
+		{
 			send_packet = true;
+		}
 		else
 		{
 			static bool flip = false;
@@ -165,9 +167,9 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 	cmd->viewangles.Clamp();
 
 	if (send_packet)
-		fake = cmd->viewangles;
+		g_fake = cmd->viewangles;
 	else
-		real = cmd->viewangles;
+		g_real = cmd->viewangles;
 }
 
 void antiaim::draw_angles()
@@ -181,20 +183,15 @@ void antiaim::draw_angles()
 
 	static auto font = draw::create_font("Verdana", 15);
 
-	std::string lby_str = "lby: ";
-	lby_str += std::to_string(localplayer->GetLBY());
+	std::string lby_str{ "lby: " + std::to_string(localplayer->GetLBY()) };
 	draw::text(100, 100, lby_str.c_str(), font, Color{ 255, 255, 255 });
 
-	std::string fake_str = "fake yaw: ";
-	fake_str += std::to_string(fake.yaw);
+	std::string fake_str{ "fake yaw: " + std::to_string(g_fake.yaw) };
 	draw::text(100, 125, fake_str.c_str(), font, Color{ 255, 255, 255 });
 
-	std::string real_str = "real yaw: ";
-	real_str += std::to_string(real.yaw);
+	std::string real_str{ "real yaw: " + std::to_string(g_real.yaw) };
 	draw::text(100, 150, real_str.c_str(), font, Color{ 255, 255, 255 });
 
-	std::string choking_str = "choking: ";
-	choking_str += choking ? "true, " : "false, ";
-	choking_str += std::to_string(choked_ticks);
+	std::string choking_str{ std::string{ "choking: " } + (g_choking ? "true, " : "false, ") + std::to_string(g_choked_ticks) };
 	draw::text(100, 200, choking_str.c_str(), font, Color{ 255, 255, 255 });
 }
