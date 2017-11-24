@@ -22,7 +22,7 @@ bool __stdcall hooks::hk_create_move(float sample_input_frametime, CUserCmd* cmd
 	misc::show_ranks(cmd);
 
 	// FIXMEW: put in FSN
-	esp::radar();
+	visuals::radar();
 
 	// doesn't matter where we call this, as long as it's called somewhat regularly
 	misc::nightmode();

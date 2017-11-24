@@ -1,8 +1,9 @@
 #include "hooks.hpp"
 
+#include <d3d9.h>
+#include <d3dx9.h>
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
-
 #include <intrin.h>
 
 #include "../gui.hpp"
