@@ -71,6 +71,7 @@
     <ClCompile Include="features\visuals.cpp">
       <Filter>features</Filter>
     </ClCompile>
+    <ClCompile Include="kit_parser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="features\features.hpp">
       <Filter>features</Filter>
     </ClInclude>
+    <ClInclude Include="kit_parser.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="hooks">

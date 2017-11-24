@@ -7,11 +7,12 @@
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include <imgui_internal.h>
 
-#include "config.hpp"
 #include "font.hpp"
 #include "options.hpp"
 
 #ifndef GUI_TEST
+#include "config.hpp"
+#include "kit_parser.hpp"
 #include "utils.hpp"
 #endif
 
@@ -115,6 +116,7 @@ namespace ImGui
 namespace gui
 {
 	static char title[64];
+	static float theme_color[3] = { .65f, .85f, .95f };
 	static bool dark_mode = false;
 
 	static void setup_style(const ImVec4& theme_color)
@@ -123,6 +125,7 @@ namespace gui
 
 		style.WindowTitleAlign = { .5f, .5f };
 		style.WindowRounding = 3.f;
+		style.FrameBorderSize = 0.f;
 
 		style.Colors[ImGuiCol_Text] = ImVec4{ .05f, .05f, .05f, 1.f };
 		style.Colors[ImGuiCol_TextDisabled] = style.Colors[ImGuiCol_Text];
@@ -184,7 +187,7 @@ namespace gui
 			ImGuiWindowFlags_AlwaysAutoResize |
 			ImGuiWindowFlags_NoSavedSettings))
 		{
-			ImGui::Columns(3); // aim
+			ImGui::Columns(3, nullptr, true); // aim
 			{
 				ImGui::PushItemWidth(150.f);
 
@@ -393,7 +396,7 @@ namespace gui
 				ImGui::PopItemWidth();
 			}
 
-			ImGui::Columns(1);
+			ImGui::Columns(1, nullptr, false);
 
 			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::CalcTextSize("").y - 10.f);
 
@@ -422,7 +425,6 @@ namespace gui
 
 			ImGui::SameLine();
 			
-			static float theme_color[3] = { .65f, .85f, .95f };
 			if (ImGui::ColorEdit3("theme color", theme_color, ImGuiColorEditFlags_NoOptions | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoTooltip))
 				setup_style(ImVec4{ theme_color[0], theme_color[1], theme_color[2], 1.f });
 
@@ -460,14 +462,15 @@ namespace gui
 		if (skin_window_open)
 		{
 			ImGui::SetNextWindowPos(ImVec2(100, 100), ImGuiCond_Once);
-			ImGui::SetNextWindowSize(ImVec2(700, 400));
-
+			ImGui::SetNextWindowSize(ImVec2(700, 415));
+			
 			if (ImGui::Begin("skinchanger", &skin_window_open,
 				ImGuiWindowFlags_NoResize |
 				ImGuiWindowFlags_NoCollapse |
 				ImGuiWindowFlags_AlwaysAutoResize |
 				ImGuiWindowFlags_NoSavedSettings))
 			{
+#ifndef GUI_TEST
 				auto& entries = config::items;
 
 				if (entries.empty())
@@ -475,7 +478,7 @@ namespace gui
 
 				static auto selected_idx = 0;
 
-				ImGui::Columns(2, nullptr, false);
+				ImGui::Columns(2, nullptr, false); // list of items
 				{
 					ImGui::PushItemWidth(-1);
 
@@ -483,11 +486,11 @@ namespace gui
 
 					ImGui::ListBox("##items", &selected_idx, [&element_name, &entries](int idx)
 					{
-						snprintf(element_name, sizeof(element_name), "%s", entries.at(idx).name);
+						snprintf(element_name, sizeof(element_name), "%s (%s)", entries.at(idx).name, weapon_names.at(entries.at(idx).definition_vector_index).name);
 						return element_name;
-					}, entries.size(), 10);
+					}, entries.size(), 12);
 
-					static auto button_size = ImVec2{ ImGui::GetColumnWidth() / 2 - 8.5f, 25 };
+					static auto button_size = ImVec2{ ImGui::GetColumnWidth() / 2.f - 12.5f, 20 };
 
 					if (ImGui::Button("add", button_size))
 						entries.insert(entries.begin() + ++selected_idx, econ_item_t{});
@@ -503,6 +506,146 @@ namespace gui
 					ImGui::PopItemWidth();
 				}
 
+				auto& selected_entry = entries[selected_idx];
+
+				ImGui::NextColumn(); // configurator
+				{
+					ImGui::InputText("name", selected_entry.name, 32);
+
+					ImGui::Combo("item", &selected_entry.definition_vector_index, [](void* data, int idx, const char** out_text)
+					{
+						*out_text = weapon_names.at(idx).name;
+						return true;
+					}, nullptr, weapon_names.size(), 10);
+
+					ImGui::BetterCheckbox("enabled", &selected_entry.enabled);
+
+					if (ImGui::InputInt("seed", &selected_entry.seed))
+						selected_entry.seed = std::max(0, selected_entry.seed);
+
+					if (ImGui::InputInt("stattrak", &selected_entry.stat_trak))
+						selected_entry.stat_trak = std::max(0, selected_entry.stat_trak);
+
+					ImGui::SliderFloat("float", &selected_entry.wear, .00001f, 1.f, "%.5f");
+
+					if (selected_entry.definition_index != GLOVE_T_SIDE)
+					{
+						ImGui::Combo("paint kit", &selected_entry.paint_kit_vector_index, [](void* data, int idx, const char** out_text)
+						{
+							*out_text = weapon_kits.at(idx).name.c_str();
+							return true;
+						}, nullptr, weapon_kits.size(), 10);
+					}
+					else
+					{
+						ImGui::Combo("paint kit", &selected_entry.paint_kit_vector_index, [](void* data, int idx, const char** out_text)
+						{
+							*out_text = glove_kits.at(idx).name.c_str();
+							return true;
+						}, nullptr, glove_kits.size(), 10);
+					}
+
+					ImGui::Combo("quality", &selected_entry.entity_quality_vector_index, [](void* data, int idx, const char** out_text)
+					{
+						*out_text = quality_names.at(idx).name;
+						return true;
+					}, nullptr, quality_names.size(), quality_names.size());
+
+					selected_entry.update_values();
+
+					if (selected_entry.definition_index == WEAPON_KNIFE)
+					{
+						ImGui::Combo("knife", &selected_entry.definition_override_vector_index, [](void* data, int idx, const char** out_text)
+						{
+							*out_text = knife_names.at(idx).name;
+							return true;
+						}, nullptr, knife_names.size(), knife_names.size());
+					}
+					else if (selected_entry.definition_index == GLOVE_T_SIDE)
+					{
+						ImGui::Combo("glove", &selected_entry.definition_override_vector_index, [](void* data, int idx, const char** out_text)
+						{
+							*out_text = glove_names.at(idx).name;
+							return true;
+						}, nullptr, glove_names.size(), glove_names.size());
+					}
+					else
+					{
+						ImGui::PushStyleVar(ImGuiStyleVar_Alpha, .3f);
+
+						static auto unused_value = 0;
+						selected_entry.definition_override_vector_index = 0;
+
+						ImGui::Combo("unavailable", &unused_value, "unavailable\0");
+
+						ImGui::PopStyleVar();
+					}
+
+					selected_entry.update_values();
+
+					ImGui::InputText("name tag", selected_entry.custom_name, 32);
+				}
+
+				ImGui::Columns(1, nullptr, false);
+
+				ImGui::Separator();
+
+				static auto selected_sticker_slot = 0;
+
+				auto& selected_sticker = selected_entry.stickers[selected_sticker_slot];
+
+				ImGui::Columns(2, nullptr, false); // sticker slots
+				{
+					ImGui::PushItemWidth(-1);
+
+					char element_name[64];
+
+					ImGui::ListBox("##stickers", &selected_sticker_slot, [&selected_entry, &element_name](int idx)
+					{
+						auto kit_vector_index = selected_entry.stickers[idx].kit_vector_index;
+						snprintf(element_name, sizeof(element_name), "#%d (%s)", idx + 1, stickers.at(kit_vector_index).name.c_str());
+						return element_name;
+					}, 5, 5);
+
+					ImGui::PopItemWidth();
+				}
+
+				ImGui::NextColumn(); // sticker configurator
+				{
+					ImGui::Combo("sticker", &selected_sticker.kit_vector_index, [](void* data, int idx, const char** out_text)
+					{
+						*out_text = stickers.at(idx).name.c_str();
+						return true;
+					}, nullptr, stickers.size(), 10);
+
+					ImGui::SliderFloat("float", &selected_sticker.wear, .00001f, 1.f, "%.5f");
+
+					ImGui::SliderFloat("scale", &selected_sticker.scale, 0.1f, 5.f, "%.3f");
+
+					ImGui::SliderFloat("rotation", &selected_sticker.rotation, 0.f, 360.f, "%.3f");
+				}
+
+				ImGui::Columns(1, nullptr, false);
+
+				ImGui::Separator();
+
+				ImGui::Columns(3, nullptr, false);
+
+				auto button_size = ImVec2{ ImGui::GetColumnWidth() - 15.f, 20.f };
+
+				if (ImGui::Button("update", button_size))
+					g_client_state->ForceFullUpdate();
+
+				ImGui::NextColumn();
+
+				if (ImGui::Button("save", button_size))
+					config::save();
+
+				ImGui::NextColumn();
+
+				if (ImGui::Button("load", button_size))
+					config::load();
+#endif
 				ImGui::End();
 			}
 		}
@@ -518,6 +661,6 @@ namespace gui
 		auto font = io.Fonts->AddFontFromMemoryCompressedTTF(RobotoFont_compressed_data, RobotoFont_compressed_size, 14.f);
 		io.FontDefault = font;
 
-		setup_style(ImVec4{ .65f, .85f, .95f, 1.f });
+		setup_style(ImVec4{ theme_color[0], theme_color[1], theme_color[2], 1.f });
 	}
 }

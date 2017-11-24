@@ -15,72 +15,72 @@
 #define MAX_WEAPON_PREFIX 16
 #define MAX_WEAPON_AMMO_NAME 32
 
-enum ItemDefinitionIndex_t
+enum ItemDefinitionIndex
 {
-	weapon_deagle = 1,
-	weapon_elite = 2,
-	weapon_fiveseven = 3,
-	weapon_glock = 4,
-	weapon_ak47 = 7,
-	weapon_aug = 8,
-	weapon_awp = 9,
-	weapon_famas = 10,
-	weapon_g3sg1 = 11,
-	weapon_galilar = 13,
-	weapon_m249 = 14,
-	weapon_m4a1 = 16,
-	weapon_mac10 = 17,
-	weapon_p90 = 19,
-	weapon_ump = 24,
-	weapon_xm1014 = 25,
-	weapon_bizon = 26,
-	weapon_mag7 = 27,
-	weapon_negev = 28,
-	weapon_sawedoff = 29,
-	weapon_tec9 = 30,
-	weapon_taser = 31,
-	weapon_hkp2000 = 32,
-	weapon_mp7 = 33,
-	weapon_mp9 = 34,
-	weapon_nova = 35,
-	weapon_p250 = 36,
-	weapon_scar20 = 38,
-	weapon_sg556 = 39,
-	weapon_ssg08 = 40,
-	weapon_knife = 42,
-	weapon_flashbang = 43,
-	weapon_hegrenade = 44,
-	weapon_smokegrenade = 45,
-	weapon_molotov = 46,
-	weapon_decoy = 47,
-	weapon_incgrenade = 48,
-	weapon_c4 = 49,
-	weapon_knife_t = 59,
-	weapon_m4a1_silencer = 60,
-	weapon_usp_silencer = 61,
-	weapon_cz75a = 63,
-	weapon_revolver = 64,
-	weapon_bayonet = 500,
-	weapon_knife_flip = 505,
-	weapon_knife_gut = 506,
-	weapon_knife_karambit = 507,
-	weapon_knife_m9_bayonet = 508,
-	weapon_knife_tactical = 509,
-	weapon_knife_falchion = 512,
-	weapon_knife_survival_bowie = 514,
-	weapon_knife_butterfly = 515,
-	weapon_knife_push = 516,
-	studded_bloodhound_gloves = 5027,
-	t_gloves = 5028,
-	ct_gloves = 5029,
-	sporty_gloves = 5030,
-	slick_gloves = 5031,
-	leather_handwraps = 5032,
-	motorcycle_gloves = 5033,
-	specialist_gloves = 5034
+	WEAPON_DEAGLE = 1,
+	WEAPON_ELITE = 2,
+	WEAPON_FIVESEVEN = 3,
+	WEAPON_GLOCK = 4,
+	WEAPON_AK47 = 7,
+	WEAPON_AUG = 8,
+	WEAPON_AWP = 9,
+	WEAPON_FAMAS = 10,
+	WEAPON_G3SG1 = 11,
+	WEAPON_GALILAR = 13,
+	WEAPON_M249 = 14,
+	WEAPON_M4A1 = 16,
+	WEAPON_MAC10 = 17,
+	WEAPON_P90 = 19,
+	WEAPON_UMP45 = 24,
+	WEAPON_XM1014 = 25,
+	WEAPON_BIZON = 26,
+	WEAPON_MAG7 = 27,
+	WEAPON_NEGEV = 28,
+	WEAPON_SAWEDOFF = 29,
+	WEAPON_TEC9 = 30,
+	WEAPON_TASER = 31,
+	WEAPON_HKP2000 = 32,
+	WEAPON_MP7 = 33,
+	WEAPON_MP9 = 34,
+	WEAPON_NOVA = 35,
+	WEAPON_P250 = 36,
+	WEAPON_SCAR20 = 38,
+	WEAPON_SG556 = 39,
+	WEAPON_SSG08 = 40,
+	WEAPON_KNIFE = 42,
+	WEAPON_FLASHBANG = 43,
+	WEAPON_HEGRENADE = 44,
+	WEAPON_SMOKEGRENADE = 45,
+	WEAPON_MOLOTOV = 46,
+	WEAPON_DECOY = 47,
+	WEAPON_INCGRENADE = 48,
+	WEAPON_C4 = 49,
+	WEAPON_KNIFE_T = 59,
+	WEAPON_M4A1_SILENCER = 60,
+	WEAPON_USP_SILENCER = 61,
+	WEAPON_CZ75A = 63,
+	WEAPON_REVOLVER = 64,
+	WEAPON_KNIFE_BAYONET = 500,
+	WEAPON_KNIFE_FLIP = 505,
+	WEAPON_KNIFE_GUT = 506,
+	WEAPON_KNIFE_KARAMBIT = 507,
+	WEAPON_KNIFE_M9_BAYONET = 508,
+	WEAPON_KNIFE_TACTICAL = 509,
+	WEAPON_KNIFE_FALCHION = 512,
+	WEAPON_KNIFE_SURVIVAL_BOWIE = 514,
+	WEAPON_KNIFE_BUTTERFLY = 515,
+	WEAPON_KNIFE_PUSH = 516,
+	GLOVE_STUDDED_BLOODHOUND = 5027,
+	GLOVE_T_SIDE = 5028,
+	GLOVE_CT_SIDE = 5029,
+	GLOVE_SPORTY = 5030,
+	GLOVE_SLICK = 5031,
+	GLOVE_LEATHER_WRAP = 5032,
+	GLOVE_MOTORCYCLE = 5033,
+	GLOVE_SPECIALIST = 5034
 };
 
-enum Bone_t
+enum Bone
 {
 	INVALID = -1,
 	BONE_PELVIS,
@@ -94,7 +94,7 @@ enum Bone_t
 	BONE_HEAD,
 };
 
-enum LifeState_t
+enum LifeState
 {
 	LIFE_ALIVE,
 	LIFE_DYING,
@@ -103,7 +103,7 @@ enum LifeState_t
 	LIFE_DISCARDBODY,
 };
 
-enum Team_t
+enum Team
 {
 	TEAM_UNASSIGNED = 0,
 	TEAM_SPECTATOR,
@@ -111,7 +111,7 @@ enum Team_t
 	TEAM_COUNTER_TERRORIST,
 };
 
-enum Flags_t
+enum Flags
 {
 	FL_ONGROUND = (1 << 0),
 	FL_DUCKING = (1 << 1),
@@ -124,7 +124,7 @@ enum Flags_t
 	FL_FAKECLIENT = (1 << 8)
 };
 
-enum MoveType_t
+enum MoveType
 {
 	MOVETYPE_NONE = 0,
 	MOVETYPE_ISOMETRIC,
@@ -142,7 +142,7 @@ enum MoveType_t
 	MOVETYPE_MAX_BITS = 4
 };
 
-enum ObserverMode_t
+enum ObserverMode
 {
 	OBS_MODE_NONE = 0,
 	OBS_MODE_DEATHCAM,
@@ -153,7 +153,7 @@ enum ObserverMode_t
 	OBS_MODE_ROAMING
 };
 
-enum CSWeaponType_t
+enum CSWeaponType
 {
 	WEAPONTYPE_KNIFE = 0,
 	WEAPONTYPE_PISTOL,
@@ -167,7 +167,7 @@ enum CSWeaponType_t
 	WEAPONTYPE_UNKNOWN
 };
 
-enum WeaponSound_t
+enum WeaponSound
 {
 	EMPTY,
 	SINGLE,
@@ -207,7 +207,7 @@ public:
 	NETVAR(GetVecOrigin, Vector, "DT_BaseEntity", "m_vecOrigin");
 	NETVAR(GetSpotted, bool, "DT_BaseEntity", "m_bSpotted");
 	NETVAR(GetModelIndex, int, "DT_BaseEntity", "m_nModelIndex");
-	NETVAR(GetTeam, Team_t, "DT_BaseEntity", "m_iTeamNum");
+	NETVAR(GetTeam, Team, "DT_BaseEntity", "m_iTeamNum");
 	NETVAR(GetOwnerEntity, CHandle<C_BaseEntity>, "DT_BaseEntity", "m_hOwnerEntity");
 	NETVAR(GetShouldGlow, bool, "DT_DynamicProp", "m_bShouldGlow");
 
@@ -226,7 +226,7 @@ public:
 class C_BaseAttributableItem : public C_BaseEntity
 {
 public:
-	NETVAR(GetItemDefinitionIndex, ItemDefinitionIndex_t, "DT_BaseAttributableItem", "m_iItemDefinitionIndex");
+	NETVAR(GetItemDefinitionIndex, ItemDefinitionIndex, "DT_BaseAttributableItem", "m_iItemDefinitionIndex");
 	NETVAR(GetFallbackPaintKit, int, "DT_BaseAttributableItem", "m_nFallbackPaintKit");
 	NETVAR(GetFallbackSeed, int, "DT_BaseAttributableItem", "m_nFallbackSeed");
 	NETVAR(GetFallbackWear, int, "DT_BaseAttributableItem", "m_flFallbackWear");
@@ -318,43 +318,43 @@ public:
 	{
 		int weaponid = GetItemDefinitionIndex();
 
-		return weaponid == weapon_deagle || weaponid == weapon_elite ||
-			weaponid == weapon_fiveseven || weaponid == weapon_p250 ||
-			weaponid == weapon_glock || weaponid == weapon_hkp2000 ||
-			weaponid == weapon_cz75a || weaponid == weapon_usp_silencer ||
-			weaponid == weapon_tec9 || weaponid == weapon_revolver;
+		return weaponid == WEAPON_DEAGLE || weaponid == WEAPON_ELITE ||
+			weaponid == WEAPON_FIVESEVEN || weaponid == WEAPON_P250 ||
+			weaponid == WEAPON_GLOCK || weaponid == WEAPON_HKP2000 ||
+			weaponid == WEAPON_CZ75A || weaponid == WEAPON_USP_SILENCER ||
+			weaponid == WEAPON_TEC9 || weaponid == WEAPON_REVOLVER;
 	}
 
 	bool IsShotgun()
 	{
 		int weaponid = GetItemDefinitionIndex();
 
-		return weaponid == weapon_xm1014 || weaponid == weapon_nova ||
-			weaponid == weapon_sawedoff || weaponid == weapon_mag7;
+		return weaponid == WEAPON_XM1014 || weaponid == WEAPON_NOVA ||
+			weaponid == WEAPON_SAWEDOFF || weaponid == WEAPON_MAG7;
 	}
 
 	bool IsSniper()
 	{
 		int weaponid = GetItemDefinitionIndex();
 
-		return weaponid == weapon_awp || weaponid == weapon_scar20 ||
-			weaponid == weapon_g3sg1 || weaponid == weapon_ssg08;
+		return weaponid == WEAPON_AWP || weaponid == WEAPON_SCAR20 ||
+			weaponid == WEAPON_G3SG1 || weaponid == WEAPON_SSG08;
 	}
 
 	bool IsNade()
 	{
 		int weaponid = GetItemDefinitionIndex();
 
-		return weaponid == weapon_flashbang || weaponid == weapon_hegrenade ||
-			weaponid == weapon_smokegrenade || weaponid == weapon_molotov ||
-			weaponid == weapon_decoy || weaponid == weapon_incgrenade;
+		return weaponid == WEAPON_FLASHBANG || weaponid == WEAPON_HEGRENADE ||
+			weaponid == WEAPON_SMOKEGRENADE || weaponid == WEAPON_MOLOTOV ||
+			weaponid == WEAPON_DECOY || weaponid == WEAPON_INCGRENADE;
 	}
 
 	bool IsKnife()
 	{
 		int weaponid = GetItemDefinitionIndex();
 
-		return weaponid == weapon_knife || weaponid == weapon_knife_t ||
+		return weaponid == WEAPON_KNIFE || weaponid == WEAPON_KNIFE_T ||
 			weaponid >= 500;
 	}
 
@@ -362,16 +362,16 @@ public:
 	{
 		int weaponid = GetItemDefinitionIndex();
 
-		return weaponid == weapon_c4;
+		return weaponid == WEAPON_C4;
 	}
 };
 
 class C_BasePlayer : public C_BaseEntity
 {
 public:
-	NETVAR(GetFlags, Flags_t, "DT_BasePlayer", "m_fFlags");
+	NETVAR(GetFlags, Flags, "DT_BasePlayer", "m_fFlags");
 	NETVAR(GetHealth, int, "DT_BasePlayer", "m_iHealth");
-	NETVAR(GetLifeState, LifeState_t, "DT_BasePlayer", "m_lifeState");
+	NETVAR(GetLifeState, LifeState, "DT_BasePlayer", "m_lifeState");
 	NETVAR(GetObserverTarget, CHandle<C_BasePlayer>, "DT_BasePlayer", "m_hObserverTarget");
 	NETVAR(GetViewModel, CHandle<C_BaseViewModel>, "DT_BasePlayer", "m_hViewModel[0]");
 	NETVAR(GetVecViewOffset, Vector, "DT_BasePlayer", "m_vecViewOffset[0]");
@@ -405,7 +405,7 @@ public:
 		return this->GetLifeState() == LIFE_ALIVE;
 	}
 
-	Vector GetBonePos(Bone_t bone)
+	Vector GetBonePos(Bone bone)
 	{
 		matrix3x4_t bone_matrix[128];
 

@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\unLimited\options.hpp" />
+    <ClInclude Include="..\unLimited\gui.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">

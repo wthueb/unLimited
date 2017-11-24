@@ -149,6 +149,7 @@
     <ClCompile Include="hooks\paint_traverse.cpp" />
     <ClCompile Include="hooks\scene_end.cpp" />
     <ClCompile Include="interfaces.cpp" />
+    <ClCompile Include="kit_parser.cpp" />
     <ClCompile Include="netvars.cpp" />
     <ClCompile Include="options.cpp" />
     <ClCompile Include="sdk\CRC.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="gui.hpp" />
     <ClInclude Include="hooks\hooks.hpp" />
     <ClInclude Include="interfaces.hpp" />
+    <ClInclude Include="kit_parser.hpp" />
     <ClInclude Include="math.hpp" />
     <ClInclude Include="netvars.hpp" />
     <ClInclude Include="options.hpp" />

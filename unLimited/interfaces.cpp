@@ -46,9 +46,7 @@ t* capture_interface(const std::string &module, const std::string &interface)
 
 void interfaces::init()
 {
-	//g_global_vars = *reinterpret_cast<CGlobalVarsBase**>(utils::find_signature("engine.dll", "68 ? ? ? ? 68 ? ? ? ? FF 50 08 85 C0") + 1);
 	g_glow_manager = *reinterpret_cast<CGlowObjectManager**>(utils::find_signature("client.dll", "0F 11 05 ? ? ? ? 83 C8 01") + 3);
-	//g_glow_manager = reinterpret_cast<CGlowObjectManager*>(*reinterpret_cast<uint64_t*>(utils::find_signature("client.dll", "A1 ? ? ? ? A8 01 75 4B") + 1) + 4);
 	g_client = capture_interface<IBaseClientDLL>("client.dll", "VClient018");
 	g_entity_list = capture_interface<IClientEntityList>("client.dll", "VClientEntityList003");
 	g_cvar = capture_interface<ICvar>("vstdlib.dll", "VEngineCvar007");

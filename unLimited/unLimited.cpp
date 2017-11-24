@@ -1,7 +1,9 @@
 #include <Windows.h>
 
+#include "config.hpp"
 #include "hooks/hooks.hpp"
 #include "interfaces.hpp"
+#include "kit_parser.hpp"
 #include "options.hpp"
 #include "utils.hpp"
 
@@ -53,6 +55,12 @@ void attach(HMODULE dll)
 #endif
 
 	options::init();
+
+	utils::console_print("finding paint kits...\n\n");
+	find_kits();
+	utils::console_print("finished dumping kits\n\n\n");
+
+	config::init();
 
 	wait_for_unload();
 }
