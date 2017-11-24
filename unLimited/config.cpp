@@ -92,3 +92,12 @@ void config::load()
 	}
 	catch (const std::exception&) {}
 }
+
+econ_item_t* config::get_by_definition_idx(ItemDefinitionIndex idx)
+{
+	for (auto& item : items)
+		if (item.enabled && item.definition_index == idx)
+			return &item;
+
+	return nullptr;
+}

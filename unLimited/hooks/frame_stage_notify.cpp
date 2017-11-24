@@ -12,11 +12,10 @@ void __stdcall hooks::hk_frame_stage_notify(ClientFrameStage_t stage)
 	{
 		visuals::thirdperson_fsn();
 	}
+	else if (stage == FRAME_NET_UPDATE_POSTDATAUPDATE_START)
+	{
+		skinchanger::apply_skins();
+	}
 
 	o_frame_stage_notify(g_client, stage);
-
-	if (stage == FRAME_NET_UPDATE_POSTDATAUPDATE_START)
-	{
-
-	}
 }

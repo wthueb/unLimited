@@ -72,6 +72,9 @@
       <Filter>features</Filter>
     </ClCompile>
     <ClCompile Include="kit_parser.cpp" />
+    <ClCompile Include="features\skinchanger.cpp">
+      <Filter>features</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />

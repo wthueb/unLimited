@@ -138,6 +138,7 @@
     <ClCompile Include="features\aimbot.cpp" />
     <ClCompile Include="features\antiaim.cpp" />
     <ClCompile Include="features\backtracking.cpp" />
+    <ClCompile Include="features\skinchanger.cpp" />
     <ClCompile Include="features\visuals.cpp" />
     <ClCompile Include="features\misc.cpp" />
     <ClCompile Include="hooks\create_move.cpp" />

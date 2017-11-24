@@ -3,6 +3,7 @@
 #include <array>
 #include <map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "kit_parser.hpp"
@@ -249,5 +250,8 @@ namespace config
 	void save();
 	void load();
 
+	econ_item_t* get_by_definition_idx(ItemDefinitionIndex idx);
+
 	extern std::vector<econ_item_t> items;
+	static std::unordered_map<std::string, std::string> icon_overrides;
 }

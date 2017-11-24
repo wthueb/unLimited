@@ -32,29 +32,32 @@ struct Frustum_t;
 
 typedef void(*pfnDemoCustomDataCallback)(uint8_t *pData, size_t iSize);
 
-
 typedef struct player_info_s
 {
-	int         unknown;            //0x0000 
+private:
+	int64_t unknown;
+public:
 	union
 	{
-		int       steamID64;          //0x0008 - SteamID64
+		int64_t xuid;
+
 		struct
 		{
-			int     xuid_low;
-			int     xuid_high;
+			int xuid_low;
+			int xuid_high;
 		};
 	};
-	char            szName[128];        //0x0010 - Player Name
-	int             userId;             //0x0090 - Unique Server Identifier
-	char            szSteamID[20];      //0x0094 - STEAM_X:Y:Z
-	char            pad_0x00A8[0x10];   //0x00A8
-	unsigned long   iSteamID;           //0x00B8 - SteamID 
-	char            szFriendsName[128];
-	bool            fakeplayer;
-	bool            ishltv;
-	unsigned int    customfiles[4];
-	unsigned char   filesdownloaded;
+
+	char name[128];
+	int userid;
+	int m_nUserID;
+	char guid[32 + 1];
+	unsigned int friendsid;
+	char friendsname[128];
+	bool fakeplayer;
+	bool ishltv;
+	unsigned int customfiles[4];
+	unsigned char filesdownloaded;
 } player_info_t;
 
 class IVEngineClient

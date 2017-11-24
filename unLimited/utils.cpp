@@ -27,7 +27,7 @@ void utils::unload()
 #endif
 	
 	options::unload();
-
+	
 	gui_shutdown();
 	Sleep(100);
 

@@ -19,6 +19,14 @@ namespace backtracking
 	void draw();
 }
 
+namespace skinchanger
+{
+	void apply_skins();
+	void fix_icons();
+
+	void unload();
+}
+
 namespace visuals
 {
 	void glow();

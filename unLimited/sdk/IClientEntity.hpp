@@ -223,25 +223,20 @@ public:
 	}
 };
 
+using cstr_32 = char[32];
+
 class C_BaseAttributableItem : public C_BaseEntity
 {
 public:
 	NETVAR(GetItemDefinitionIndex, ItemDefinitionIndex, "DT_BaseAttributableItem", "m_iItemDefinitionIndex");
 	NETVAR(GetFallbackPaintKit, int, "DT_BaseAttributableItem", "m_nFallbackPaintKit");
 	NETVAR(GetFallbackSeed, int, "DT_BaseAttributableItem", "m_nFallbackSeed");
-	NETVAR(GetFallbackWear, int, "DT_BaseAttributableItem", "m_flFallbackWear");
+	NETVAR(GetFallbackWear, float, "DT_BaseAttributableItem", "m_flFallbackWear");
 	NETVAR(GetFallbackStatTrak, int, "DT_BaseAttributableItem", "m_nFallbackStatTrak");
 	NETVAR(GetItemIDHigh, int, "DT_BaseAttributableItem", "m_iItemIDHigh");
 	NETVAR(GetAccountID, int, "DT_BaseAttributableItem", "m_iAccountID");
 	NETVAR(GetEntityQuality, int, "DT_BaseAttributableItem", "m_iEntityQuality");
-	NETVAR(GetCustomName, char*, "DT_BaseAttributableItem", "m_szCustomName");
-};
-
-class C_BaseViewModel : public C_BaseEntity
-{
-public:
-	NETVAR(GetWeapon, int, "DT_BaseViewModel", "m_hWeapon");
-	NETVAR(GetOwner, int, "DT_BaseViewModel", "m_hOwner");
+	NETVAR(GetCustomName, cstr_32, "DT_BaseAttributableItem", "m_szCustomName");
 };
 
 class CHudTexture;
@@ -366,6 +361,15 @@ public:
 	}
 };
 
+class C_BasePlayer;
+
+class C_BaseViewModel : public C_BaseEntity
+{
+public:
+	NETVAR(GetWeapon, CHandle<C_BaseCombatWeapon>, "DT_BaseViewModel", "m_hWeapon");
+	NETVAR(GetOwner, CHandle<C_BasePlayer>, "DT_BaseViewModel", "m_hOwner");
+};
+
 class C_BasePlayer : public C_BaseEntity
 {
 public:
@@ -393,7 +397,7 @@ public:
 	NETVAR(GetCompRank, int, "DT_CSPlayerResource", "m_iCompetitiveRanking");
 	NETVAR(GetActiveWeapon, CHandle<C_BaseCombatWeapon>, "DT_BaseCombatCharacter", "m_hActiveWeapon");
 	PNETVAR(GetWeapons, CHandle<C_BaseCombatWeapon>, "DT_BaseCombatCharacter", "m_hMyWeapons");
-	PNETVAR(GetWearables, CHandle<C_BaseAttributableItem>, "DT_BaseCombatCharacter", "m_hMyWearables");
+	NETVAR(GetWearables, CHandle<C_BaseAttributableItem>, "DT_BaseCombatCharacter", "m_hMyWearables");
 
 	const Vector GetEyePosition()
 	{
