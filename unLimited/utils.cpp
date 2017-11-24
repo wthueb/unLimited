@@ -6,6 +6,7 @@
 #include <Psapi.h>
 
 #include "hooks/hooks.hpp"
+#include "sdk/sdk.hpp"
 
 // gets set in DllMain when dll is attached
 HMODULE utils::dll{};
@@ -23,9 +24,7 @@ void utils::unload()
 #ifdef _DEBUG
 	detach_console();
 #endif
-
-	// FIXMEW: disable all options and close menu
-
+	
 	gui_shutdown();
 	Sleep(100);
 

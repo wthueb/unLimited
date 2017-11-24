@@ -46,6 +46,10 @@ void gui_shutdown()
 
 	gui_open = false;
 
+	auto cl_mouseenable = g_cvar->FindVar("cl_mouseenable");
+
+	cl_mouseenable->SetValue(1);
+
 	Sleep(2000);
 
 	ImGui_ImplDX9_Shutdown();

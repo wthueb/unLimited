@@ -59,15 +59,21 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 
 		choking = !send_packet;
 	}
-	else if (options::antiaim::type != options::antiaim::SPIN_SLOW && options::antiaim::type != options::antiaim::SPIN_FAST)
-	{
-		static bool flip = false;
-		flip = !flip;
-
-		send_packet = flip;
-	}
 	else
-		send_packet = true;
+	{
+		choking = false;
+		choked_ticks = 0;
+
+		if (options::antiaim::type == options::antiaim::SPIN_SLOW && options::antiaim::type == options::antiaim::SPIN_FAST)
+			send_packet = true;
+		else
+		{
+			static bool flip = false;
+			flip = !flip;
+
+			send_packet = flip;
+		}
+	}
 
 	switch (options::antiaim::type)
 	{
