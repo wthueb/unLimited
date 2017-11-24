@@ -78,7 +78,7 @@ namespace math
 		return RAD2DEG(acos(aim.Dot(ang) / aim.LengthSqr()));
 	}
 
-	static void correct_movement(CUserCmd* cmd, const QAngle &old_angle, float old_forward, float old_side)
+	static void correct_movement(CUserCmd* cmd, const QAngle& old_angle, float old_forward, float old_side)
 	{
 		float delta;
 		float f1;
@@ -105,7 +105,7 @@ namespace math
 		cmd->sidemove = sin(DEG2RAD(delta)) * old_forward + sin(DEG2RAD(delta + 90.f)) * old_side;
 	}
 
-	static void clamp_angle(QAngle &angle)
+	static void clamp_angle(QAngle& angle)
 	{
 		for (auto i = 0; i < 3; ++i)
 			if (!std::isfinite(angle[i])) // if it is infinite or NaN

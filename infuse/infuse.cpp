@@ -176,7 +176,7 @@ int main(int argc, char* argv[])
 	std::cout << "=====================================================================\n\n";
 	
 	cyan;
-	std::cout << "press any key to exit...\n";
+	std::cout << "press any key to exit...\n\n";
 	std::cout << "automatically exiting in 5 seconds...\n";
 
 	CreateThread(0, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(wait_for_exit), 0, 0, 0);
