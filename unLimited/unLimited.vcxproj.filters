@@ -48,9 +48,6 @@
     <ClCompile Include="features\aimbot.cpp">
       <Filter>features</Filter>
     </ClCompile>
-    <ClCompile Include="features\esp.cpp">
-      <Filter>features</Filter>
-    </ClCompile>
     <ClCompile Include="hooks\override_view.cpp">
       <Filter>hooks</Filter>
     </ClCompile>
@@ -66,6 +63,12 @@
       <Filter>features</Filter>
     </ClCompile>
     <ClCompile Include="features\antiaim.cpp">
+      <Filter>features</Filter>
+    </ClCompile>
+    <ClCompile Include="hooks\frame_stage_notify.cpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="features\visuals.cpp">
       <Filter>features</Filter>
     </ClCompile>
   </ItemGroup>

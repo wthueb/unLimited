@@ -138,11 +138,12 @@
     <ClCompile Include="features\aimbot.cpp" />
     <ClCompile Include="features\antiaim.cpp" />
     <ClCompile Include="features\backtracking.cpp" />
-    <ClCompile Include="features\esp.cpp" />
+    <ClCompile Include="features\visuals.cpp" />
     <ClCompile Include="features\misc.cpp" />
     <ClCompile Include="hooks\create_move.cpp" />
     <ClCompile Include="hooks\directx.cpp" />
     <ClCompile Include="hooks\do_post_screen_space_effects.cpp" />
+    <ClCompile Include="hooks\frame_stage_notify.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
     <ClCompile Include="hooks\override_view.cpp" />
     <ClCompile Include="hooks\paint_traverse.cpp" />

@@ -235,7 +235,7 @@ namespace gui
 
 			ImGui::NextColumn();
 
-			ImGui::BetterCheckbox("esp", &options::visuals::enabled);
+			ImGui::BetterCheckbox("visuals", &options::visuals::enabled);
 			{
 				DISABLE(options::visuals::enabled, .2f);
 
@@ -254,6 +254,21 @@ namespace gui
 				}
 
 				ImGui::BetterCheckbox("radar", &options::visuals::radar);
+
+				ImGui::BetterCheckbox("thirdperson", &options::visuals::thirdperson);
+				{
+					DISABLE(options::visuals::thirdperson, .2f);
+					
+					// not sure why we have to do this again...
+					ImGui::PushItemWidth(150.f);
+
+					ImGui::InputInt("thirdperson offset", &options::visuals::thirdperson_offset, 10);
+
+					ImGui::PopItemWidth();
+
+					ImGui::PopStyleVar();
+					ImGui::BetterPopItemFlag();
+				}
 
 				ImGui::PopStyleVar();
 				ImGui::BetterPopItemFlag();

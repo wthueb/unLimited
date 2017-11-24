@@ -29,6 +29,20 @@ namespace options
 		keys.push_back({ 0x57, "w" });
 	}
 
+	void unload()
+	{
+		aim::enabled = false;
+		antiaim::enabled = false;
+		visuals::enabled = false;
+		misc::bhop = false;
+		misc::autostrafe = false;
+		misc::backtracking = false;
+		misc::show_ranks = false;
+		misc::nightmode = false;
+		misc::airstuck = false;
+		misc::fov = 90.f;
+	}
+
 	namespace aim
 	{
 		bool enabled = true;
@@ -74,6 +88,7 @@ namespace options
 		bool radar = false;
 
 		bool thirdperson = false;
+		int thirdperson_offset = 150;
 	}
 
 	namespace misc

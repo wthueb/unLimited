@@ -10,6 +10,7 @@
 CBaseClientState* g_client_state{};
 CGlobalVarsBase* g_global_vars{};
 CGlowObjectManager* g_glow_manager{};
+CInput* g_input{};
 IBaseClientDLL* g_client{};
 IClientEntityList* g_entity_list{};
 IClientMode* g_client_mode{};
@@ -65,5 +66,6 @@ void interfaces::init()
 
 	g_client_state = **reinterpret_cast<CBaseClientState***>((*reinterpret_cast<uintptr_t**>(g_engine))[12] + 0x10);
 	g_global_vars = **reinterpret_cast<CGlobalVarsBase***>((*reinterpret_cast<uintptr_t**>(g_client))[0] + 0x1B);
+	g_input = *reinterpret_cast<CInput**>((*reinterpret_cast<uintptr_t**>(g_client))[15] + 0x1);
 	g_client_mode = **reinterpret_cast<IClientMode***>((*reinterpret_cast<uintptr_t**>(g_client))[10] + 0x5);
 }

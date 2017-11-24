@@ -19,10 +19,13 @@ namespace backtracking
 	void draw();
 }
 
-namespace esp
+namespace visuals
 {
 	void glow();
 	void radar();
+
+	void thirdperson_override_view();
+	void thirdperson_fsn();
 }
 
 namespace misc

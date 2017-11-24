@@ -1,12 +1,11 @@
 #include "features.hpp"
 
+#include "../options.hpp"
 #include "../sdk/sdk.hpp"
 
-#include "../options.hpp"
-
-void esp::glow()
+void visuals::glow()
 {
-	if (!options::visuals::enabled || !options::visuals::glow)
+	if (!options::visuals::enabled || !options::visuals::glow || !g_engine->IsInGame())
 		return;
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
@@ -98,9 +97,9 @@ void esp::glow()
 	}
 }
 
-void esp::radar()
+void visuals::radar()
 {
-	if (!options::visuals::radar || !g_engine->IsInGame())
+	if (!options::visuals::enabled || !options::visuals::radar || !g_engine->IsInGame())
 		return;
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
@@ -115,5 +114,50 @@ void esp::radar()
 			continue;
 
 		entity->GetSpotted() = true;
+	}
+}
+
+void visuals::thirdperson_override_view()
+{
+	if (!options::visuals::enabled || !options::visuals::thirdperson || !g_engine->IsInGame())
+	{
+		g_input->m_fCameraInThirdPerson = false;
+		return;
+	}
+	
+	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+	if (!localplayer)
+		return;
+
+	static QAngle viewangles;
+	g_engine->GetViewAngles(viewangles);
+
+	if (localplayer->IsAlive())
+	{
+		g_input->m_fCameraInThirdPerson = true;
+		g_input->m_vecCameraOffset = Vector{ viewangles.pitch, viewangles.yaw, vec_t(options::visuals::thirdperson_offset) };
+	}
+	else
+	{
+		g_input->m_fCameraInThirdPerson = false;
+	}
+}
+
+extern QAngle g_thirdperson_angles;
+
+void visuals::thirdperson_fsn()
+{
+	if (!options::visuals::enabled || !options::visuals::thirdperson || !g_engine->IsInGame())
+		return;
+
+	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+	if (!localplayer)
+		return;
+
+	static ptrdiff_t deadflag = netvar_sys::get().get_offset("DT_BasePlayer", "deadflag");
+
+	if (localplayer->IsAlive() && g_input->m_fCameraInThirdPerson)
+	{
+		*reinterpret_cast<QAngle*>(uintptr_t(localplayer) + deadflag + 4) = g_thirdperson_angles;
 	}
 }

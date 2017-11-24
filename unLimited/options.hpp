@@ -14,6 +14,7 @@ namespace options
 	extern std::vector<option_t> keys;
 
 	void init();
+	void unload();
 
 	namespace aim
 	{
@@ -70,6 +71,7 @@ namespace options
 		extern bool radar;
 
 		extern bool thirdperson;
+		extern int thirdperson_offset;
 	}
 
 	namespace misc

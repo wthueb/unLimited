@@ -6,6 +6,7 @@
 #include <Psapi.h>
 
 #include "hooks/hooks.hpp"
+#include "options.hpp"
 #include "sdk/sdk.hpp"
 
 // gets set in DllMain when dll is attached
@@ -25,6 +26,8 @@ void utils::unload()
 	detach_console();
 #endif
 	
+	options::unload();
+
 	gui_shutdown();
 	Sleep(100);
 

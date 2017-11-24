@@ -13,10 +13,18 @@ static QAngle g_real{};
 static bool g_choking = false;
 static int g_choked_ticks = 0;
 
+QAngle g_thirdperson_angles{};
+
 void antiaim::process(CUserCmd* cmd, bool& send_packet)
 {
-	if (!options::antiaim::enabled || !g_engine->IsInGame())
+	if (!g_engine->IsInGame())
 		return;
+
+	if (!options::antiaim::enabled)
+	{
+		g_thirdperson_angles = cmd->viewangles;
+		return;
+	}
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
 	if (!localplayer)
@@ -170,6 +178,20 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		g_fake = cmd->viewangles;
 	else
 		g_real = cmd->viewangles;
+
+	if (send_packet)
+	{
+		// if not faking, display real angle
+		if (options::antiaim::type == options::antiaim::SPIN_SLOW || options::antiaim::type == options::antiaim::SPIN_FAST)
+			g_thirdperson_angles = cmd->viewangles;
+	}
+	else
+	{
+		// if faking, display fake angle in thirdperson
+		if (options::antiaim::type == options::antiaim::LEGIT || options::antiaim::type == options::antiaim::RAGE ||
+			options::antiaim::type == options::antiaim::LBY_SIDEWAYS)
+			g_thirdperson_angles = cmd->viewangles;
+	}
 }
 
 void antiaim::draw_angles()
