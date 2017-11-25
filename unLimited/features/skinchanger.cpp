@@ -74,9 +74,6 @@ bool is_code_ptr(void* ptr)
 	return out.Type && !(out.Protect & (PAGE_GUARD | PAGE_NOACCESS)) && out.Protect & protect_flags;
 }
 
-int count = 0;
-std::vector<std::pair<C_BaseAttributableItem*, void**&>> old_vmts;
-
 void apply_sticker_hooks(C_BaseAttributableItem* item)
 {
 	if (!s_econ_item_interface_wrapper_offset)
@@ -88,11 +85,6 @@ void apply_sticker_hooks(C_BaseAttributableItem* item)
 
 	if (!hooked_vmt)
 	{
-		old_vmts.emplace_back(item, vmt);
-
-		if (old_vmts.size() > 10)
-			old_vmts.erase(old_vmts.begin());
-
 		size_t size = 0;
 
 		while (is_code_ptr(vmt[size]))
@@ -109,21 +101,6 @@ void apply_sticker_hooks(C_BaseAttributableItem* item)
 	}
 
 	vmt = hooked_vmt;
-}
-
-void remove_sticker_hooks(C_BaseAttributableItem* item)
-{
-	auto old_vmt = std::find_if(old_vmts.begin(), old_vmts.end(), [item](const std::pair<C_BaseAttributableItem*, void**&>& x)
-	{
-		return item == x.first;
-	})->second;
-
-	if (!old_vmt)
-		return;
-
-	void**& vmt = *reinterpret_cast<void***>(uintptr_t(item) + s_econ_item_interface_wrapper_offset);
-
-	vmt = old_vmt;
 }
 
 void erase_override(int idx)
@@ -319,36 +296,4 @@ void skinchanger::fix_icons(IGameEvent* event)
 	if (g_engine->GetPlayerForUserID(event->GetInt("attacker")) == g_engine->GetLocalPlayer())
 		if (auto icon_override = config::get_icon_override(event->GetString("weapon")))
 			event->SetString("weapon", icon_override);
-}
-
-void skinchanger::unload()
-{
-	auto local_idx = g_engine->GetLocalPlayer();
-
-	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(local_idx));
-	if (!localplayer)
-		return;
-
-	player_info_t player_info;
-	if (!g_engine->GetPlayerInfo(local_idx, &player_info))
-		return;
-
-	auto& wearables = localplayer->GetWearables();
-
-	auto glove = wearables.Get();
-	if (glove)
-	{
-		glove->GetClientNetworkable()->SetDestroyedOnRecreateEntities();
-	}
-
-	auto weapons = localplayer->GetWeapons();
-
-	for (auto i = 0; weapons[i].IsValid(); ++i)
-	{
-		auto weapon = weapons[i].Get();
-		if (!weapon)
-			continue;
-
-		remove_sticker_hooks(weapon);		
-	}
 }
