@@ -68,54 +68,15 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* device)
 	if (_ReturnAddress() != ret)
 		return o_end_scene(device);
 	
-	// this code is so sloppy i'm actually really dissapointed in myself here
-
-	static auto& style = ImGui::GetStyle();
-	
-	static float alpha = .01f;
-	static float start_alpha = alpha;
-	static float start_time = ImGui::GetTime();
-	static bool old_gui_open = gui_open;
-	
-	if (gui_open != old_gui_open)
-	{
-		start_alpha = alpha;
-		start_time = ImGui::GetTime();
-		old_gui_open = gui_open;
-	}
-
 	if (gui_open)
 	{
 		ImGui::GetIO().MouseDrawCursor = true;
 		
 		ImGui_ImplDX9_NewFrame();
 
-		// FIXMEW: sometimes this just doesn't work because the current time is way after the
-		// start_time and i have no idea why or how to fix it...
-		alpha = std::clamp(start_alpha + .2f * (ImGui::GetTime() - start_time) / .2f, .01f, 1.f);
-		
-		style.Alpha = alpha;
-
 		gui::draw_gui();
 		
 		ImGui::Render();
-	}
-	else
-	{
-		if (alpha > .01f)
-		{
-			ImGui::GetIO().MouseDrawCursor = false;
-
-			ImGui_ImplDX9_NewFrame();
-
-			alpha = std::clamp(start_alpha - .2f * (ImGui::GetTime() - start_time) / .2f, .01f, 1.f);
-
-			style.Alpha = alpha;
-
-			gui::draw_gui();
-
-			ImGui::Render();
-		}
 	}
 
 	return o_end_scene(device);
