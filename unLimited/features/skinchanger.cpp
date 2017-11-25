@@ -15,9 +15,9 @@ enum class StickerAttributeType
 	ROTATION
 };
 
-static uint32_t s_econ_item_interface_wrapper_offset = 0;
+static uint32_t s_econ_item_interface_wrapper_offset = 0u;
 
-static void* oGetStickerAttributeBySlotIndexFloat;
+static void* oGetStickerAttributeBySlotIndexFloat = nullptr;
 
 float __fastcall GetStickerAttributeBySlotIndexFloat(void* thisptr, void*, int slot, StickerAttributeType attribute, float unknown)
 {
@@ -45,7 +45,7 @@ float __fastcall GetStickerAttributeBySlotIndexFloat(void* thisptr, void*, int s
 	return reinterpret_cast<decltype(GetStickerAttributeBySlotIndexFloat)*>(oGetStickerAttributeBySlotIndexFloat)(thisptr, nullptr, slot, attribute, unknown);
 }
 
-static void* oGetStickerAttributeBySlotIndexInt;
+static void* oGetStickerAttributeBySlotIndexInt = nullptr;
 
 unsigned int __fastcall GetStickerAttributeBySlotIndexInt(void* thisptr, void*, int slot, StickerAttributeType attribute, unsigned unknown)
 {

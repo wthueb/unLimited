@@ -11,12 +11,12 @@
 static bool initialized = false;
 static bool gui_open = false;
 
-static HWND hwnd{};
-static WNDPROC o_wndproc{};
+static HWND hwnd = nullptr;
+static WNDPROC o_wndproc = nullptr;
 
 // kind of hacky, but i don't want to have a header for this file or anything :/
 // d3d_device gets initialized in hooks.cpp
-extern uintptr_t d3d_device;
+extern uintptr_t d3d_device = 0u;
 
 LRESULT __stdcall hk_wndproc(HWND hwnd, UINT message, WPARAM w_param, LPARAM l_param);
 
@@ -62,9 +62,9 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* device)
 {
 	static auto o_end_scene = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*)>(index::end_scene);
 
+	// stupid double rendering
 	static auto ret = _ReturnAddress();
 
-	// stupid double rendering
 	if (_ReturnAddress() != ret)
 		return o_end_scene(device);
 	
@@ -72,8 +72,6 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* device)
 	{
 		ImGui::GetIO().MouseDrawCursor = true;
 		
-		ImGui_ImplDX9_NewFrame();
-
 		gui::draw_gui();
 		
 		ImGui::Render();

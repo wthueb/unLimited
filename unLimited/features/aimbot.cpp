@@ -13,9 +13,9 @@ void correct_aim();
 
 bool is_visible(C_BasePlayer* player);
 
-static C_BasePlayer* localplayer{};
-static C_BaseCombatWeapon* active_weapon{};
-static CUserCmd* cmd{};
+static C_BasePlayer* localplayer = nullptr;
+static C_BaseCombatWeapon* active_weapon = nullptr;
+static CUserCmd* cmd = nullptr;
 static int best_target = -1;
 
 void aimbot::process(CUserCmd* _cmd, bool& send_packet)

@@ -46,24 +46,24 @@ namespace hooks
 	namespace index
 	{
 		// d3d
-		static constexpr size_t reset = 16;
-		static constexpr size_t end_scene = 42;
+		static constexpr size_t reset = 16u;
+		static constexpr size_t end_scene = 42u;
 
 		// client
-		static constexpr size_t frame_stage_notify = 36;
+		static constexpr size_t frame_stage_notify = 36u;
 
 		// client mode
-		static constexpr size_t override_view = 18;
-		static constexpr size_t create_move = 24;
-		static constexpr size_t do_post_screen_space_effects = 44;
+		static constexpr size_t override_view = 18u;
+		static constexpr size_t create_move = 24u;
+		static constexpr size_t do_post_screen_space_effects = 44u;
 
 		// game event manager
-		static constexpr size_t fire_event_client_side = 9;
+		static constexpr size_t fire_event_client_side = 9u;
 
 		// panel
-		static constexpr size_t paint_traverse = 41;
+		static constexpr size_t paint_traverse = 41u;
 
 		// render view
-		static constexpr size_t scene_end = 9;
+		static constexpr size_t scene_end = 9u;
 	}
 }

@@ -12,7 +12,7 @@ struct backtrack_data
 	Vector headpos;
 };
 
-backtrack_data head_positions[64][12];
+backtrack_data head_positions[64][12]{};
 
 void backtracking::process(CUserCmd* cmd)
 {

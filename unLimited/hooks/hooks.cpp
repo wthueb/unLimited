@@ -7,12 +7,12 @@ uintptr_t d3d_device{};
 
 namespace hooks
 {
-	std::shared_ptr<vmt_hook> d3d_device_hook{};
-	std::shared_ptr<vmt_hook> client_hook{};
-	std::shared_ptr<vmt_hook> client_mode_hook{};
-	std::shared_ptr<vmt_hook> game_event_manager_hook{};
-	std::shared_ptr<vmt_hook> panel_hook{};
-	std::shared_ptr<vmt_hook> render_view_hook{};
+	std::shared_ptr<vmt_hook> d3d_device_hook = nullptr;
+	std::shared_ptr<vmt_hook> client_hook = nullptr;
+	std::shared_ptr<vmt_hook> client_mode_hook = nullptr;
+	std::shared_ptr<vmt_hook> game_event_manager_hook = nullptr;
+	std::shared_ptr<vmt_hook> panel_hook = nullptr;
+	std::shared_ptr<vmt_hook> render_view_hook = nullptr;
 
 	void init()
 	{

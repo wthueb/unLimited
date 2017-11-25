@@ -10,11 +10,11 @@
 #include "sdk/sdk.hpp"
 
 // gets set in DllMain when dll is attached
-HMODULE utils::dll{};
+HMODULE utils::dll = nullptr;
 
-HANDLE out{}, old_out{};
-HANDLE err{}, old_err{};
-HANDLE in{}, old_in{};
+HANDLE out = nullptr, old_out = nullptr;
+HANDLE err = nullptr, old_err = nullptr;
+HANDLE in = nullptr, old_in = nullptr;
 
 extern void gui_shutdown();
 

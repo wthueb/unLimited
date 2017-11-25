@@ -7,25 +7,25 @@
 
 #include "utils.hpp"
 
-CBaseClientState* g_client_state{};
-CGlobalVarsBase* g_global_vars{};
-CGlowObjectManager* g_glow_manager{};
-CInput* g_input{};
-IBaseClientDLL* g_client{};
-IClientEntityList* g_entity_list{};
-IClientMode* g_client_mode{};
-ICvar* g_cvar{};
-IEngineTrace* g_engine_trace{};
-IGameEventManager2* g_game_event_manager{};
-ILocalize* g_localize{};
-IMaterialSystem* g_material_system{};
-IPanel* g_panel{};
-ISurface* g_surface{};
-IVDebugOverlay* g_debug_overlay{};
-IVEngineClient* g_engine{};
-IVModelInfo* g_model_info{};
-IVRenderView* g_render_view{};
-IVModelRender* g_model_render{};
+CBaseClientState* g_client_state = nullptr;
+CGlobalVarsBase* g_global_vars = nullptr;
+CGlowObjectManager* g_glow_manager = nullptr;
+CInput* g_input = nullptr;
+IBaseClientDLL* g_client = nullptr;
+IClientEntityList* g_entity_list = nullptr;
+IClientMode* g_client_mode = nullptr;
+ICvar* g_cvar = nullptr;
+IEngineTrace* g_engine_trace = nullptr;
+IGameEventManager2* g_game_event_manager = nullptr;
+ILocalize* g_localize = nullptr;
+IMaterialSystem* g_material_system = nullptr;
+IPanel* g_panel = nullptr;
+ISurface* g_surface = nullptr;
+IVDebugOverlay* g_debug_overlay = nullptr;
+IVEngineClient* g_engine = nullptr;
+IVModelInfo* g_model_info = nullptr;
+IVRenderView* g_render_view = nullptr;
+IVModelRender* g_model_render = nullptr;
 
 template<typename t>
 t* capture_interface(const std::string &module, const std::string &interface)

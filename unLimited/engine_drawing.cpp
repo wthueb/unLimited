@@ -21,7 +21,7 @@ void draw::circle(const Vector2D& pos, float points, float radius, const Color& 
 
 void draw::filled_circle(const Vector2D& pos, float points, float radius, const Color& col)
 {
-	std::vector<Vertex_t> vertices;
+	std::vector<Vertex_t> vertices{};
 	auto step = float(M_PI * 2.f / points);
 
 	for (auto a = 0.f; a < M_PI * 2.f; a += step)
@@ -34,7 +34,7 @@ void draw::circle3D(const Vector& pos, float points, float radius, const Color& 
 {
 	float step = float(M_PI * 2.f / points);
 
-	std::vector<Vector> points3d;
+	std::vector<Vector> points3d{};
 
 	for (auto a = 0.f; a < M_PI * 2.f; a += step)
 	{

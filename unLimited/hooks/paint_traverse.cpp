@@ -10,7 +10,7 @@ void __fastcall hooks::hk_paint_traverse(void* thisptr, void* edx, VPANEL panel,
 
 	o_paint_traverse(thisptr, panel, force_repaint, allow_force);
 
-	static VPANEL FocusOverlayPanel;
+	static VPANEL FocusOverlayPanel = 0u;
 	if (!FocusOverlayPanel)
 	{
 		auto panel_name = g_panel->GetName(panel);

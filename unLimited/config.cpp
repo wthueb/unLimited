@@ -7,8 +7,8 @@
 
 using json = nlohmann::json;
 
-std::vector<econ_item_t> config::items;
-std::unordered_map<std::string, std::string> config::icon_overrides;
+std::vector<econ_item_t> config::items{};
+std::unordered_map<std::string, std::string> config::icon_overrides{};
 
 void to_json(json& j, const sticker_t& sticker)
 {
