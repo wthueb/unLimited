@@ -108,5 +108,7 @@ namespace options
 		int airstuck_key = 0;
 
 		float fov = 90.f;
+
+		bool chat_spam = false;
 	}
 }

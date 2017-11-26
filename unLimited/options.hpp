@@ -91,5 +91,7 @@ namespace options
 		extern int airstuck_key;
 
 		extern float fov;
+
+		extern bool chat_spam;
 	}
 }

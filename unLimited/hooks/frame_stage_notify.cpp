@@ -11,6 +11,9 @@ void __stdcall hooks::hk_frame_stage_notify(ClientFrameStage_t stage)
 	if (stage == FRAME_RENDER_START)
 	{
 		visuals::thirdperson_fsn();
+		visuals::radar();
+		misc::nightmode();
+		misc::chat_spam();
 	}
 	else if (stage == FRAME_NET_UPDATE_POSTDATAUPDATE_START)
 	{

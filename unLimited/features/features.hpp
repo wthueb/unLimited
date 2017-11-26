@@ -41,4 +41,5 @@ namespace misc
 	void show_ranks(CUserCmd* cmd);
 	void nightmode();
 	void airstuck(CUserCmd* cmd);
+	void chat_spam();
 }

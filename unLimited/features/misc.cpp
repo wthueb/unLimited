@@ -1,5 +1,7 @@
 #include "features.hpp"
 
+#include <chrono>
+
 #include "../options.hpp"
 
 void misc::bhop(CUserCmd* cmd)
@@ -61,7 +63,7 @@ void misc::nightmode()
 	static bool old = false;
 
 	// only enable/disable once per setting toggle
-	if (options::misc::nightmode == old)
+	if (options::misc::nightmode == old || !g_engine->IsInGame())
 		return;
 
 	static auto r_drawspecificstaticprop = g_cvar->FindVar("r_drawspecificstaticprop");
@@ -115,4 +117,24 @@ void misc::airstuck(CUserCmd* cmd)
 	{
 		cmd->tick_count = 16777216;
 	}
+}
+
+void misc::chat_spam()
+{
+	if (!options::misc::chat_spam || !g_engine->IsInGame())
+		return;
+
+	static std::chrono::time_point<std::chrono::steady_clock> last_time{};
+
+	auto cur_time = std::chrono::steady_clock::now();
+
+	auto duration_since_last = std::chrono::duration_cast<std::chrono::duration<double>>(cur_time - last_time);
+
+	// spam every .35 seconds
+	if (duration_since_last.count() < .35)
+		return;
+
+	g_engine->ClientCmd_Unrestricted("say wi1.xyz takes ahold of me");
+
+	last_time = std::chrono::steady_clock::now();
 }

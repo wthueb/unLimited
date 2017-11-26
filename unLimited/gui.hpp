@@ -393,6 +393,8 @@ namespace gui
 				if (ImGui::InputFloat("view fov", &options::misc::fov, 1.f, 0.f, 0))
 					options::misc::fov = std::clamp(options::misc::fov, 5.f, 179.f);
 
+				ImGui::BetterCheckbox("chat spam", &options::misc::chat_spam);
+
 				ImGui::PopItemWidth();
 			}
 
