@@ -68,10 +68,12 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* device)
 	if (_ReturnAddress() != ret)
 		return o_end_scene(device);
 	
-	if (gui_open)
+	if (initialized && gui_open)
 	{
 		ImGui::GetIO().MouseDrawCursor = true;
-		
+
+		ImGui_ImplDX9_NewFrame();
+
 		gui::draw_gui();
 		
 		ImGui::Render();
