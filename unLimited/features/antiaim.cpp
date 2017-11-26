@@ -215,15 +215,15 @@ void antiaim::draw_angles()
 		return;
 
 	std::string lby_str{ "lby: " + std::to_string(localplayer->GetLBY()) };
-	draw::text(100, 100, lby_str.c_str(), font, Color{ 255, 255, 255 });
+	draw::text(100, 100, lby_str.c_str(), font, Color{ 0, 0, 255 });
 
 	std::string real_str{ "real yaw: " + std::to_string(g_real.yaw) };
-	draw::text(100, 150, real_str.c_str(), font, Color{ 255, 255, 255 });
+	draw::text(100, 150, real_str.c_str(), font, Color{ 0, 255, 0 });
 
 	std::string fake_str{ "fake yaw: " + std::to_string(g_fake.yaw) };
-	draw::text(100, 125, fake_str.c_str(), font, Color{ 255, 255, 255 });
+	draw::text(100, 125, fake_str.c_str(), font, Color{ 255, 0, 0 });
 
-	std::string choking_str{ std::string{ "choking: " } +(g_choking ? "true, " : "false, ") + std::to_string(g_choked_ticks) };
+	std::string choking_str{ std::string{ "choking: " } + (g_choking ? "true, " : "false, ") + std::to_string(g_choked_ticks) };
 	draw::text(100, 200, choking_str.c_str(), font, Color{ 255, 255, 255 });
 
 	static auto line_length = 20.f;
@@ -243,8 +243,8 @@ void antiaim::draw_angles()
 		if (g_debug_overlay->ScreenPosition(start, start2d) || g_debug_overlay->ScreenPosition(end, end2d))
 			return;
 		
-		draw::line(int(start2d.x), int(start2d.y), int(end2d.x), int(end2d.y), Color{ 255, 255, 255 });
-		draw::text(int(end2d.x), int(end2d.y), "lby", font, Color{ 255, 255, 255 });
+		draw::line(int(start2d.x), int(start2d.y), int(end2d.x), int(end2d.y), Color{ 0, 0, 255 });
+		draw::text(int(end2d.x), int(end2d.y), "lby", font, Color{ 0, 0, 255 });
 	}
 
 	// real
