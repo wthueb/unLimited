@@ -20,7 +20,7 @@ static int best_target = -1;
 
 void aimbot::process(CUserCmd* _cmd, bool& send_packet)
 {
-	if (!g_engine->IsInGame() || !options::aim::enabled)
+	if (!options::aim::enabled || !g_engine->IsInGame())
 		return;
 
 	drop_target();
@@ -96,7 +96,7 @@ void find_target()
 {
 	float best_fov = options::aim::fov;
 
-	for (auto i = 1; i <= g_global_vars->maxClients; ++i)
+	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
 	{
 		auto potential = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
 		if (!potential)

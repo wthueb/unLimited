@@ -31,16 +31,15 @@ void backtracking::process(CUserCmd* cmd)
 
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
 	{
-		auto entity = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
-		if (!entity)
+		auto player = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
+		if (!player)
 			continue;
 
-		if (entity == localplayer || entity->IsDormant() ||
-			!entity->IsAlive() || entity->GetTeam() == localplayer->GetTeam())
+		if (!player->IsValid() || player == localplayer || player->GetTeam() == localplayer->GetTeam())
 			continue;
 
-		float simtime = entity->GetSimulationTime();
-		Vector headpos{ entity->GetBonePos(BONE_HEAD) };
+		float simtime = player->GetSimulationTime();
+		Vector headpos{ player->GetBonePos(BONE_HEAD) };
 
 		head_positions[i][cmd->command_number % 13] = backtrack_data{ simtime, headpos };
 
@@ -85,20 +84,17 @@ void backtracking::draw()
 	if (!options::misc::backtracking || !options::misc::backtracking_vis)
 		return;
 
+	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+	if (!localplayer)
+		return;
+
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
 	{
 		auto player = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
 		if (!player)
 			continue;
 
-		if (player->IsDormant() || !player->IsAlive())
-			continue;
-
-		auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
-		if (!localplayer)
-			return;
-		
-		if (player == localplayer || player->GetTeam() == localplayer->GetTeam())
+		if (!player->IsValid() || player == localplayer || player->GetTeam() == localplayer->GetTeam())
 			continue;
 
 		for (auto t = 0; t < options::misc::backtracking_amt; ++t)

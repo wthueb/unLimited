@@ -106,14 +106,14 @@ void visuals::radar()
 
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
 	{
-		auto entity = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
-		if (!entity)
+		auto player = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
+		if (!player)
 			continue;
 
-		if (entity == localplayer || entity->IsDormant() || !entity->IsAlive())
+		if (!player->IsValid() || player == localplayer)
 			continue;
 
-		entity->GetSpotted() = true;
+		player->GetSpotted() = true;
 	}
 }
 

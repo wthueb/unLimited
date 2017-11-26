@@ -16,7 +16,7 @@ static WNDPROC o_wndproc = nullptr;
 
 // kind of hacky, but i don't want to have a header for this file or anything :/
 // d3d_device gets initialized in hooks.cpp
-extern uintptr_t d3d_device = 0u;
+extern uintptr_t d3d_device;
 
 LRESULT __stdcall hk_wndproc(HWND hwnd, UINT message, WPARAM w_param, LPARAM l_param);
 
