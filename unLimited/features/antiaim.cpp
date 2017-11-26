@@ -210,7 +210,7 @@ void antiaim::draw_angles()
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
 	if (!localplayer)
 		return;
-
+	
 	if (!localplayer->IsAlive())
 		return;
 
@@ -226,7 +226,7 @@ void antiaim::draw_angles()
 	std::string choking_str{ std::string{ "choking: " } + (g_choking ? "true, " : "false, ") + std::to_string(g_choked_ticks) };
 	draw::text(100, 200, choking_str.c_str(), font, Color{ 255, 255, 255 });
 
-	static auto line_length = 20.f;
+	constexpr auto line_length = 20.f;
 
 	auto start = localplayer->GetOrigin();
 
