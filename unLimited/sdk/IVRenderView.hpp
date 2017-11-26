@@ -5,9 +5,6 @@
 #include "Vector4D.hpp"
 #include "VMatrix.hpp"
 
-//-----------------------------------------------------------------------------
-// Forward declarations
-//-----------------------------------------------------------------------------
 class CViewSetup;
 class CEngineSprite;
 class IClientEntity;
@@ -16,11 +13,7 @@ struct model_t;
 class IClientRenderable;
 class ITexture;
 
-
-//-----------------------------------------------------------------------------
-// Flags used by DrawWorldLists
-//-----------------------------------------------------------------------------
-enum
+enum DrawWorldList
 {
 	DRAWWORLDLISTS_DRAW_STRICTLYABOVEWATER = 0x001,
 	DRAWWORLDLISTS_DRAW_STRICTLYUNDERWATER = 0x002,
@@ -35,7 +28,7 @@ enum
 	DRAWWORLDLISTS_DRAW_DECALS_AND_OVERLAYS = 0x400,
 };
 
-enum
+enum MatSortGroup
 {
 	MAT_SORT_GROUP_STRICTLY_ABOVEWATER = 0,
 	MAT_SORT_GROUP_STRICTLY_UNDERWATER,
@@ -45,10 +38,8 @@ enum
 	MAX_MAT_SORT_GROUPS
 };
 
-//-----------------------------------------------------------------------------
-// Leaf index
-//-----------------------------------------------------------------------------
 typedef unsigned short LeafIndex_t;
+
 enum
 {
 	INVALID_LEAF_INDEX = (LeafIndex_t)~0
@@ -74,9 +65,6 @@ class IWorldRenderList /*: public IRefCounted*/
 {
 };
 
-//-----------------------------------------------------------------------------
-// Describes the fog volume for a particular point
-//-----------------------------------------------------------------------------
 struct VisibleFogVolumeInfo_t
 {
 	int            m_nVisibleFogVolume;
@@ -92,11 +80,10 @@ struct VPlane
 	Vector        m_Normal;
 	vec_t        m_Dist;
 };
+
 #define FRUSTUM_NUMPLANES    6
 typedef VPlane Frustum[FRUSTUM_NUMPLANES];
-//-----------------------------------------------------------------------------
-// Vertex format for brush models
-//-----------------------------------------------------------------------------
+
 struct BrushVertex_t
 {
 	Vector        m_Pos;
@@ -110,19 +97,11 @@ private:
 	BrushVertex_t(const BrushVertex_t& src);
 };
 
-//-----------------------------------------------------------------------------
-// Visibility data for area portal culling
-//-----------------------------------------------------------------------------
 struct VisOverrideData_t
 {
 	Vector        m_vecVisOrigin;                    // The point to to use as the viewpoint for area portal backface cull checks.
 	float        m_fDistToAreaPortalTolerance;    // The distance from an area portal before using the full screen as the viewable portion.
 };
-
-
-//-----------------------------------------------------------------------------
-// interface for asking about the Brush surfaces from the client DLL
-//-----------------------------------------------------------------------------
 
 class IBrushSurface
 {
@@ -138,11 +117,6 @@ public:
 	// Gets at the material properties for this surface
 	virtual IMaterial* GetMaterial() = 0;
 };
-
-
-//-----------------------------------------------------------------------------
-// interface for installing a new renderer for brush surfaces
-//-----------------------------------------------------------------------------
 
 class IBrushRenderer
 {
@@ -175,8 +149,8 @@ public:
 		SetColorModulation(clr);
 	}
 	virtual void                GetColorModulation(float* blend) = 0;
-	virtual void                SceneBegin(void) = 0;
-	virtual void                SceneEnd(void) = 0;
+	virtual void                SceneBegin() = 0;
+	virtual void                SceneEnd() = 0; // 9
 	virtual void                GetVisibleFogVolume(const Vector& eyePoint, VisibleFogVolumeInfo_t *pInfo) = 0;
 	virtual IWorldRenderList*   CreateWorldList() = 0;
 	virtual void                BuildWorldLists(IWorldRenderList *pList, WorldListInfo_t* pInfo, int iForceFViewLeaf, const VisOverrideData_t* pVisData = NULL, bool bShadowDepth = false, float *pReflectionWaterHeight = NULL) = 0;
