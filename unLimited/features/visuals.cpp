@@ -47,16 +47,20 @@ void visuals::chams()
 		initialized = true;
 	}
 
+	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+	if (!localplayer)
+		return;
+
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
 	{
-		if (i == g_engine->GetLocalPlayer())
-			continue;
-
 		auto player = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
 		if (!player)
 			continue;
 
-		if (!player->IsValid())
+		if (!player->IsValid() || player == localplayer)
+			continue;
+
+		if (!options::visuals::friendlies && player->GetTeam() == localplayer->GetTeam())
 			continue;
 
 		//IMaterial* mat = g_material_system->FindMaterial("dev/dev_envmap", TEXTURE_GROUP_OTHER);
@@ -67,7 +71,7 @@ void visuals::chams()
 		{
 			static IMaterial* ignorez = g_material_system->FindMaterial("ignorez", TEXTURE_GROUP_MODEL);
 			if (!ignorez)
-				continue;
+				return;
 
 			ignorez->ColorModulate(1.f, 0.f, 0.f);
 			ignorez->AlphaModulate(1.f);
@@ -78,16 +82,16 @@ void visuals::chams()
 
 		static IMaterial* regular = g_material_system->FindMaterial("regular", TEXTURE_GROUP_MODEL);
 		if (!regular)
-			continue;
+			return;
 
 		regular->ColorModulate(0.f, 1.f, 0.f);
 		regular->AlphaModulate(1.f);
 
 		g_model_render->ForcedMaterialOverride(regular);
 		player->DrawModel(STUDIO_RENDER, 255);
-
-		g_model_render->ForcedMaterialOverride(nullptr);
 	}
+
+	g_model_render->ForcedMaterialOverride(nullptr);
 }
 
 void visuals::glow()

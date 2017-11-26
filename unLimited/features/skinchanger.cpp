@@ -185,8 +185,8 @@ void skinchanger::apply_skins()
 		return;
 
 	auto& wearables = localplayer->GetWearables();
-
-	auto glove_config = config::get_by_definition_idx(GLOVE_T_SIDE);
+	if (!wearables.IsValid())
+		return;
 
 	static CHandle<C_BaseAttributableItem> glove_handle{};
 
@@ -211,6 +211,8 @@ void skinchanger::apply_skins()
 
 		return;
 	}
+
+	auto glove_config = config::get_by_definition_idx(GLOVE_T_SIDE);
 
 	if (glove_config && glove_config->definition_override_index)
 	{
