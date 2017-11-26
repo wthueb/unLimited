@@ -185,8 +185,6 @@ void skinchanger::apply_skins()
 		return;
 
 	auto& wearables = localplayer->GetWearables();
-	if (!wearables.IsValid())
-		return;
 
 	static CHandle<C_BaseAttributableItem> glove_handle{};
 
