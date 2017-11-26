@@ -75,6 +75,8 @@ namespace options
 
 		extern bool thirdperson;
 		extern int thirdperson_offset;
+
+		extern bool noscope;
 	}
 
 	namespace misc

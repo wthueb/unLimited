@@ -18,7 +18,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 4
-#define VERSION_PATCH 2
+#define VERSION_PATCH 3
 
 namespace ImGui
 {
@@ -294,6 +294,8 @@ namespace gui
 						ImGui::PopStyleVar();
 						ImGui::BetterPopItemFlag();
 					}
+
+					ImGui::BetterCheckbox("disable scope", &options::visuals::noscope);
 
 					ImGui::PopStyleVar();
 					ImGui::BetterPopItemFlag();

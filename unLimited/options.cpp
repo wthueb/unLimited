@@ -93,6 +93,8 @@ namespace options
 
 		bool thirdperson = false;
 		int thirdperson_offset = 150;
+
+		bool noscope = false;
 	}
 
 	namespace misc

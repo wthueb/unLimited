@@ -223,7 +223,7 @@ void visuals::thirdperson_override_view()
 	static QAngle viewangles;
 	g_engine->GetViewAngles(viewangles);
 
-	if (localplayer->IsAlive())
+	if (localplayer->IsAlive() && !localplayer->IsScoped())
 	{
 		g_input->m_fCameraInThirdPerson = true;
 		g_input->m_vecCameraOffset = Vector{ viewangles.pitch, viewangles.yaw, vec_t(options::visuals::thirdperson_offset) };

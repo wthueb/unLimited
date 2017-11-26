@@ -8,20 +8,29 @@ void __fastcall hooks::hk_paint_traverse(void* thisptr, void* edx, VPANEL panel,
 {
 	static auto o_paint_traverse = panel_hook->get_original<void(__thiscall*)(void*, VPANEL, bool, bool)>(index::paint_traverse);
 
-	o_paint_traverse(thisptr, panel, force_repaint, allow_force);
-
 	static VPANEL FocusOverlayPanel = 0u;
-	if (!FocusOverlayPanel)
+	static VPANEL HudZoom = 0u;
+
+	// don't want to have to get panel name and strcmp every single time
+	if (!FocusOverlayPanel || !HudZoom)
 	{
 		auto panel_name = g_panel->GetName(panel);
-		if (!strcmp(panel_name, "FocusOverlayPanel"))
+		if (!FocusOverlayPanel && !strcmp(panel_name, "FocusOverlayPanel"))
 			FocusOverlayPanel = panel;
-		else
-			return;
+		else if (!HudZoom && !strcmp(panel_name, "HudZoom"))
+			HudZoom = panel;
 	}
-	else if (panel != FocusOverlayPanel)
-		return;
+
+	if (panel != FocusOverlayPanel)
+	{
+		if (panel == HudZoom)
+			return;
+		else
+			return o_paint_traverse(thisptr, panel, force_repaint, allow_force);
+	}
 
 	backtracking::draw();
 	antiaim::draw_angles();
+
+	o_paint_traverse(thisptr, panel, force_repaint, allow_force);
 }
