@@ -10,7 +10,7 @@ void __fastcall hooks::hk_scene_end(void* thisptr, void* edx)
 
 	//o_scene_end(thisptr);
 
-	static bool initialized = false;
+	/*static bool initialized = false;
 
 	if (!initialized)
 	{
@@ -84,5 +84,5 @@ void __fastcall hooks::hk_scene_end(void* thisptr, void* edx)
 		player->DrawModel(STUDIO_RENDER, 255);
 
 		g_model_render->ForcedMaterialOverride(nullptr);
-	}
+	}*/
 }

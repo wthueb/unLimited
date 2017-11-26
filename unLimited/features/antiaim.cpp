@@ -1,14 +1,14 @@
 #include "features.hpp"
 
-#include "../options.hpp"
-
 #include "../engine_drawing.hpp"
+#include "../math.hpp"
+#include "../options.hpp"
 
 #define TICKS_TO_TIME(t)  (float(t) * g_global_vars->interval_per_tick)
 #define TIME_TO_TICKS(dt) (int(.5f + float(dt) / g_global_vars->interval_per_tick))
 
-static QAngle g_fake{};
 static QAngle g_real{};
+static QAngle g_fake{};
 
 static bool g_choking = false;
 static int g_choked_ticks = 0;
@@ -35,10 +35,16 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 
 	auto weapon = localplayer->GetActiveWeapon().Get();
 	if (!weapon)
+	{
+		g_thirdperson_angles = g_real = g_fake = cmd->viewangles;
 		return;
+	}
 
 	if (weapon->IsKnife() || weapon->IsBomb())
+	{
+		g_thirdperson_angles = g_real = g_fake = cmd->viewangles;
 		return;
+	}
 
 	if (cmd->buttons & IN_ATTACK &&
 		g_global_vars->get_realtime(cmd) >= weapon->GetNextPrimaryAttack() &&
@@ -196,24 +202,78 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 
 void antiaim::draw_angles()
 {
-	if (!options::antiaim::enabled || !options::antiaim::text || !g_engine->IsInGame())
+	if (!options::antiaim::enabled || !options::antiaim::show || !g_engine->IsInGame())
 		return;
+
+	static auto font = draw::create_font("Verdana", 15);
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
 	if (!localplayer)
 		return;
 
-	static auto font = draw::create_font("Verdana", 15);
+	if (!localplayer->IsAlive())
+		return;
 
 	std::string lby_str{ "lby: " + std::to_string(localplayer->GetLBY()) };
 	draw::text(100, 100, lby_str.c_str(), font, Color{ 255, 255, 255 });
 
-	std::string fake_str{ "fake yaw: " + std::to_string(g_fake.yaw) };
-	draw::text(100, 125, fake_str.c_str(), font, Color{ 255, 255, 255 });
-
 	std::string real_str{ "real yaw: " + std::to_string(g_real.yaw) };
 	draw::text(100, 150, real_str.c_str(), font, Color{ 255, 255, 255 });
 
-	std::string choking_str{ std::string{ "choking: " } + (g_choking ? "true, " : "false, ") + std::to_string(g_choked_ticks) };
+	std::string fake_str{ "fake yaw: " + std::to_string(g_fake.yaw) };
+	draw::text(100, 125, fake_str.c_str(), font, Color{ 255, 255, 255 });
+
+	std::string choking_str{ std::string{ "choking: " } +(g_choking ? "true, " : "false, ") + std::to_string(g_choked_ticks) };
 	draw::text(100, 200, choking_str.c_str(), font, Color{ 255, 255, 255 });
+
+	static auto line_length = 20.f;
+
+	auto start = localplayer->GetOrigin();
+
+	Vector forward, end, start2d, end2d;
+	
+	// lby
+	{
+		math::AngleVectors(QAngle{ 0.f, localplayer->GetLBY(), 0.f }, &forward);
+		
+		forward *= line_length * 1.5f;
+		
+		end = start + forward;
+		
+		if (g_debug_overlay->ScreenPosition(start, start2d) || g_debug_overlay->ScreenPosition(end, end2d))
+			return;
+		
+		draw::line(int(start2d.x), int(start2d.y), int(end2d.x), int(end2d.y), Color{ 255, 255, 255 });
+		draw::text(int(end2d.x), int(end2d.y), "lby", font, Color{ 255, 255, 255 });
+	}
+
+	// real
+	{
+		math::AngleVectors(QAngle{ 0.f, g_real.yaw, 0.f }, &forward);
+
+		forward *= line_length;
+
+		end = start + forward;
+
+		if (g_debug_overlay->ScreenPosition(start, start2d) || g_debug_overlay->ScreenPosition(end, end2d))
+			return;
+
+		draw::line(int(start2d.x), int(start2d.y), int(end2d.x), int(end2d.y), Color{ 0, 255, 0 });
+		draw::text(int(end2d.x), int(end2d.y), "real", font, Color{ 0, 255, 0 });
+	}
+
+	// fake
+	{
+		math::AngleVectors(QAngle{ 0.f, g_fake.yaw, 0.f }, &forward);
+
+		forward *= line_length;
+
+		end = start + forward;
+
+		if (g_debug_overlay->ScreenPosition(start, start2d) || g_debug_overlay->ScreenPosition(end, end2d))
+			return;
+
+		draw::line(int(start2d.x), int(start2d.y), int(end2d.x), int(end2d.y), Color{ 255, 0, 0 });
+		draw::text(int(end2d.x), int(end2d.y), "fake", font, Color{ 255, 0, 0 });
+	}
 }

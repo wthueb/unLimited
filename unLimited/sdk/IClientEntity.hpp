@@ -204,7 +204,7 @@ class C_BaseEntity : public IClientEntity
 {
 public:
 	NETVAR(GetSimulationTime, float, "DT_BaseEntity", "m_flSimulationTime");
-	NETVAR(GetVecOrigin, Vector, "DT_BaseEntity", "m_vecOrigin");
+	NETVAR(GetOrigin, Vector, "DT_BaseEntity", "m_vecOrigin");
 	NETVAR(GetSpotted, bool, "DT_BaseEntity", "m_bSpotted");
 	NETVAR(GetModelIndex, int, "DT_BaseEntity", "m_nModelIndex");
 	NETVAR(GetTeam, Team, "DT_BaseEntity", "m_iTeamNum");
@@ -378,7 +378,7 @@ public:
 	NETVAR(GetLifeState, LifeState, "DT_BasePlayer", "m_lifeState");
 	NETVAR(GetObserverTarget, CHandle<C_BasePlayer>, "DT_BasePlayer", "m_hObserverTarget");
 	NETVAR(GetViewModel, CHandle<C_BaseViewModel>, "DT_BasePlayer", "m_hViewModel[0]");
-	NETVAR(GetVecViewOffset, Vector, "DT_BasePlayer", "m_vecViewOffset[0]");
+	NETVAR(GetViewOffset, Vector, "DT_BasePlayer", "m_vecViewOffset[0]");
 	NETVAR(GetTickBase, int, "DT_BasePlayer", "m_nTickBase");
 	NETVAR(GetVelocity, Vector, "DT_BasePlayer", "m_vecVelocity[0]");
 	NETVAR(GetViewPunch, QAngle, "DT_BasePlayer", "m_viewPunchAngle");
@@ -401,7 +401,7 @@ public:
 
 	const Vector GetEyePosition()
 	{
-		return this->GetVecOrigin() + this->GetVecViewOffset();
+		return this->GetOrigin() + this->GetViewOffset();
 	}
 
 	bool IsAlive()

@@ -64,7 +64,7 @@ namespace options
 	namespace antiaim
 	{
 		bool enabled = false;
-		bool text = true;
+		bool show = true;
 
 		int type = LEGIT;
 		bool fakelag = false;

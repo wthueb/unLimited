@@ -47,7 +47,7 @@ namespace options
 		};
 
 		extern bool enabled;
-		extern bool text;
+		extern bool show;
 
 		extern int type;
 		extern bool fakelag;
