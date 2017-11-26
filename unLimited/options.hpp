@@ -57,6 +57,9 @@ namespace options
 	{
 		extern bool enabled;
 
+		extern bool chams;
+		extern bool ignorez;
+
 		extern bool glow;
 		extern float glow_alpha;
 		extern int glow_style;

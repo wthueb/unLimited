@@ -41,6 +41,7 @@ namespace options
 		misc::nightmode = false;
 		misc::airstuck = false;
 		misc::fov = 90.f;
+		misc::chat_spam = false;
 	}
 
 	namespace aim
@@ -73,6 +74,9 @@ namespace options
 	namespace visuals
 	{
 		bool enabled = true;
+
+		bool chams = false;
+		bool ignorez = false;
 
 		bool glow = false;
 		float glow_alpha = 1.f;

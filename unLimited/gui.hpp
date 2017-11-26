@@ -17,8 +17,8 @@
 #endif
 
 #define VERSION_MAJOR 0
-#define VERSION_MINOR 3
-#define VERSION_PATCH 4
+#define VERSION_MINOR 4
+#define VERSION_PATCH 0
 
 namespace ImGui
 {
@@ -258,6 +258,16 @@ namespace gui
 				ImGui::BetterCheckbox("visuals", &options::visuals::enabled);
 				{
 					DISABLE(options::visuals::enabled, .2f);
+
+					ImGui::BetterCheckbox("chams", &options::visuals::chams);
+					{
+						DISABLE(options::visuals::chams, .2f);
+
+						ImGui::BetterCheckbox("ignorez (see through walls)", &options::visuals::ignorez);
+
+						ImGui::PopStyleVar();
+						ImGui::BetterPopItemFlag();
+					}
 
 					ImGui::BetterCheckbox("glow", &options::visuals::glow);
 					{
