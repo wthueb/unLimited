@@ -1,7 +1,5 @@
 #include "options.hpp"
 
-#include <Windows.h>
-
 #include <vector>
 
 #include "sdk/sdk.hpp"
@@ -92,9 +90,11 @@ namespace options
 		bool radar = false;
 
 		bool thirdperson = false;
-		int thirdperson_offset = 150;
+		float thirdperson_offset = 150.f;
 
 		bool noscope = false;
+
+		bool noflash = false;
 	}
 
 	namespace misc

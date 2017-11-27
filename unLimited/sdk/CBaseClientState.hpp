@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cstdint>
+using uintptr_t = unsigned int;
 
 class CBaseClientState
 {

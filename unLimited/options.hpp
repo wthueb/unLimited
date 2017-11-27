@@ -74,9 +74,12 @@ namespace options
 		extern bool radar;
 
 		extern bool thirdperson;
-		extern int thirdperson_offset;
+		extern float thirdperson_offset;
 
 		extern bool noscope;
+
+		extern bool noflash;
+		
 	}
 
 	namespace misc

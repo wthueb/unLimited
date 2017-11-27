@@ -12,6 +12,7 @@ void __stdcall hooks::hk_frame_stage_notify(ClientFrameStage_t stage)
 	{
 		visuals::thirdperson_fsn();
 		visuals::radar();
+		visuals::noflash();
 		misc::nightmode();
 		misc::chat_spam();
 	}

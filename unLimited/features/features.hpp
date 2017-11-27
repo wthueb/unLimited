@@ -33,6 +33,8 @@ namespace visuals
 
 	void thirdperson_override_view();
 	void thirdperson_fsn();
+
+	void noflash();
 }
 
 namespace misc

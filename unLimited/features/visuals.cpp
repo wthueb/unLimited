@@ -72,7 +72,7 @@ void visuals::chams()
 
 		if (options::visuals::ignorez)
 		{
-			static IMaterial* ignorez = g_material_system->FindMaterial("ignorez", TEXTURE_GROUP_MODEL);
+			IMaterial* ignorez = g_material_system->FindMaterial("ignorez", TEXTURE_GROUP_MODEL);
 			if (!ignorez)
 				return;
 
@@ -84,7 +84,7 @@ void visuals::chams()
 			g_model_render->ForcedMaterialOverride(nullptr);
 		}
 
-		static IMaterial* regular = g_material_system->FindMaterial("regular", TEXTURE_GROUP_MODEL);
+		IMaterial* regular = g_material_system->FindMaterial("regular", TEXTURE_GROUP_MODEL);
 		if (!regular)
 			return;
 
@@ -229,7 +229,7 @@ void visuals::thirdperson_override_view()
 	if (localplayer->IsAlive() && !localplayer->IsScoped())
 	{
 		g_input->m_fCameraInThirdPerson = true;
-		g_input->m_vecCameraOffset = Vector{ viewangles.pitch, viewangles.yaw, vec_t(options::visuals::thirdperson_offset) };
+		g_input->m_vecCameraOffset = Vector{ viewangles.pitch, viewangles.yaw, options::visuals::thirdperson_offset };
 	}
 	else
 	{
@@ -255,4 +255,16 @@ void visuals::thirdperson_fsn()
 	{
 		*reinterpret_cast<QAngle*>(uintptr_t(localplayer) + deadflag + 4) = g_thirdperson_angles;
 	}
+}
+
+void visuals::noflash()
+{
+	if (!options::visuals::enabled || !options::visuals::noflash || !g_engine->IsInGame())
+		return;
+
+	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+	if (!localplayer)
+		return;
+
+	localplayer->GetFlashMaxAlpha() = 0.f;
 }

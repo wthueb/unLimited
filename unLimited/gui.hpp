@@ -18,7 +18,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 4
-#define VERSION_PATCH 5
+#define VERSION_PATCH 7
 
 namespace ImGui
 {
@@ -289,13 +289,15 @@ namespace gui
 					{
 						DISABLE(options::visuals::thirdperson, .2f);
 
-						ImGui::InputInt("thirdperson offset", &options::visuals::thirdperson_offset, 10);
+						ImGui::SliderFloat("thirdperson offset", &options::visuals::thirdperson_offset, 20.f, 300.f, "%.0f");
 
 						ImGui::PopStyleVar();
 						ImGui::BetterPopItemFlag();
 					}
 
 					ImGui::BetterCheckbox("disable scope", &options::visuals::noscope);
+
+					ImGui::BetterCheckbox("noflash", &options::visuals::noflash);
 
 					ImGui::PopStyleVar();
 					ImGui::BetterPopItemFlag();

@@ -384,13 +384,13 @@ public:
 	NETVAR(GetViewPunch, QAngle, "DT_BasePlayer", "m_viewPunchAngle");
 	NETVAR(GetAimPunch, QAngle, "DT_BasePlayer", "m_aimPunchAngle");
 	NETVAR(GetEyeAngles, QAngle, "DT_CSPlayer", "m_angEyeAngles[0]");
-	NETVAR(GetFlashMaxAlpha, float, "DT_CSPlayer", "m_flFlashMaxAlpha");
 	NETVAR(IsScoped, bool, "DT_CSPlayer", "m_bIsScoped");
 	NETVAR(GetArmor, int, "DT_CSPlayer", "m_ArmorValue");
 	NETVAR(HasDefuser, bool, "DT_CSPlayer", "m_bHasDefuser");
 	NETVAR(IsDefusing, bool, "DT_CSPlayer", "m_bIsDefusing");
 	NETVAR(HasImmunity, bool, "DT_CSPlayer", "m_bGunGameImmunity");
 	NETVAR(HasHelmet, bool, "DT_CSPlayer", "m_bHasHelmet");
+	NETVAR(GetFlashMaxAlpha, float, "DT_CSPlayer", "m_flFlashMaxAlpha");
 	NETVAR(GetFlashDuration, float, "DT_CSPlayer", "m_flFlashDuration");
 	NETVAR(GetLBY, float, "DT_CSPlayer", "m_flLowerBodyYawTarget");
 	NETVAR(GetShotsFired, int, "DT_CSPlayer", "m_iShotsFired");
