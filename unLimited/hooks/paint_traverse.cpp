@@ -1,6 +1,8 @@
 #include "hooks.hpp"
 
+#include "../engine_drawing.hpp"
 #include "../features/features.hpp"
+#include "../options.hpp"
 #include "../sdk/sdk.hpp"
 #include "../vmt_hook.hpp"
 
@@ -23,10 +25,22 @@ void __fastcall hooks::hk_paint_traverse(void* thisptr, void* edx, VPANEL panel,
 
 	if (panel != FocusOverlayPanel)
 	{
-		if (panel == HudZoom)
+		if (options::visuals::noscope && panel == HudZoom)
 			return;
 		else
 			return o_paint_traverse(thisptr, panel, force_repaint, allow_force);
+	}
+
+	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+	if (!localplayer)
+		return;
+
+	if (options::visuals::noscope && localplayer->IsScoped())
+	{
+		int w, h;
+		g_engine->GetScreenSize(w, h);
+		draw::line(0, h / 2, w, h / 2, Color{ 255, 255, 255 });
+		draw::line(w / 2, 0, w / 2, h, Color{ 255, 255, 255 });
 	}
 
 	backtracking::draw();
