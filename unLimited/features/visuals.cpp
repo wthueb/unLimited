@@ -57,7 +57,10 @@ void visuals::chams()
 		if (!player)
 			continue;
 
-		if (!player->IsValid() || player == localplayer)
+		if (!player->IsValid())
+			continue;
+
+		if (!options::visuals::thirdperson && player == localplayer)
 			continue;
 
 		if (!options::visuals::friendlies && player->GetTeam() == localplayer->GetTeam())
@@ -78,6 +81,7 @@ void visuals::chams()
 
 			g_model_render->ForcedMaterialOverride(ignorez);
 			player->DrawModel(STUDIO_RENDER, 255);
+			g_model_render->ForcedMaterialOverride(nullptr);
 		}
 
 		static IMaterial* regular = g_material_system->FindMaterial("regular", TEXTURE_GROUP_MODEL);
@@ -89,9 +93,8 @@ void visuals::chams()
 
 		g_model_render->ForcedMaterialOverride(regular);
 		player->DrawModel(STUDIO_RENDER, 255);
+		g_model_render->ForcedMaterialOverride(nullptr);
 	}
-
-	g_model_render->ForcedMaterialOverride(nullptr);
 }
 
 void visuals::glow()
