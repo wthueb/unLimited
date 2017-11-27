@@ -39,8 +39,8 @@ void __fastcall hooks::hk_paint_traverse(void* thisptr, void* edx, VPANEL panel,
 	{
 		int w, h;
 		g_engine->GetScreenSize(w, h);
-		draw::line(0, h / 2, w, h / 2, Color{ 255, 255, 255 });
-		draw::line(w / 2, 0, w / 2, h, Color{ 255, 255, 255 });
+		draw::line(0, h / 2, w, h / 2, Color{ 0, 0, 0 });
+		draw::line(w / 2, 0, w / 2, h, Color{ 0, 0, 0 });
 	}
 
 	backtracking::draw();
