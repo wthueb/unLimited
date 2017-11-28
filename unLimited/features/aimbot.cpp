@@ -37,7 +37,7 @@ void aimbot::process(CUserCmd* _cmd, bool& send_packet)
 
 	if (active_weapon->IsKnife() || active_weapon->IsNade() || active_weapon->IsBomb())
 		return;
-
+	
 	bool should_correct = false;
 
 	if (options::aim::aimbot)
@@ -63,8 +63,7 @@ void aimbot::process(CUserCmd* _cmd, bool& send_packet)
 	}
 
 	if (options::aim::rcs && !should_correct &&
-		!active_weapon->IsPistol() && !active_weapon->IsShotgun() &&
-		!active_weapon->IsSniper()) // FIXMEW: nShotsFired?
+		localplayer->GetShotsFired() > 1)
 		rcs();
 
 	g_engine->SetViewAngles(cmd->viewangles);
