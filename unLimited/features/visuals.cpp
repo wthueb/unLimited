@@ -60,7 +60,7 @@ void visuals::chams()
 		if (!player->IsValid())
 			continue;
 
-		if (!options::visuals::thirdperson && player == localplayer)
+		if (!g_input->m_fCameraInThirdPerson && player == localplayer)
 			continue;
 
 		if (!options::visuals::friendlies && player->GetTeam() == localplayer->GetTeam())
