@@ -76,8 +76,8 @@ void visuals::chams()
 			if (!ignorez)
 				return;
 
-			ignorez->ColorModulate(1.f, 0.f, 0.f);
-			ignorez->AlphaModulate(1.f);
+			g_render_view->SetColorModulation(1.f, 0.f, 0.f);
+			g_render_view->SetBlend(1.f);
 
 			g_model_render->ForcedMaterialOverride(ignorez);
 			player->DrawModel(STUDIO_RENDER, 255);
@@ -88,8 +88,8 @@ void visuals::chams()
 		if (!regular)
 			return;
 
-		regular->ColorModulate(0.f, 1.f, 0.f);
-		regular->AlphaModulate(1.f);
+		g_render_view->SetColorModulation(0.f, 1.f, 0.f);
+		g_render_view->SetBlend(1.f);
 
 		g_model_render->ForcedMaterialOverride(regular);
 		player->DrawModel(STUDIO_RENDER, 255);
