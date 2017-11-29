@@ -21,7 +21,7 @@ namespace hooks
 	HRESULT __stdcall hk_end_scene(IDirect3DDevice9* device);
 
 	// client
-	void __stdcall hk_frame_stage_notify(ClientFrameStage_t stage);
+	void __stdcall hk_frame_stage_notify(ClientFrameStage stage);
 	
 	// client mode
 	void __stdcall hk_override_view(CViewSetup* view);

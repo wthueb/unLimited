@@ -361,6 +361,14 @@ public:
 	}
 };
 
+class C_BaseCSGrenade : public C_BaseCombatWeapon
+{
+public:
+	NETVAR(GetPinPulled, bool, "DT_BaseCSGrenade", "m_bPinPulled");
+	NETVAR(GetThrowTime, float, "DT_BaseCSGrenade", "m_fThrowTime");
+	NETVAR(GetThrowStrength, float, "DT_BaseCSGrenade", "m_flThrowStrength");
+};
+
 class C_BasePlayer;
 
 class C_BaseViewModel : public C_BaseEntity

@@ -14,25 +14,10 @@ void visuals::chams()
 
 	if (!initialized)
 	{
-		std::ofstream("csgo\\materials\\regular.vmt") << R"#("VertexLitGeneric"
+		std::ofstream("csgo\\materials\\flat.vmt") << R"#("VertexLitGeneric"
 			{
 			"$basetexture" "vgui/white_additive"
 			"$ignorez"      "0"
-			"$envmap"       ""
-			"$nofog"        "1"
-			"$model"        "1"
-			"$nocull"       "0"
-			"$selfillum"    "1"
-			"$halflambert"  "1"
-			"$znearer"      "0"
-			"$flat"         "1"
-			}
-		)#";
-
-		std::ofstream("csgo\\materials\\ignorez.vmt") << R"#("VertexLitGeneric"
-			{
-			"$basetexture" "vgui/white_additive"
-			"$ignorez"      "1"
 			"$envmap"       ""
 			"$nofog"        "1"
 			"$model"        "1"
@@ -49,6 +34,10 @@ void visuals::chams()
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
 	if (!localplayer)
+		return;
+
+	auto mat = g_material_system->FindMaterial("flat", TEXTURE_GROUP_MODEL);
+	if (!mat)
 		return;
 
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
@@ -72,26 +61,21 @@ void visuals::chams()
 
 		if (options::visuals::ignorez)
 		{
-			IMaterial* ignorez = g_material_system->FindMaterial("ignorez", TEXTURE_GROUP_MODEL);
-			if (!ignorez)
-				return;
+			mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
 
 			g_render_view->SetColorModulation(1.f, 0.f, 0.f);
 			g_render_view->SetBlend(1.f);
 
-			g_model_render->ForcedMaterialOverride(ignorez);
+			g_model_render->ForcedMaterialOverride(mat);
 			player->DrawModel(STUDIO_RENDER, 255);
-			g_model_render->ForcedMaterialOverride(nullptr);
 		}
 
-		IMaterial* regular = g_material_system->FindMaterial("regular", TEXTURE_GROUP_MODEL);
-		if (!regular)
-			return;
+		mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, false);
 
 		g_render_view->SetColorModulation(0.f, 1.f, 0.f);
 		g_render_view->SetBlend(1.f);
 
-		g_model_render->ForcedMaterialOverride(regular);
+		g_model_render->ForcedMaterialOverride(mat);
 		player->DrawModel(STUDIO_RENDER, 255);
 		g_model_render->ForcedMaterialOverride(nullptr);
 	}
@@ -213,7 +197,10 @@ void visuals::radar()
 
 void visuals::thirdperson_override_view()
 {
-	if (!options::visuals::enabled || !options::visuals::thirdperson || !g_engine->IsInGame())
+	if (!g_engine->IsInGame())
+		return;
+
+	if (!options::visuals::enabled || !options::visuals::thirdperson)
 	{
 		g_input->m_fCameraInThirdPerson = false;
 		return;

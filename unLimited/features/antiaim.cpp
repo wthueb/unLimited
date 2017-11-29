@@ -40,10 +40,21 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		return;
 	}
 
-	if (weapon->IsKnife() || weapon->IsBomb() || weapon->IsNade() && (localplayer->GetFlags() & IN_GRENADE1 || localplayer->GetFlags() & IN_GRENADE2))
+	if (weapon->IsKnife() || weapon->IsBomb())
 	{
 		g_thirdperson_angles = g_real = g_fake = cmd->viewangles;
 		return;
+	}
+
+	if (weapon->IsNade())
+	{
+		auto nade = static_cast<C_BaseCSGrenade*>(weapon);
+
+		if (nade->GetThrowTime() > 0.f)
+		{
+			g_thirdperson_angles = g_real = g_fake = cmd->viewangles;
+			return;
+		}
 	}
 
 	if (cmd->buttons & IN_ATTACK &&
