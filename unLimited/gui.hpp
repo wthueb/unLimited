@@ -116,7 +116,7 @@ namespace ImGui
 namespace gui
 {
 	static char title[64];
-	static float theme_color[3] = { .65f, .85f, .95f };
+	constexpr float theme_color[3] = { .65f, .85f, .95f };
 	static bool dark_mode = false;
 
 	static void setup_style(const ImVec4& theme_color)
