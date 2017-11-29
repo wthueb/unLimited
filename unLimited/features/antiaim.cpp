@@ -34,13 +34,13 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		return;
 
 	auto weapon = localplayer->GetActiveWeapon().Get();
-	if (!weapon)
+	if (!weapon || weapon->IsKnife() || weapon->IsBomb())
 	{
 		g_thirdperson_angles = g_real = g_fake = cmd->viewangles;
 		return;
 	}
 
-	if (weapon->IsKnife() || weapon->IsBomb())
+	if (cmd->buttons & IN_USE)
 	{
 		g_thirdperson_angles = g_real = g_fake = cmd->viewangles;
 		return;
@@ -65,17 +65,10 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		return;
 	}
 
-	if (cmd->buttons & IN_USE)
-	{
-		g_thirdperson_angles = g_real = g_fake = cmd->viewangles;
-		return;
-	}
-
 	//if (localplayer->GetMoveType() == MOVETYPE_LADDER)
 	//	return;
 
-	// FIXMEW: don't fakelag when shooting
-	if (options::antiaim::fakelag)
+	if (options::antiaim::fakelag && !(localplayer->GetFlags() & FL_ONGROUND && cmd->buttons & IN_JUMP))
 	{
 		if (g_choked_ticks < 15)
 		{
