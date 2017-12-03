@@ -172,6 +172,82 @@ void apply_config(C_BaseAttributableItem* item, const econ_item_t* config, unsig
 	apply_sticker_hooks(item);
 }
 
+inline int rand_seq(Sequence low, Sequence high)
+{
+	return rand() % (high - low) + low;
+}
+
+const static std::unordered_map<std::string, int(*)(int)> anim_fixes
+{
+	{ "models/weapons/v_knife_butterfly.mdl", [](int sequence) -> int
+	{
+		switch (sequence)
+		{
+		case SEQUENCE_DEFAULT_DRAW:
+			return rand_seq(SEQUENCE_BUTTERFLY_DRAW, SEQUENCE_BUTTERFLY_DRAW2);
+		case SEQUENCE_DEFAULT_LOOKAT01:
+			return rand_seq(SEQUENCE_BUTTERFLY_LOOKAT01, SEQUENCE_BUTTERFLY_LOOKAT03);
+		default:
+			return sequence + 1;
+		}
+	} },
+		
+	{ "models/weapons/v_knife_falchion_advanced.mdl", [](int sequence) -> int
+	{
+		switch (sequence)
+		{
+		case SEQUENCE_DEFAULT_IDLE2:
+			return SEQUENCE_FALCHION_IDLE1;
+		case SEQUENCE_DEFAULT_HEAVY_MISS1:
+			return rand_seq(SEQUENCE_FALCHION_HEAVY_MISS1, SEQUENCE_FALCHION_HEAVY_MISS1_NOFLIP);
+		case SEQUENCE_DEFAULT_LOOKAT01:
+			return rand_seq(SEQUENCE_FALCHION_LOOKAT01, SEQUENCE_FALCHION_LOOKAT02);
+		case SEQUENCE_DEFAULT_DRAW:
+		case SEQUENCE_DEFAULT_IDLE1:
+			return sequence;
+		default:
+			return sequence - 1;
+		}
+	} },
+
+	{ "models/weapons/v_knife_push.mdl", [](int sequence) -> int
+	{
+		switch (sequence)
+		{
+		case SEQUENCE_DEFAULT_IDLE2:
+			return SEQUENCE_DAGGERS_IDLE1;
+		case SEQUENCE_DEFAULT_LIGHT_MISS1:
+		case SEQUENCE_DEFAULT_LIGHT_MISS2:
+			return rand_seq(SEQUENCE_DAGGERS_LIGHT_MISS1, SEQUENCE_DAGGERS_LIGHT_MISS5);
+		case SEQUENCE_DEFAULT_HEAVY_MISS1:
+			return rand_seq(SEQUENCE_DAGGERS_HEAVY_MISS2, SEQUENCE_DAGGERS_HEAVY_MISS1);
+		case SEQUENCE_DEFAULT_HEAVY_HIT1:
+		case SEQUENCE_DEFAULT_HEAVY_BACKSTAB:
+		case SEQUENCE_DEFAULT_LOOKAT01:
+			return sequence + 3;
+		case SEQUENCE_DEFAULT_DRAW:
+		case SEQUENCE_DEFAULT_IDLE1:
+			return sequence;
+		default:
+			return sequence + 2;
+		}
+	} },
+
+	{ "models/weapons/v_knife_survival_bowie.mdl", [](int sequence) -> int
+	{
+		switch (sequence)
+		{
+		case SEQUENCE_DEFAULT_DRAW:
+		case SEQUENCE_DEFAULT_IDLE1:
+			return sequence;
+		case SEQUENCE_DEFAULT_IDLE2:
+			return SEQUENCE_BOWIE_IDLE1;
+		default:
+			return sequence - 1;
+		}
+	} }
+};
+
 void skinchanger::apply_skins()
 {
 	auto local_idx = g_engine->GetLocalPlayer();
@@ -275,7 +351,7 @@ void skinchanger::apply_skins()
 	auto viewmodel = viewmodel_handle.Get();
 	if (!viewmodel)
 		return;
-
+	
 	auto viewmodel_weapon_handle = viewmodel->GetWeapon();
 	if (!viewmodel_weapon_handle.IsValid())
 		return;
@@ -296,4 +372,29 @@ void skinchanger::fix_icons(IGameEvent* event)
 	if (g_engine->GetPlayerForUserID(event->GetInt("attacker")) == g_engine->GetLocalPlayer())
 		if (auto icon_override = config::get_icon_override(event->GetString("weapon")))
 			event->SetString("weapon", icon_override);
+}
+
+void skinchanger::fix_anims()
+{
+	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+	if (!localplayer)
+		return;
+
+	auto view_model = localplayer->GetViewModel();
+	auto knife_model = g_model_info->GetModel(view_model->GetModelIndex());
+	auto model_name = g_model_info->GetModelName(knife_model);
+
+	static int lastseq = -1;
+
+	int new_sequence = 0;
+
+	if (anim_fixes.count(model_name))
+		new_sequence = anim_fixes.at(model_name)(view_model->GetSequence());
+
+	if (new_sequence && lastseq != view_model->GetSequence())
+	{
+		view_model->SendViewModelMatchingSequence(new_sequence);
+	}
+
+	lastseq = view_model->GetSequence();
 }

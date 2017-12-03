@@ -192,6 +192,38 @@ enum WeaponSound
 	NUM_SHOOT_SOUND_TYPES,
 };
 
+enum Sequence
+{
+	SEQUENCE_DEFAULT_DRAW = 0,
+	SEQUENCE_DEFAULT_IDLE1 = 1,
+	SEQUENCE_DEFAULT_IDLE2 = 2,
+	SEQUENCE_DEFAULT_LIGHT_MISS1 = 3,
+	SEQUENCE_DEFAULT_LIGHT_MISS2 = 4,
+	SEQUENCE_DEFAULT_HEAVY_MISS1 = 9,
+	SEQUENCE_DEFAULT_HEAVY_HIT1 = 10,
+	SEQUENCE_DEFAULT_HEAVY_BACKSTAB = 11,
+	SEQUENCE_DEFAULT_LOOKAT01 = 12,
+
+	SEQUENCE_BUTTERFLY_DRAW = 0,
+	SEQUENCE_BUTTERFLY_DRAW2 = 1,
+	SEQUENCE_BUTTERFLY_LOOKAT01 = 13,
+	SEQUENCE_BUTTERFLY_LOOKAT03 = 15,
+
+	SEQUENCE_FALCHION_IDLE1 = 1,
+	SEQUENCE_FALCHION_HEAVY_MISS1 = 8,
+	SEQUENCE_FALCHION_HEAVY_MISS1_NOFLIP = 9,
+	SEQUENCE_FALCHION_LOOKAT01 = 12,
+	SEQUENCE_FALCHION_LOOKAT02 = 13,
+
+	SEQUENCE_DAGGERS_IDLE1 = 1,
+	SEQUENCE_DAGGERS_LIGHT_MISS1 = 2,
+	SEQUENCE_DAGGERS_LIGHT_MISS5 = 6,
+	SEQUENCE_DAGGERS_HEAVY_MISS2 = 11,
+	SEQUENCE_DAGGERS_HEAVY_MISS1 = 12,
+
+	SEQUENCE_BOWIE_IDLE1 = 1,
+};
+
 struct SpatializationInfo_t;
 
 class IClientEntity : public IClientUnknown, public IClientRenderable, public IClientNetworkable, public IClientThinkable
@@ -210,6 +242,7 @@ public:
 	NETVAR(GetTeam, Team, "DT_BaseEntity", "m_iTeamNum");
 	NETVAR(GetOwnerEntity, CHandle<C_BaseEntity>, "DT_BaseEntity", "m_hOwnerEntity");
 	NETVAR(GetShouldGlow, bool, "DT_DynamicProp", "m_bShouldGlow");
+	NETVAR(GetSequence, Sequence, "DT_BaseAnimating", "m_nSequence");
 
 	void SetModelIndex(int index)
 	{
@@ -376,6 +409,11 @@ class C_BaseViewModel : public C_BaseEntity
 public:
 	NETVAR(GetWeapon, CHandle<C_BaseCombatWeapon>, "DT_BaseViewModel", "m_hWeapon");
 	NETVAR(GetOwner, CHandle<C_BasePlayer>, "DT_BaseViewModel", "m_hOwner");
+
+	inline void SendViewModelMatchingSequence(int sequence) {
+		using ofunc = void(__thiscall*)(void*, int);
+		return get_vfunc<ofunc>(this, 241)(this, sequence);
+	}
 };
 
 class C_BasePlayer : public C_BaseEntity

@@ -23,6 +23,7 @@ namespace skinchanger
 {
 	void apply_skins();
 	void fix_icons(IGameEvent* event);
+	void fix_anims();
 }
 
 namespace visuals

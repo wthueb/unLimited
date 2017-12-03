@@ -11,6 +11,7 @@ void __stdcall hooks::hk_frame_stage_notify(ClientFrameStage stage)
 	if (stage == FRAME_NET_UPDATE_POSTDATAUPDATE_START)
 	{
 		skinchanger::apply_skins();
+		skinchanger::fix_anims();
 	}
 	else if (stage == FRAME_RENDER_START)
 	{
