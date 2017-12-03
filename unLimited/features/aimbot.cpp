@@ -160,6 +160,7 @@ void correct_aim()
 		return;
 
 	if (options::aim::vis_check &&
+		(!options::aim::aim_key || !GetAsyncKeyState(options::aim::aim_key)) &&
 		!is_visible(target))
 		return;
 
