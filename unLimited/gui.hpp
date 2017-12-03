@@ -18,7 +18,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 4
-#define VERSION_PATCH 17
+#define VERSION_PATCH 18
 
 namespace ImGui
 {

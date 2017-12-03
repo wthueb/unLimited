@@ -1,5 +1,7 @@
 #include "features.hpp"
 
+#include <TimeAPI.h>
+
 #include <algorithm>
 
 #include "../math.hpp"
@@ -174,16 +176,19 @@ void correct_aim()
 	if (math::get_fov(cmd->viewangles + localplayer->GetAimPunch() * 2.f, dst) > options::aim::fov)
 		return;
 
-	if (!active_weapon->IsSniper() && !active_weapon->IsPistol() && !active_weapon->IsShotgun())
+	if (localplayer->GetShotsFired() > 1)
 		dst -= localplayer->GetAimPunch() * 2.f;
-
+	
 	dst.Clamp();
 
 	if (options::aim::smooth)
 	{
 		QAngle delta{ dst - cmd->viewangles };
+
 		delta.Clamp();
+		
 		delta /= std::max(1.f, options::aim::smooth_amount);
+		
 		dst = cmd->viewangles + delta;
 	}
 
