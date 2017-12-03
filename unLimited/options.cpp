@@ -55,7 +55,7 @@ namespace options
 		bool reaim = true;
 		int aim_key = 0;
 		bool friendlies = false;
-		bool visible_only = true;
+		bool vis_check = true;
 
 		bool rcs = false;
 	}

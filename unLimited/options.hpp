@@ -29,7 +29,7 @@ namespace options
 		extern bool reaim;
 		extern int aim_key;
 		extern bool friendlies;
-		extern bool visible_only;
+		extern bool vis_check;
 
 		extern bool rcs;
 	}
@@ -79,7 +79,6 @@ namespace options
 		extern bool noscope;
 
 		extern bool noflash;
-		
 	}
 
 	namespace misc

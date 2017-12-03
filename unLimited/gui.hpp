@@ -18,7 +18,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 4
-#define VERSION_PATCH 14
+#define VERSION_PATCH 15
 
 namespace ImGui
 {
@@ -236,7 +236,7 @@ namespace gui
 						}
 
 						ImGui::BetterCheckbox("shoot teammates", &options::aim::friendlies);
-						ImGui::BetterCheckbox("visible check", &options::aim::visible_only);
+						ImGui::BetterCheckbox("visible check", &options::aim::vis_check);
 
 						ImGui::PopStyleVar();
 						ImGui::BetterPopItemFlag();

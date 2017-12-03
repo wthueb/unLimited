@@ -108,9 +108,10 @@ void find_target()
 			potential->GetTeam() == localplayer->GetTeam())
 			continue;
 
-		if (options::aim::visible_only &&
+		if (options::aim::vis_check &&
+			(!options::aim::aim_key || !GetAsyncKeyState(options::aim::aim_key)) &&
 			!is_visible(potential))
-			continue;
+				continue;
 
 		Vector target_pos{ potential->GetBonePos(Bone(options::aim::bone)) };
 		Vector eye_pos{ localplayer->GetEyePosition() };
@@ -158,7 +159,7 @@ void correct_aim()
 	if (!target->IsValid() || target == localplayer)
 		return;
 
-	if (options::aim::visible_only &&
+	if (options::aim::vis_check &&
 		!is_visible(target))
 		return;
 
