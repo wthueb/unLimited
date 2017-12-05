@@ -66,3 +66,8 @@ void notifier::option_changed(const char* name, bool value)
 {
 	option_changed(name, value ? "true" : "false");
 }
+
+void notifier::update_all_options()
+{
+
+}

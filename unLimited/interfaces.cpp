@@ -108,7 +108,7 @@ void interfaces::init()
 	utils::console_print("g_model_render: 0x%08x\n\n", g_model_render);
 
 	utils::console_print("g_steam_friends: 0x%08x\n", g_steam_friends);
-	utils::console_print("g_steam_http: 0x%08x\n\n", g_steam_http);
+	utils::console_print("g_steam_http: 0x%08x\n", g_steam_http);
 	utils::console_print("g_steam_user: 0x%08x\n\n", g_steam_user);
 #endif
 }

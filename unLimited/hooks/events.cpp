@@ -5,18 +5,20 @@
 
 #include "../features/features.hpp"
 #include "hooks.hpp"
+#include "../notifier.hpp"
 #include "../sdk/sdk.hpp"
 
 void events::init()
 {
-	
+	add_listener("round_end", [](IGameEvent* event)
+	{
+		notifier::update_all_options();
+	});
 }
 
 bool events::add_listener(std::string name, std::function<void(IGameEvent*)> func)
 {
-	auto listener = new EventListener{ name, func };
-
-	return g_game_event_manager->AddListener(listener, name.c_str(), false);
+	return g_game_event_manager->AddListener(new EventListener{ name, func }, name.c_str(), false);
 }
 
 bool __stdcall events::hk_fire_event_client_side(IGameEvent* event)

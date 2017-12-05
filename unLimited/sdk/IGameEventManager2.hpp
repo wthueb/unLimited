@@ -87,7 +87,7 @@ public:
 
 	int GetEventDebugID()
 	{
-		return 0;
+		return 42;
 	}
 
 private:
