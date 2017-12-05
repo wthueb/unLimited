@@ -78,6 +78,7 @@
     <ClCompile Include="hooks\events.cpp">
       <Filter>hooks</Filter>
     </ClCompile>
+    <ClCompile Include="notifier.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />
@@ -219,6 +220,10 @@
     <ClInclude Include="kit_parser.hpp" />
     <ClInclude Include="hooks\events.hpp">
       <Filter>hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="notifier.hpp" />
+    <ClInclude Include="sdk\Steam.hpp">
+      <Filter>sdk</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

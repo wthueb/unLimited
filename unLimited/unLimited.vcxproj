@@ -156,6 +156,7 @@
     <ClCompile Include="interfaces.cpp" />
     <ClCompile Include="kit_parser.cpp" />
     <ClCompile Include="netvars.cpp" />
+    <ClCompile Include="notifier.cpp" />
     <ClCompile Include="options.cpp" />
     <ClCompile Include="sdk\CRC.cpp" />
     <ClCompile Include="sdk\Vector.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="kit_parser.hpp" />
     <ClInclude Include="math.hpp" />
     <ClInclude Include="netvars.hpp" />
+    <ClInclude Include="notifier.hpp" />
     <ClInclude Include="options.hpp" />
     <ClInclude Include="sdk\CBaseClientState.hpp" />
     <ClInclude Include="sdk\CGlobalVarsBase.hpp" />
@@ -203,6 +205,7 @@
     <ClInclude Include="sdk\IMaterial.hpp" />
     <ClInclude Include="sdk\IMaterialSystem.hpp" />
     <ClInclude Include="sdk\IPanel.hpp" />
+    <ClInclude Include="sdk\Steam.hpp" />
     <ClInclude Include="sdk\IVModelRender.hpp" />
     <ClInclude Include="sdk\IVRenderView.hpp" />
     <ClInclude Include="sdk\ISurface.hpp" />

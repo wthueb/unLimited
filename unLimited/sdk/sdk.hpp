@@ -23,3 +23,4 @@
 #include "IVModelInfo.hpp"
 #include "IVModelRender.hpp"
 #include "IVRenderView.hpp"
+#include "Steam.hpp"
