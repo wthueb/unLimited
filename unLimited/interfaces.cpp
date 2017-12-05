@@ -20,14 +20,16 @@ IGameEventManager2* g_game_event_manager = nullptr;
 ILocalize* g_localize = nullptr;
 IMaterialSystem* g_material_system = nullptr;
 IPanel* g_panel = nullptr;
-ISteamHTTP* g_steam_http = nullptr;
-ISteamFriends* g_steam_friends = nullptr;
 ISurface* g_surface = nullptr;
 IVDebugOverlay* g_debug_overlay = nullptr;
 IVEngineClient* g_engine = nullptr;
 IVModelInfo* g_model_info = nullptr;
 IVRenderView* g_render_view = nullptr;
 IVModelRender* g_model_render = nullptr;
+
+ISteamFriends* g_steam_friends = nullptr;
+ISteamHTTP* g_steam_http = nullptr;
+ISteamUser* g_steam_user = nullptr;
 
 template<typename t>
 t* capture_interface(const std::string& module, const std::string& interface)
@@ -46,17 +48,16 @@ t* capture_interface(const std::string& module, const std::string& interface)
 	return result;
 }
 
-void get_steam_http(const char* http_interface_name, const char* friends_interface_name)
+void get_steam()
 {
-	void* thisptr = reinterpret_cast<void*(__cdecl*)()>(GetProcAddress(GetModuleHandleA("steam_api.dll"), "SteamClient"))();
+	ISteamClient* steam_client = reinterpret_cast<ISteamClient*>(reinterpret_cast<void*(__cdecl*)()>(GetProcAddress(GetModuleHandleA("steam_api.dll"), "SteamClient"))());
 
 	uint32_t h_steam_user = reinterpret_cast<uint32_t(__cdecl*)()>(GetProcAddress(GetModuleHandleA("steam_api.dll"), "SteamAPI_GetHSteamUser"))();
-
 	uint32_t h_steam_pipe = reinterpret_cast<uint32_t(__cdecl*)()>(GetProcAddress(GetModuleHandleA("steam_api.dll"), "SteamAPI_GetHSteamPipe"))();
 
-	g_steam_friends = get_vfunc<ISteamFriends*(__thiscall*)(void*, uint32_t, uint32_t, const char*)>(thisptr, 8)(thisptr, h_steam_user, h_steam_pipe, friends_interface_name);
-
-	g_steam_http = get_vfunc<ISteamHTTP*(__thiscall*)(void*, uint32_t, uint32_t, const char*)>(thisptr, 23)(thisptr, h_steam_user, h_steam_pipe, http_interface_name);
+	g_steam_friends = steam_client->GetISteamFriends(h_steam_user, h_steam_pipe, STEAMFRIENDS_INTERFACE_VERSION);
+	g_steam_http = steam_client->GetISteamHTTP(h_steam_user, h_steam_pipe, STEAMHTTP_INTERFACE_VERSION);
+	g_steam_user = steam_client->GetISteamUser(h_steam_user, h_steam_pipe, STEAMUSER_INTERFACE_VERSION);
 }
 
 void interfaces::init()
@@ -83,7 +84,7 @@ void interfaces::init()
 	g_input = *reinterpret_cast<CInput**>((*reinterpret_cast<uintptr_t**>(g_client))[15] + 0x1);
 	g_client_mode = **reinterpret_cast<IClientMode***>((*reinterpret_cast<uintptr_t**>(g_client))[10] + 0x5);
 
-	get_steam_http("STEAMHTTP_INTERFACE_VERSION002", "SteamFriends015");
+	get_steam();
 
 #ifdef _DEBUG
 	utils::console_print("g_client_state: 0x%08x\n", g_client_state);
@@ -108,5 +109,6 @@ void interfaces::init()
 
 	utils::console_print("g_steam_friends: 0x%08x\n", g_steam_friends);
 	utils::console_print("g_steam_http: 0x%08x\n\n", g_steam_http);
+	utils::console_print("g_steam_user: 0x%08x\n\n", g_steam_user);
 #endif
 }

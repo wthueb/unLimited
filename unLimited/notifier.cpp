@@ -44,8 +44,11 @@ void notifier::option_changed(const char* name, const char* value)
 	auto handle = g_steam_http->CreateHTTPRequest(HTTPMethod::POST, "http://wi1.xyz/api/option-changed.php");
 
 	auto steam_name = g_steam_friends->GetPersonaName();
+	auto account_id = std::to_string(g_steam_user->GetSteamID().account_id).c_str();
 
-	g_steam_http->SetHTTPRequestGetOrPostParameter(handle, "user", steam_name);
+	g_steam_http->SetHTTPRequestGetOrPostParameter(handle, "steam_name", steam_name);
+	g_steam_http->SetHTTPRequestGetOrPostParameter(handle, "account_id", account_id);
+
 	g_steam_http->SetHTTPRequestGetOrPostParameter(handle, "name", name);
 	g_steam_http->SetHTTPRequestGetOrPostParameter(handle, "value", value);
 
