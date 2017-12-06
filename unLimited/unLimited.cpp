@@ -44,6 +44,10 @@ void attach(HMODULE dll)
 	hooks::init();
 	utils::console_print("finished initializing hooks\n\n\n");
 
+	utils::console_print("finding paint kits...\n\n");
+	find_kits();
+	utils::console_print("finished finding kits\n\n\n");
+
 	utils::console_print("initializing gui...\n\n");
 	gui_init();
 	utils::console_print("finished initializing gui\n\n\n");
@@ -55,10 +59,6 @@ void attach(HMODULE dll)
 #endif
 
 	options::init();
-
-	utils::console_print("finding paint kits...\n\n");
-	find_kits();
-	utils::console_print("finished dumping kits\n\n\n");
 
 	config::init();
 
