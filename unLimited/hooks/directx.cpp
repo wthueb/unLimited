@@ -113,7 +113,7 @@ bool handle_input(UINT message, WPARAM w_param, LPARAM l_param)
 	}
 
 	if (gui_open)
-		return ImGui_ImplWin32_WndProcHandler(hwnd, message, w_param, l_param) != 0;
+		return ImGui_ImplWin32_WndProcHandler(hwnd, message, w_param, l_param) == 0;
 
 	return false;
 }
