@@ -82,7 +82,7 @@ enum ItemDefinitionIndex
 
 enum Bone
 {
-	INVALID = -1,
+	BONE_INVALID = -1,
 	BONE_PELVIS,
 	LEAN_ROOT,
 	CAM_DRIVER,
@@ -92,6 +92,7 @@ enum Bone
 	BONE_UPPER_SPINAL_COLUMN,
 	BONE_NECK,
 	BONE_HEAD,
+	BONE_MAX_BONES
 };
 
 enum LifeState

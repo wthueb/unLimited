@@ -234,7 +234,7 @@ struct Ray_t
 
 	Ray_t() : m_pWorldAxisTransform(NULL) {}
 
-	void Init(Vector const &start, Vector const &end)
+	void Init(const Vector& start, const Vector& end)
 	{
 		m_Delta = end - start;
 

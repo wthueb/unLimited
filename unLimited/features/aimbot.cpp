@@ -19,13 +19,12 @@ static C_BasePlayer* localplayer = nullptr;
 static C_BaseCombatWeapon* active_weapon = nullptr;
 static CUserCmd* cmd = nullptr;
 static int best_target = -1;
+static Bone bone = BONE_INVALID;
 
 void aimbot::process(CUserCmd* _cmd, bool& send_packet)
 {
 	if (!options::aim::enabled || !g_engine->IsInGame())
 		return;
-
-	drop_target();
 
 	localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
 	if (!localplayer)
@@ -35,11 +34,13 @@ void aimbot::process(CUserCmd* _cmd, bool& send_packet)
 	if (!active_weapon)
 		return;
 
-	cmd = _cmd;
-
 	if (active_weapon->IsKnife() || active_weapon->IsNade() || active_weapon->IsBomb())
 		return;
+
+	drop_target();
 	
+	cmd = _cmd;
+
 	bool should_correct = false;
 
 	if (options::aim::aimbot)
@@ -89,13 +90,20 @@ void rcs()
 	}
 	else
 	{
-		old_angle.pitch = old_angle.yaw = old_angle.roll = 0;
+		old_angle.Init();
 	}
 }
 
 void find_target()
 {
 	float best_fov = options::aim::fov;
+	
+	Vector eye_pos{ localplayer->GetEyePosition() };
+
+	if (options::aim::bone == -1)
+		bone = BONE_MIDDLE_SPINAL_COLUMN;
+	else
+		bone = Bone(options::aim::bone);
 
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
 	{
@@ -115,8 +123,7 @@ void find_target()
 			!is_visible(potential))
 				continue;
 
-		Vector target_pos{ potential->GetBonePos(Bone(options::aim::bone)) };
-		Vector eye_pos{ localplayer->GetEyePosition() };
+		Vector target_pos{ potential->GetBonePos(bone) };
 		Vector relative{ eye_pos - target_pos };
 
 		QAngle angle;
@@ -128,6 +135,32 @@ void find_target()
 		{
 			best_fov = fov;
 			best_target = i;
+		}
+	}
+
+	if (best_target != -1 && options::aim::bone == -1)
+	{
+		auto target = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(best_target));
+		if (!target)
+			return;
+
+		for (auto i = 1u; i < options::bones.size(); ++i)
+		{
+			auto potential = Bone(options::bones.at(i).num);
+
+			Vector target_pos{ target->GetBonePos(potential) };
+			Vector relative{ eye_pos - target_pos };
+
+			QAngle angle;
+			math::VectorAngles(relative, angle);
+
+			auto fov = math::get_fov(cmd->viewangles + localplayer->GetAimPunch() * 2.f, angle);
+
+			if (fov <= best_fov)
+			{
+				best_fov = fov;
+				bone = potential;
+			}
 		}
 	}
 }
@@ -167,7 +200,7 @@ void correct_aim()
 		return;
 
 	Vector eye_pos{ localplayer->GetEyePosition() };
-	Vector target_pos{ target->GetBonePos(Bone(options::aim::bone)) };
+	Vector target_pos{ target->GetBonePos(bone) };
 	Vector relative{ eye_pos - target_pos };
 
 	QAngle dst;
@@ -205,7 +238,7 @@ bool is_visible(C_BasePlayer* player)
 		reinterpret_cast<LineGoesThroughSmokeFn>(utils::find_signature("client.dll", "55 8B EC 83 EC 08 8B 15 ? ? ? ? 0F 57 C0"));
 
 	Vector start{ localplayer->GetEyePosition() };
-	Vector end{ player->GetBonePos(Bone(options::aim::bone)) };
+	Vector end{ player->GetBonePos(bone) };
 
 	if (LineGoesThroughSmoke(start, end, true))
 		return false;

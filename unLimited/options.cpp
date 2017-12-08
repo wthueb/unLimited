@@ -11,6 +11,7 @@ namespace options
 
 	void init()
 	{
+		bones.push_back({ BONE_INVALID, "dynamic" });
 		bones.push_back({ BONE_HEAD, "head" });
 		bones.push_back({ BONE_NECK, "neck" });
 		bones.push_back({ BONE_UPPER_SPINAL_COLUMN, "chest" });
@@ -50,7 +51,7 @@ namespace options
 		float fov = 1.f;
 		bool smooth = true;
 		float smooth_amount = 5.f;
-		int bone = 8;
+		int bone = -1;
 		bool on_shoot = true;
 		bool reaim = true;
 		int aim_key = 0;
