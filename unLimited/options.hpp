@@ -64,6 +64,8 @@ namespace options
 		extern float glow_alpha;
 		extern int glow_style;
 
+		extern bool skeletons;
+
 		extern bool players;
 		extern bool friendlies;
 		extern bool chickens;

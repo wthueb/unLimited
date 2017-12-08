@@ -28,8 +28,10 @@ namespace skinchanger
 
 namespace visuals
 {
-	void glow();
 	void chams();
+	void glow();
+	void skeletons();
+
 	void radar();
 
 	void thirdperson_override_view();

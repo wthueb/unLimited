@@ -45,6 +45,7 @@ void __fastcall hooks::hk_paint_traverse(void* thisptr, void* edx, VPANEL panel,
 
 	backtracking::draw();
 	antiaim::draw_angles();
+	visuals::skeletons();
 
 	o_paint_traverse(thisptr, panel, force_repaint, allow_force);
 }

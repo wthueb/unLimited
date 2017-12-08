@@ -95,7 +95,7 @@ struct CStickerKit
 void find_kits()
 {
 	static std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-
+	
 	// search the relative calls
 
 	// call    ItemSystem

@@ -2,6 +2,7 @@
 
 #include <fstream>
 
+#include "../engine_drawing.hpp"
 #include "../options.hpp"
 #include "../sdk/sdk.hpp"
 
@@ -172,6 +173,52 @@ void visuals::glow()
 		object.m_bRenderWhenOccluded = true;
 		object.m_bRenderWhenUnoccluded = false;
 		object.m_nGlowStyle = options::visuals::glow_style;
+	}
+}
+
+void visuals::skeletons()
+{
+	if (!options::visuals::enabled || !options::visuals::skeletons)
+		return;
+
+	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+	if (!localplayer)
+		return;
+
+	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
+	{
+		auto player = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
+		if (!player)
+			continue;
+
+		if (!player->IsValid() || player == localplayer)
+			continue;
+
+		studiohdr_t* studio_model = g_model_info->GetStudioModel(player->GetModel());
+		if (!studio_model)
+			continue;
+		
+		static matrix3x4_t bone_to_world_out[128];
+
+		if (player->SetupBones(bone_to_world_out, 128, 256, player->GetSimulationTime()))
+		{
+			for (auto i = 0; i < studio_model->numbones; ++i)
+			{
+				mstudiobone_t* bone = studio_model->pBone(i);
+				if (!bone || !(bone->flags & 256) || bone->parent == -1)
+					continue;
+
+				Vector bone_pos;
+				if (g_debug_overlay->ScreenPosition(player->GetBonePos(Bone(i)), bone_pos))
+					continue;
+
+				Vector parent_pos;
+				if (g_debug_overlay->ScreenPosition(player->GetBonePos(Bone(bone->parent)), parent_pos))
+					continue;
+
+				draw::line(Vector2D{ bone_pos.x, bone_pos.y }, Vector2D{ parent_pos.x, parent_pos.y }, Color{ 255, 255, 255 });
+			}
+		}
 	}
 }
 

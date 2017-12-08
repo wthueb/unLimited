@@ -23,7 +23,7 @@ void notifier::option_changed(const char* name, bool value) {}
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 5
-#define VERSION_PATCH 5
+#define VERSION_PATCH 6
 
 namespace ImGui
 {
@@ -292,6 +292,8 @@ namespace gui
 						ImGui::PopStyleVar();
 						ImGui::BetterPopItemFlag();
 					}
+
+					ADD_CHECKBOX("skeletons", options::visuals::skeletons);
 
 					ADD_CHECKBOX("radar", options::visuals::radar);
 

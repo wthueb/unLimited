@@ -81,6 +81,8 @@ namespace options
 		float glow_alpha = 1.f;
 		int glow_style = 0;
 
+		bool skeletons = false;
+
 		bool players = true;
 		bool friendlies = true;
 		bool chickens = false;
