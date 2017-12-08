@@ -12,9 +12,13 @@
 #include "options.hpp"
 
 #ifndef GUI_TEST
+
 #include "config.hpp"
 #include "kit_parser.hpp"
 #include "utils.hpp"
+#else
+void notifier::option_changed(const char* name, const char* value) {}
+void notifier::option_changed(const char* name, bool value) {}
 #endif
 
 #define VERSION_MAJOR 0
