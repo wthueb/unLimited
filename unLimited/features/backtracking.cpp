@@ -16,7 +16,7 @@ backtrack_data head_positions[64][12]{};
 
 void backtracking::process(CUserCmd* cmd)
 {
-	if (!options::misc::backtracking)
+	if (!options.misc_backtracking)
 		return;
 	
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
@@ -63,7 +63,7 @@ void backtracking::process(CUserCmd* cmd)
 		Vector view_forward;
 		math::AngleVectors(cmd->viewangles + localplayer->GetAimPunch() * 2.f, &view_forward);
 
-		for (auto i = 0; i < options::misc::backtracking_amt; ++i)
+		for (auto i = 0; i < options.misc_backtracking_amt; ++i)
 		{
 			float dist = math::distance_point_to_line(head_positions[best_target][i].headpos, localplayer->GetEyePosition(), view_forward);
 
@@ -81,7 +81,7 @@ void backtracking::process(CUserCmd* cmd)
 
 void backtracking::draw()
 {
-	if (!options::misc::backtracking || !options::misc::backtracking_vis)
+	if (!options.misc_backtracking || !options.misc_backtracking_vis)
 		return;
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
@@ -97,12 +97,12 @@ void backtracking::draw()
 		if (!player->IsValid() || player == localplayer || player->GetTeam() == localplayer->GetTeam())
 			continue;
 
-		for (auto t = 0; t < options::misc::backtracking_amt; ++t)
+		for (auto j = 0; j < options.misc_backtracking_amt; ++j)
 		{
-			if (head_positions[i][t].simtime > localplayer->GetSimulationTime() - 1.f)
+			if (head_positions[i][j].simtime > localplayer->GetSimulationTime() - 1.f)
 			{
 				Vector out;
-				if (!g_debug_overlay->ScreenPosition(head_positions[i][t].headpos, out))
+				if (!g_debug_overlay->ScreenPosition(head_positions[i][j].headpos, out))
 				{
 					g_surface->DrawSetColor(Color{ 255, 0, 0 });
 					g_surface->DrawOutlinedRect(int(out.x), int(out.y), int(out.x + 2.f), int(out.y + 2.f));

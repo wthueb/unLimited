@@ -25,7 +25,7 @@ void __fastcall hooks::hk_paint_traverse(void* thisptr, void* edx, VPANEL panel,
 
 	if (panel != FocusOverlayPanel)
 	{
-		if (options::visuals::noscope && panel == HudZoom)
+		if (options.visuals_noscope && panel == HudZoom)
 			return;
 		else
 			return o_paint_traverse(thisptr, panel, force_repaint, allow_force);
@@ -35,7 +35,7 @@ void __fastcall hooks::hk_paint_traverse(void* thisptr, void* edx, VPANEL panel,
 	if (!localplayer)
 		return;
 
-	if (options::visuals::noscope && localplayer->IsScoped())
+	if (options.visuals_noscope && localplayer->IsScoped())
 	{
 		int w, h;
 		g_engine->GetScreenSize(w, h);

@@ -157,7 +157,6 @@
     <ClCompile Include="kit_parser.cpp" />
     <ClCompile Include="netvars.cpp" />
     <ClCompile Include="notifier.cpp" />
-    <ClCompile Include="options.cpp" />
     <ClCompile Include="sdk\CRC.cpp" />
     <ClCompile Include="sdk\Vector.cpp" />
     <ClCompile Include="sdk\Vector2D.cpp" />

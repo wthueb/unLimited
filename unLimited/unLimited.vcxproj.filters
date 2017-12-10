@@ -35,7 +35,6 @@
     <ClCompile Include="hooks\paint_traverse.cpp">
       <Filter>hooks</Filter>
     </ClCompile>
-    <ClCompile Include="options.cpp" />
     <ClCompile Include="..\deps\imgui\imgui.cpp">
       <Filter>imgui</Filter>
     </ClCompile>

@@ -27,7 +27,7 @@ void utils::unload()
 	detach_console();
 #endif
 	
-	options::unload();
+	options.unload();
 	
 	gui_shutdown();
 	Sleep(100);

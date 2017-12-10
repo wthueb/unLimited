@@ -20,7 +20,7 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 	if (!g_engine->IsInGame())
 		return;
 
-	if (!options::antiaim::enabled)
+	if (!options.aa_enabled)
 	{
 		g_thirdperson_angles = cmd->viewangles;
 		return;
@@ -84,7 +84,7 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 	//if (localplayer->GetMoveType() == MOVETYPE_LADDER)
 	//	return;
 
-	if (options::antiaim::fakelag && !(localplayer->GetFlags() & FL_ONGROUND && cmd->buttons & IN_JUMP))
+	if (options.aa_fakelag && !(localplayer->GetFlags() & FL_ONGROUND && cmd->buttons & IN_JUMP))
 	{
 		if (++g_choked_ticks < 15)
 		{
@@ -103,7 +103,7 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		g_choking = false;
 		g_choked_ticks = 0;
 
-		if (options::antiaim::type == options::antiaim::SPIN_SLOW && options::antiaim::type == options::antiaim::SPIN_FAST)
+		if (options.aa_type == aa_type::SPIN_SLOW && options.aa_type == aa_type::SPIN_FAST)
 			send_packet = true;
 		else
 		{
@@ -114,9 +114,9 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		}
 	}
 
-	switch (options::antiaim::type)
+	switch (options.aa_type)
 	{
-	case options::antiaim::LEGIT:
+	case aa_type::LEGIT:
 	{
 		static bool swap = false;
 
@@ -133,7 +133,7 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		break;
 	}
 
-	case options::antiaim::RAGE: // fake sideways, emotion; real backwards, emotion
+	case aa_type::RAGE: // fake sideways, emotion; real backwards, emotion
 	{
 		if (send_packet)
 			cmd->viewangles.yaw += 90.f;
@@ -145,7 +145,7 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		break;
 	}
 
-	case options::antiaim::LBY_SIDEWAYS: // fake backwards, emotion; real sideways opposite lby, emotion
+	case aa_type::LBY_SIDEWAYS: // fake backwards, emotion; real sideways opposite lby, emotion
 	{
 		static float old_lby = 0.f;
 		static bool swap = false;
@@ -175,7 +175,7 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		break;
 	}
 
-	case options::antiaim::SPIN_SLOW:
+	case aa_type::SPIN_SLOW:
 	{
 		float curtime = g_global_vars->get_realtime(cmd);
 
@@ -186,7 +186,7 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		break;
 	}
 
-	case options::antiaim::SPIN_FAST:
+	case aa_type::SPIN_FAST:
 	{
 		float curtime = g_global_vars->get_realtime(cmd);
 
@@ -211,21 +211,21 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 	if (send_packet)
 	{
 		// if not faking, display real angle
-		if (options::antiaim::type == options::antiaim::SPIN_SLOW || options::antiaim::type == options::antiaim::SPIN_FAST)
+		if (options.aa_type == aa_type::SPIN_SLOW || options.aa_type == aa_type::SPIN_FAST)
 			g_thirdperson_angles = cmd->viewangles;
 	}
 	else
 	{
 		// if faking, display fake angle in thirdperson
-		if (options::antiaim::type == options::antiaim::LEGIT || options::antiaim::type == options::antiaim::RAGE ||
-			options::antiaim::type == options::antiaim::LBY_SIDEWAYS)
+		if (options.aa_type == aa_type::LEGIT || options.aa_type == aa_type::RAGE ||
+			options.aa_type == aa_type::LBY_SIDEWAYS)
 			g_thirdperson_angles = cmd->viewangles;
 	}
 }
 
 void antiaim::draw_angles()
 {
-	if (!options::antiaim::enabled || !options::antiaim::show || !g_engine->IsInGame())
+	if (!options.aa_enabled || !options.aa_show || !g_engine->IsInGame())
 		return;
 
 	static auto font = draw::create_font("Verdana", 15);

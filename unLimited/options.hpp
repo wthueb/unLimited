@@ -1,6 +1,18 @@
 #pragma once
 
-#include <vector>
+#include <Windows.h>
+
+#include <array>
+
+enum class aa_type
+{
+	LEGIT,
+	RAGE,
+	LBY_SIDEWAYS,
+	SPIN_SLOW,
+	SPIN_FAST,
+	AA_COUNT
+};
 
 struct option_t
 {
@@ -8,99 +20,117 @@ struct option_t
 	const char* name;
 };
 
-namespace options
+class options_class
 {
-	extern std::vector<option_t> bones;
-	extern std::vector<option_t> keys;
+public:
+	std::array<std::pair<Bone, const char*>, 8> bones = { {
+		{ BONE_INVALID, "dynamic" },
+		{ BONE_HEAD, "head" },
+		{ BONE_NECK, "neck" },
+		{ BONE_UPPER_SPINAL_COLUMN, "chest" },
+		{ BONE_MIDDLE_SPINAL_COLUMN, "nips xd" },
+		{ BONE_LOWER_SPINAL_COLUMN, "stomach" },
+		{ BONE_HIP, "hip" },
+		{ BONE_PELVIS, "pelvis" }
+	} };
 
-	void init();
-	void unload();
+	std::array<std::pair<int, const char*>, 6> keys = { {
+		{ 0, "none" },
+		{ VK_XBUTTON1, "mouse4" },
+		{ VK_XBUTTON2, "mouse5" },
+		{ VK_MBUTTON, "mouse3" },
+		{ VK_MENU, "alt" },
+		{ 0x57, "w" }
+	} };
 
-	namespace aim
+	void unload()
 	{
-		extern bool enabled;
-		
-		extern bool aimbot;
-		extern float fov;
-		extern bool smooth;
-		extern float smooth_amount;
-		extern int bone;
-		extern bool on_shoot;
-		extern bool reaim;
-		extern int aim_key;
-		extern bool friendlies;
-		extern bool vis_check;
-
-		extern bool rcs;
+		aim_enabled = false;
+		aa_enabled = false;
+		visuals_enabled = false;
+		misc_bhop = false;
+		misc_autostrafe = false;
+		misc_backtracking = false;
+		misc_show_ranks = false;
+		misc_nightmode = false;
+		misc_airstuck = false;
+		misc_fov = 90.f;
+		misc_chat_spam = false;
 	}
 
-	namespace antiaim
-	{
-		enum aa_type
-		{
-			LEGIT,
-			RAGE,
-			LBY_SIDEWAYS,
-			SPIN_SLOW,
-			SPIN_FAST,
-			AA_COUNT
-		};
+	// aim
 
-		extern bool enabled;
-		extern bool show;
+	bool aim_enabled = true;
 
-		extern int type;
-		extern bool fakelag;
-	}
+	bool aim_aimbot = false;
+	float aim_fov = 1.f;
+	bool aim_smooth = true;
+	float aim_smooth_amount = 5.f;
+	int aim_bone = -1;
+	bool aim_on_shoot = true;
+	bool aim_reaim = true;
+	int aim_aim_key = 0;
+	bool aim_friendlies = false;
+	bool aim_vis_check = true;
 
-	namespace visuals
-	{
-		extern bool enabled;
+	bool aim_rcs = false;
 
-		extern bool chams;
-		extern bool ignorez;
+	// anti-aim
 
-		extern bool glow;
-		extern float glow_alpha;
-		extern int glow_style;
+	bool aa_enabled = false;
+	bool aa_show = false;
 
-		extern bool skeletons;
+	aa_type aa_type = aa_type::LEGIT;
+	bool aa_fakelag = false;
 
-		extern bool players;
-		extern bool friendlies;
-		extern bool chickens;
-		extern bool defuse_kits;
-		extern bool c4;
-		extern bool weapons;
+	// visuals
 
-		extern bool radar;
+	bool visuals_enabled = true;
 
-		extern bool thirdperson;
-		extern float thirdperson_offset;
+	bool visuals_chams = false;
+	bool visuals_ignorez = false;
 
-		extern bool noscope;
+	bool visuals_glow = false;
+	float visuals_glow_alpha = 1.f;
+	int visuals_glow_style = 0;
 
-		extern bool noflash;
-	}
+	bool visuals_skeletons = false;
 
-	namespace misc
-	{
-		extern bool bhop;
-		extern bool autostrafe;
+	bool visuals_players = true;
+	bool visuals_friendlies = true;
+	bool visuals_chickens = false;
+	bool visuals_defuse_kits = false;
+	bool visuals_c4 = false;
+	bool visuals_weapons = false;
 
-		extern bool backtracking;
-		extern bool backtracking_vis;
-		extern int backtracking_amt;
+	bool visuals_radar = false;
 
-		extern bool show_ranks;
+	bool visuals_thirdperson = false;
+	float visuals_thirdperson_offset = 150.f;
 
-		extern bool nightmode;
+	bool visuals_noscope = false;
 
-		extern bool airstuck;
-		extern int airstuck_key;
+	bool visuals_noflash = false;
 
-		extern float fov;
+	// misc
 
-		extern bool chat_spam;
-	}
-}
+	bool misc_bhop = false;
+	bool misc_autostrafe = false;
+
+	bool misc_backtracking = false;
+	bool misc_backtracking_vis = true;
+	int misc_backtracking_amt = 12;
+
+	bool misc_show_ranks = false;
+
+	bool misc_nightmode = false;
+
+	bool misc_airstuck = false;
+	int misc_airstuck_key = 0;
+
+	float misc_fov = 90.f;
+
+	bool misc_chat_spam = false;
+};
+
+extern options_class options;

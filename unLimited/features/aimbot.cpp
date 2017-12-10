@@ -23,7 +23,7 @@ static Bone bone = BONE_INVALID;
 
 void aimbot::process(CUserCmd* _cmd, bool& send_packet)
 {
-	if (!options::aim::enabled || !g_engine->IsInGame())
+	if (!options.aim_enabled || !g_engine->IsInGame())
 		return;
 
 	localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
@@ -43,14 +43,14 @@ void aimbot::process(CUserCmd* _cmd, bool& send_packet)
 
 	bool should_correct = false;
 
-	if (options::aim::aimbot)
+	if (options.aim_aimbot)
 	{
 		static bool found = false; // FIXMEW: just check best_target?
 
-		if (options::aim::on_shoot && cmd->buttons & IN_ATTACK ||
-			options::aim::aim_key && GetAsyncKeyState(options::aim::aim_key))
+		if (options.aim_on_shoot && cmd->buttons & IN_ATTACK ||
+			options.aim_aim_key && GetAsyncKeyState(options.aim_aim_key))
 		{
-			if (!found || options::aim::reaim)
+			if (!found || options.aim_reaim)
 			{
 				find_target();
 				found = true;
@@ -65,7 +65,7 @@ void aimbot::process(CUserCmd* _cmd, bool& send_packet)
 			correct_aim();
 	}
 
-	if (options::aim::rcs && !should_correct &&
+	if (options.aim_rcs && !should_correct &&
 		localplayer->GetShotsFired() > 1)
 		rcs();
 
@@ -96,14 +96,14 @@ void rcs()
 
 void find_target()
 {
-	float best_fov = options::aim::fov;
+	float best_fov = options.aim_fov;
 	
 	Vector eye_pos{ localplayer->GetEyePosition() };
 
-	if (options::aim::bone == -1)
+	if (options.aim_bone == -1)
 		bone = BONE_MIDDLE_SPINAL_COLUMN;
 	else
-		bone = Bone(options::aim::bone);
+		bone = Bone(options.aim_bone);
 
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
 	{
@@ -114,12 +114,12 @@ void find_target()
 		if (!potential->IsValid() || potential == localplayer)
 			continue;
 
-		if (!options::aim::friendlies &&
+		if (!options.aim_friendlies &&
 			potential->GetTeam() == localplayer->GetTeam())
 			continue;
 
-		if (options::aim::vis_check &&
-			(!options::aim::aim_key || !GetAsyncKeyState(options::aim::aim_key)) &&
+		if (options.aim_vis_check &&
+			(!options.aim_aim_key || !GetAsyncKeyState(options.aim_aim_key)) &&
 			!is_visible(potential))
 				continue;
 
@@ -138,15 +138,15 @@ void find_target()
 		}
 	}
 
-	if (best_target != -1 && options::aim::bone == -1)
+	if (best_target != -1 && options.aim_bone == -1)
 	{
 		auto target = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(best_target));
 		if (!target)
 			return;
 
-		for (auto i = 1u; i < options::bones.size(); ++i)
+		for (auto it : options.bones)
 		{
-			auto potential = Bone(options::bones.at(i).num);
+			auto potential = it.first;
 
 			Vector target_pos{ target->GetBonePos(potential) };
 			Vector relative{ eye_pos - target_pos };
@@ -177,7 +177,7 @@ void drop_target()
 	if (!target->IsValid() || target == localplayer)
 		best_target = -1;
 
-	if (!options::aim::friendlies &&
+	if (!options.aim_friendlies &&
 		target->GetTeam() == localplayer->GetTeam())
 		best_target = -1;
 }
@@ -194,8 +194,8 @@ void correct_aim()
 	if (!target->IsValid() || target == localplayer)
 		return;
 
-	if (options::aim::vis_check &&
-		(!options::aim::aim_key || !GetAsyncKeyState(options::aim::aim_key)) &&
+	if (options.aim_vis_check &&
+		(!options.aim_aim_key || !GetAsyncKeyState(options.aim_aim_key)) &&
 		!is_visible(target))
 		return;
 
@@ -206,7 +206,7 @@ void correct_aim()
 	QAngle dst;
 	math::VectorAngles(relative, dst);
 
-	if (math::get_fov(cmd->viewangles + localplayer->GetAimPunch() * 2.f, dst) > options::aim::fov)
+	if (math::get_fov(cmd->viewangles + localplayer->GetAimPunch() * 2.f, dst) > options.aim_fov)
 		return;
 
 	if (localplayer->GetShotsFired() > 1)
@@ -214,13 +214,13 @@ void correct_aim()
 	
 	dst.Clamp();
 
-	if (options::aim::smooth)
+	if (options.aim_smooth)
 	{
 		QAngle delta{ dst - cmd->viewangles };
 
 		delta.Clamp();
 		
-		delta /= std::max(1.f, options::aim::smooth_amount);
+		delta /= std::max(1.f, options.aim_smooth_amount);
 		
 		dst = cmd->viewangles + delta;
 	}

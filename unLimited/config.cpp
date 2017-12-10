@@ -3,6 +3,7 @@
 #include <fstream>
 #include <json.hpp>
 
+#include "options.hpp"
 #include "sdk/sdk.hpp"
 
 using json = nlohmann::json;
@@ -79,12 +80,18 @@ void config::init()
 
 void config::save()
 {
+	std::ofstream file("unLimited_config.bin", std::ios::binary);
+	file.write(reinterpret_cast<char*>(&options), sizeof(options));
+
 	std::sort(items.begin(), items.end());
 	std::ofstream("skin_config.json") << json(items);
 }
 
 void config::load()
 {
+	std::ifstream file("unLimited_config.bin", std::ios::binary);
+	file.read(reinterpret_cast<char*>(&options), sizeof(options));
+
 	try
 	{
 		items = json::parse(std::ifstream("skin_config.json")).get<std::vector<econ_item_t>>();

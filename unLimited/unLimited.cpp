@@ -9,6 +9,8 @@
 
 extern void gui_init();
 
+options_class options{};
+
 void wait_for_unload()
 {
 	while (true)
@@ -57,8 +59,6 @@ void attach(HMODULE dll)
 	netvar_sys::get().dump();
 	utils::console_print("finished dumping netvars...\n\n\n");
 #endif
-
-	options::init();
 
 	config::init();
 

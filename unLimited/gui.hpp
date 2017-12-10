@@ -22,8 +22,8 @@ void notifier::option_changed(const char* name, bool value) {}
 #endif
 
 #define VERSION_MAJOR 0
-#define VERSION_MINOR 5
-#define VERSION_PATCH 8
+#define VERSION_MINOR 6
+#define VERSION_PATCH 0
 
 namespace ImGui
 {
@@ -198,21 +198,21 @@ namespace gui
 			{
 				ImGui::PushItemWidth(150.f);
 
-				ADD_CHECKBOX("aim", options::aim::enabled);
+				ADD_CHECKBOX("aim", options.aim_enabled);
 				{
-					DISABLE(options::aim::enabled, .2f);
+					DISABLE(options.aim_enabled, .2f);
 
-					ADD_CHECKBOX("aimbot", options::aim::aimbot);
+					ADD_CHECKBOX("aimbot", options.aim_aimbot);
 					{
-						DISABLE(options::aim::aimbot, .2f);
+						DISABLE(options.aim_aimbot, .2f);
 
-						ImGui::SliderFloat("fov", &options::aim::fov, .1f, 180.f, "%.1f", 2.f);
+						ImGui::SliderFloat("fov", &options.aim_fov, .1f, 180.f, "%.1f", 2.f);
 
-						ADD_CHECKBOX("smooth", options::aim::smooth);
+						ADD_CHECKBOX("smooth", options.aim_smooth);
 						{
-							DISABLE(options::aim::smooth, .2f);
+							DISABLE(options.aim_smooth, .2f);
 
-							ImGui::SliderFloat("smooth amount", &options::aim::smooth_amount, 1.f, 30.f, "%.1f", 1.f);
+							ImGui::SliderFloat("smooth amount", &options.aim_smooth_amount, 1.f, 30.f, "%.1f", 1.f);
 
 							ImGui::PopStyleVar();
 							ImGui::BetterPopItemFlag();
@@ -223,36 +223,36 @@ namespace gui
 							static int selected = 0;
 							if (ImGui::Combo("bone", &selected, [](void* data, int idx, const char** out_text)
 							{
-								*out_text = options::bones.at(idx).name;
+								*out_text = options.bones.at(idx).second;
 								return true;
-							}, nullptr, options::bones.size(), -1))
-								options::aim::bone = options::bones.at(selected).num;
+							}, nullptr, options.bones.size(), -1))
+								options.aim_bone = options.bones.at(selected).first;
 						}
 
-						ADD_CHECKBOX("on shoot", options::aim::on_shoot);
+						ADD_CHECKBOX("on shoot", options.aim_on_shoot);
 
-						ADD_CHECKBOX("reaim", options::aim::reaim);
+						ADD_CHECKBOX("reaim", options.aim_reaim);
 
 						// aim key
 						{
 							static int selected = 0;
 							if (ImGui::Combo("aim key", &selected, [](void* data, int idx, const char** out_text)
 							{
-								*out_text = options::keys.at(idx).name;
+								*out_text = options.keys.at(idx).second;
 								return true;
-							}, nullptr, options::keys.size(), -1))
-								options::aim::aim_key = options::keys.at(selected).num;
+							}, nullptr, options.keys.size(), -1))
+								options.aim_aim_key = options.keys.at(selected).first;
 						}
 
-						ADD_CHECKBOX("shoot teammates", options::aim::friendlies);
+						ADD_CHECKBOX("shoot teammates", options.aim_friendlies);
 
-						ADD_CHECKBOX("visible check", options::aim::vis_check);
+						ADD_CHECKBOX("visible check", options.aim_vis_check);
 
 						ImGui::PopStyleVar();
 						ImGui::BetterPopItemFlag();
 					}
 
-					ADD_CHECKBOX("rcs", options::aim::rcs);
+					ADD_CHECKBOX("rcs", options.aim_rcs);
 
 					ImGui::PopStyleVar();
 					ImGui::BetterPopItemFlag();
@@ -265,51 +265,51 @@ namespace gui
 			{
 				ImGui::PushItemWidth(150.f);
 
-				ADD_CHECKBOX("visuals", options::visuals::enabled);
+				ADD_CHECKBOX("visuals", options.visuals_enabled);
 				{
-					DISABLE(options::visuals::enabled, .2f);
+					DISABLE(options.visuals_enabled, .2f);
 
-					ADD_CHECKBOX("chams", options::visuals::chams);
+					ADD_CHECKBOX("chams", options.visuals_chams);
 					{
-						DISABLE(options::visuals::chams, .2f);
+						DISABLE(options.visuals_chams, .2f);
 
-						ADD_CHECKBOX("ignorez (through walls)", options::visuals::ignorez);
+						ADD_CHECKBOX("ignorez (through walls)", options.visuals_ignorez);
 
 						ImGui::PopStyleVar();
 						ImGui::BetterPopItemFlag();
 					}
 
-					ADD_CHECKBOX("glow", options::visuals::glow);
+					ADD_CHECKBOX("glow", options.visuals_glow);
 					{
-						DISABLE(options::visuals::glow, .2f);
+						DISABLE(options.visuals_glow, .2f);
 
-						if (ImGui::InputFloat("glow alpha", &options::visuals::glow_alpha, .1f, 0.f, 1))
-							options::visuals::glow_alpha = std::clamp(options::visuals::glow_alpha, .1f, 1.f);
+						if (ImGui::InputFloat("glow alpha", &options.visuals_glow_alpha, .1f, 0.f, 1))
+							options.visuals_glow_alpha = std::clamp(options.visuals_glow_alpha, .1f, 1.f);
 
-						if (ImGui::InputInt("glow style", &options::visuals::glow_style))
-							options::visuals::glow_style = std::clamp(options::visuals::glow_style, 0, 3);
+						if (ImGui::InputInt("glow style", &options.visuals_glow_style))
+							options.visuals_glow_style = std::clamp(options.visuals_glow_style, 0, 3);
 
 						ImGui::PopStyleVar();
 						ImGui::BetterPopItemFlag();
 					}
 
-					ADD_CHECKBOX("skeletons", options::visuals::skeletons);
+					ADD_CHECKBOX("skeletons", options.visuals_skeletons);
 
-					ADD_CHECKBOX("radar", options::visuals::radar);
+					ADD_CHECKBOX("radar", options.visuals_radar);
 
-					ADD_CHECKBOX("thirdperson", options::visuals::thirdperson);
+					ADD_CHECKBOX("thirdperson", options.visuals_thirdperson);
 					{
-						DISABLE(options::visuals::thirdperson, .2f);
+						DISABLE(options.visuals_thirdperson, .2f);
 
-						ImGui::SliderFloat("thirdperson offset", &options::visuals::thirdperson_offset, 20.f, 300.f, "%.0f");
+						ImGui::SliderFloat("thirdperson offset", &options.visuals_thirdperson_offset, 20.f, 300.f, "%.0f");
 
 						ImGui::PopStyleVar();
 						ImGui::BetterPopItemFlag();
 					}
 
-					ADD_CHECKBOX("disable scope", options::visuals::noscope);
+					ADD_CHECKBOX("disable scope", options.visuals_noscope);
 
-					ADD_CHECKBOX("noflash", options::visuals::noflash);
+					ADD_CHECKBOX("noflash", options.visuals_noflash);
 
 					ImGui::PopStyleVar();
 					ImGui::BetterPopItemFlag();
@@ -325,25 +325,25 @@ namespace gui
 				if (ImGui::Button("skinchanger"))
 					skin_window_open = !skin_window_open;
 
-				ADD_CHECKBOX("bhop", options::misc::bhop);
+				ADD_CHECKBOX("bhop", options.misc_bhop);
 
-				//ADD_CHECKBOX("autostrafe", options::misc::autostrafe);
+				//ADD_CHECKBOX("autostrafe", options.misc_autostrafe);
 
-				ADD_CHECKBOX("backtracking", options::misc::backtracking);
+				ADD_CHECKBOX("backtracking", options.misc_backtracking);
 				{
-					DISABLE(options::misc::backtracking, .2f);
+					DISABLE(options.misc_backtracking, .2f);
 
-					ADD_CHECKBOX("backtracking visual", options::misc::backtracking_vis);
+					ADD_CHECKBOX("backtracking visual", options.misc_backtracking_vis);
 
 					// backtracking amount
 					{
 						ImGui::PushItemWidth(30.f);
 
-						static float temp = float(options::misc::backtracking_amt);
+						static float temp = float(options.misc_backtracking_amt);
 
 						// so we don't have the + -, kind of stupid but
 						if (ImGui::InputFloat("backtracking amount (ticks, max 12)", &temp, 0.f, 0.f, 0))
-							options::misc::backtracking_amt = std::clamp(int(temp), 1, 12);
+							options.misc_backtracking_amt = std::clamp(int(temp), 1, 12);
 
 						ImGui::PopItemWidth();
 					}
@@ -352,31 +352,33 @@ namespace gui
 					ImGui::BetterPopItemFlag();
 				}
 
-				ADD_CHECKBOX("anti-aim", options::antiaim::enabled);
+				ADD_CHECKBOX("anti-aim", options.aa_enabled);
 				{
-					DISABLE(options::antiaim::enabled, .2f);
+					DISABLE(options.aa_enabled, .2f);
 
-					ImGui::Combo("aa type", &options::antiaim::type, [](void* data, int idx, const char** out_text)
+					static auto selected = int(options.aa_type);
+
+					if (ImGui::Combo("aa type", &selected, [](void* data, int idx, const char** out_text)
 					{
-						switch (idx)
+						switch (aa_type(idx))
 						{
-						case options::antiaim::aa_type::LEGIT:
+						case aa_type::LEGIT:
 							*out_text = "legit";
 							break;
 
-						case options::antiaim::aa_type::RAGE:
+						case aa_type::RAGE:
 							*out_text = "rage";
 							break;
 
-						case options::antiaim::aa_type::LBY_SIDEWAYS:
+						case aa_type::LBY_SIDEWAYS:
 							*out_text = "lby";
 							break;
 
-						case options::antiaim::aa_type::SPIN_SLOW:
+						case aa_type::SPIN_SLOW:
 							*out_text = "slow spin";
 							break;
 
-						case options::antiaim::aa_type::SPIN_FAST:
+						case aa_type::SPIN_FAST:
 							*out_text = "fast spin";
 							break;
 
@@ -386,43 +388,44 @@ namespace gui
 						}
 
 						return true;
-					}, nullptr, options::antiaim::aa_type::AA_COUNT, -1);
+					}, nullptr, int(aa_type::AA_COUNT), -1))
+						options.aa_type = aa_type(selected);
 
-					ADD_CHECKBOX("fakelag", options::antiaim::fakelag);
+					ADD_CHECKBOX("fakelag", options.aa_fakelag);
 					
-					ADD_CHECKBOX("show angles/choke", options::antiaim::show);
+					ADD_CHECKBOX("show angles/choke", options.aa_show);
 
 					ImGui::PopStyleVar();
 					ImGui::BetterPopItemFlag();
 				}
 
-				ADD_CHECKBOX("show ranks", options::misc::show_ranks);
+				ADD_CHECKBOX("show ranks", options.misc_show_ranks);
 
-				ADD_CHECKBOX("nightmode", options::misc::nightmode);
+				ADD_CHECKBOX("nightmode", options.misc_nightmode);
 
-				ADD_CHECKBOX("airstuck", options::misc::airstuck);
+				ADD_CHECKBOX("airstuck", options.misc_airstuck);
 				{
-					DISABLE(options::misc::airstuck, .2f);
+					DISABLE(options.misc_airstuck, .2f);
 
 					// airstuck key
 					{
 						static int selected = 0;
 						if (ImGui::Combo("airstuck key", &selected, [](void* data, int idx, const char** out_text)
 						{
-							*out_text = options::keys.at(idx).name;
+							*out_text = options.keys.at(idx).second;
 							return true;
-						}, nullptr, options::keys.size(), -1))
-							options::misc::airstuck_key = options::keys.at(selected).num;
+						}, nullptr, options.keys.size(), -1))
+							options.misc_airstuck_key = options.keys.at(selected).first;
 					}
 
 					ImGui::PopStyleVar();
 					ImGui::BetterPopItemFlag();
 				}
 
-				if (ImGui::InputFloat("view fov", &options::misc::fov, 1.f, 0.f, 0))
-					options::misc::fov = std::clamp(options::misc::fov, 5.f, 179.f);
+				if (ImGui::InputFloat("view fov", &options.misc_fov, 1.f, 0.f, 0))
+					options.misc_fov = std::clamp(options.misc_fov, 5.f, 179.f);
 
-				ADD_CHECKBOX("chat spam", options::misc::chat_spam);
+				ADD_CHECKBOX("chat spam", options.misc_chat_spam);
 
 				ImGui::PopItemWidth();
 			}

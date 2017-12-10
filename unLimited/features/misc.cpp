@@ -6,7 +6,7 @@
 
 void misc::bhop(CUserCmd* cmd)
 {
-	if (!options::misc::bhop || !g_engine->IsInGame())
+	if (!options.misc_bhop || !g_engine->IsInGame())
 		return;
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
@@ -22,7 +22,7 @@ void misc::bhop(CUserCmd* cmd)
 
 void misc::autostrafe(CUserCmd* cmd)
 {
-	if (!options::misc::autostrafe || !g_engine->IsInGame())
+	if (!options.misc_autostrafe || !g_engine->IsInGame())
 		return;
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
@@ -42,7 +42,7 @@ void misc::autostrafe(CUserCmd* cmd)
 
 void misc::show_ranks(CUserCmd* cmd)
 {
-	if (!options::misc::show_ranks || !g_engine->IsInGame())
+	if (!options.misc_show_ranks || !g_engine->IsInGame())
 		return;
 
 	if (!(cmd->buttons & IN_SCORE))
@@ -63,22 +63,22 @@ void misc::nightmode()
 	static bool old = false;
 
 	// only enable/disable once per setting toggle
-	if (options::misc::nightmode == old || !g_engine->IsInGame())
+	if (options.misc_nightmode == old || !g_engine->IsInGame())
 		return;
 
 	static auto r_drawspecificstaticprop = g_cvar->FindVar("r_drawspecificstaticprop");
 	static auto sv_skyname = g_cvar->FindVar("sv_skyname");
 
-	r_drawspecificstaticprop->SetValue(options::misc::nightmode ? 0 : 1);
+	r_drawspecificstaticprop->SetValue(options.misc_nightmode ? 0 : 1);
 
 	static std::string old_sky{};
 
-	if (options::misc::nightmode)
+	if (options.misc_nightmode)
 		old_sky = sv_skyname->GetString();
 
 	// FIXMEW: use LoadNamedSky (string ref: "skybox/%s%s" in ida) so it works on non-local servers
 	// (spoofing sv_cheats is for losers)
-	sv_skyname->SetValue(options::misc::nightmode ? "sky_csgo_night02" : old_sky.c_str());
+	sv_skyname->SetValue(options.misc_nightmode ? "sky_csgo_night02" : old_sky.c_str());
 
 	for (auto i = g_material_system->FirstMaterial(); i != g_material_system->InvalidMaterial(); i = g_material_system->NextMaterial(i))
 	{
@@ -88,32 +88,32 @@ void misc::nightmode()
 
 		if (strstr(mat->GetTextureGroupName(), "World") || strstr(mat->GetTextureGroupName(), "StaticProp"))
 		{
-			if (options::misc::nightmode)
+			if (options.misc_nightmode)
 				mat->ColorModulate(.25f, .25f, .25f);
 			else
 				mat->ColorModulate(1.f, 1.f, 1.f);
 		}
 		else if (strstr(mat->GetTextureGroupName(), "Model"))
 		{
-			if (options::misc::nightmode)
+			if (options.misc_nightmode)
 				mat->ColorModulate(.4f, .4f, .4f);
 			else
 				mat->ColorModulate(1.f, 1.f, 1.f);
 		}
 	}
 
-	old = options::misc::nightmode;
+	old = options.misc_nightmode;
 }
 
 void misc::airstuck(CUserCmd* cmd)
 {
-	if (!options::misc::airstuck || !g_engine->IsInGame())
+	if (!options.misc_airstuck || !g_engine->IsInGame())
 		return;
 
 	if (cmd->buttons & IN_ATTACK || cmd->buttons & IN_ATTACK2)
 		return;
 
-	if (options::misc::airstuck_key && GetAsyncKeyState(options::misc::airstuck_key))
+	if (options.misc_airstuck_key && GetAsyncKeyState(options.misc_airstuck_key))
 	{
 		cmd->tick_count = 16777216;
 	}
@@ -121,7 +121,7 @@ void misc::airstuck(CUserCmd* cmd)
 
 void misc::chat_spam()
 {
-	if (!options::misc::chat_spam || !g_engine->IsInGame())
+	if (!options.misc_chat_spam || !g_engine->IsInGame())
 		return;
 
 	static std::chrono::time_point<std::chrono::steady_clock> last_time{};
