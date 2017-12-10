@@ -1,44 +1,44 @@
 #include "features.hpp"
 
 #include <fstream>
+#include <sstream>
 
 #include "../engine_drawing.hpp"
 #include "../options.hpp"
 #include "../sdk/sdk.hpp"
+
+IMaterial* create_materal(std::string type, std::string texture, bool ignorez, bool nofog, bool model, bool nocull, bool halflambert)
+{
+	std::stringstream mat_data;
+	mat_data << "\"" + type + "\"\n"
+		"{\n"
+		"\t\"$basetexture\" \"" + texture + "\"\n"
+		"\t\"$ignorez\" \"" + std::to_string(ignorez) + "\"\n"
+		"\t\"$nofog\" \"" + std::to_string(nofog) + "\"\n"
+		"\t\"$model\" \"" + std::to_string(model) + "\"\n"
+		"\t\"$nocull\" \"" + std::to_string(nocull) + "\"\n"
+		"\t\"$halflambert\" \"" + std::to_string(halflambert) + "\"\n"
+		"}\n" << std::flush;
+
+	static auto num = 0;
+	std::string mat_name = "unLimited_" + std::to_string(num++);
+
+	auto key_values = new KeyValues(mat_name.c_str());
+	key_values->LoadFromBuffer(mat_name.c_str(), mat_data.str().c_str());
+
+	return g_material_system->CreateMaterial(mat_name.c_str(), key_values);
+}
 
 void visuals::chams()
 {
 	if (!options::visuals::enabled || !options::visuals::chams || !g_engine->IsInGame())
 		return;
 
-	static bool initialized = false;
-
-	if (!initialized)
-	{
-		std::ofstream("csgo\\materials\\flat.vmt") << R"#("VertexLitGeneric"
-			{
-			"$basetexture" "vgui/white_additive"
-			"$ignorez"      "0"
-			"$envmap"       ""
-			"$nofog"        "1"
-			"$model"        "1"
-			"$nocull"       "0"
-			"$selfillum"    "1"
-			"$halflambert"  "1"
-			"$znearer"      "0"
-			"$flat"         "1"
-			}
-		)#";
-
-		initialized = true;
-	}
+	static IMaterial* regular = create_materal("VertexLitGeneric", "vgui/white_additive", false, true, true, true, true);
+	static IMaterial* ignorez = create_materal("VertexLitGeneric", "vgui/white_additive", true, true, true, true, true);
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
 	if (!localplayer)
-		return;
-
-	auto mat = g_material_system->FindMaterial("flat", TEXTURE_GROUP_MODEL);
-	if (!mat)
 		return;
 
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
@@ -62,21 +62,17 @@ void visuals::chams()
 
 		if (options::visuals::ignorez)
 		{
-			mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, true);
-
 			g_render_view->SetColorModulation(1.f, 0.f, 0.f);
 			g_render_view->SetBlend(1.f);
 
-			g_model_render->ForcedMaterialOverride(mat);
+			g_model_render->ForcedMaterialOverride(ignorez);
 			player->DrawModel(STUDIO_RENDER, 255);
 		}
-
-		mat->SetMaterialVarFlag(MATERIAL_VAR_IGNOREZ, false);
 
 		g_render_view->SetColorModulation(0.f, 1.f, 0.f);
 		g_render_view->SetBlend(1.f);
 
-		g_model_render->ForcedMaterialOverride(mat);
+		g_model_render->ForcedMaterialOverride(regular);
 		player->DrawModel(STUDIO_RENDER, 255);
 		g_model_render->ForcedMaterialOverride(nullptr);
 	}

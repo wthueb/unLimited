@@ -274,7 +274,26 @@ public:
 };
 
 class CHudTexture;
-class KeyValues;
+
+class KeyValues
+{
+public:
+	KeyValues(const char* name)
+	{
+		static auto func = reinterpret_cast<void(__thiscall*)(void*, const char*)>
+			(utils::find_signature("client.dll", "55 8B EC 51 33 C0 C7 45 ? ? ? ? ? 56 8B F1 81 26 ? ? ? ? C6 46 03 00 89 46 10 89 46 18 89 46 14 89 46 1C 89 46 04 89 46 08 89 46 0C FF 15 ? ? ? ? 6A 01 FF 75 08 8D 4D FC 8B 10 51 8B C8 FF 52 24 8B 0E 33 4D FC 81 E1 ? ? ? ? 31 0E 88 46 03"));
+		
+		func(this, name);
+	}
+
+	void LoadFromBuffer(const char* resource_name, const char* buffer, void* file_system = nullptr, const char* path_id = nullptr, void* evaluate_symbol_proc = nullptr)
+	{
+		static auto func = reinterpret_cast<void(__thiscall*)(void*, const char*, const char*, void*, const char*, void*)>
+			(utils::find_signature("client.dll", "55 8B EC 83 E4 F8 83 EC 34 53 8B 5D 0C 89 4C 24 04"));
+
+		func(this, resource_name, buffer, file_system, path_id, evaluate_symbol_proc);
+	}
+};
 
 class FileWeaponInfo_t
 {
