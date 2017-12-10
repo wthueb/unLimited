@@ -8,6 +8,7 @@
 namespace events
 {
 	void init();
+	void unload();
 
 	bool add_listener(std::string name, std::function<void(IGameEvent*)>);
 

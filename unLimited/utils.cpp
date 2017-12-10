@@ -5,6 +5,7 @@
 
 #include <Psapi.h>
 
+#include "hooks/events.hpp"
 #include "hooks/hooks.hpp"
 #include "options.hpp"
 #include "sdk/sdk.hpp"
@@ -30,6 +31,8 @@ void utils::unload()
 	
 	gui_shutdown();
 	Sleep(100);
+
+	events::unload();
 
 	hooks::unload();
 	Sleep(500);

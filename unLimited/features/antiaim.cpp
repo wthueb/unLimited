@@ -37,12 +37,20 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 	if (!weapon || weapon->IsKnife() || weapon->IsBomb())
 	{
 		g_thirdperson_angles = g_real = g_fake = cmd->viewangles;
+
+		g_choking = false;
+		g_choked_ticks = 0;
+
 		return;
 	}
 
 	if (cmd->buttons & IN_USE)
 	{
 		g_thirdperson_angles = g_real = g_fake = cmd->viewangles;
+
+		g_choking = false;
+		g_choked_ticks = 0;
+
 		return;
 	}
 
@@ -53,6 +61,10 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		if (nade->GetThrowTime() > 0.f)
 		{
 			g_thirdperson_angles = g_real = g_fake = cmd->viewangles;
+
+			g_choking = false;
+			g_choked_ticks = 0;
+
 			return;
 		}
 	}
@@ -62,6 +74,10 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		weapon->GetAmmo() > 0)
 	{
 		g_thirdperson_angles = g_real = g_fake = cmd->viewangles;
+
+		g_choking = false;
+		g_choked_ticks = 0;
+
 		return;
 	}
 
@@ -70,10 +86,9 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 
 	if (options::antiaim::fakelag && !(localplayer->GetFlags() & FL_ONGROUND && cmd->buttons & IN_JUMP))
 	{
-		if (g_choked_ticks < 15)
+		if (++g_choked_ticks < 15)
 		{
 			send_packet = false;
-			++g_choked_ticks;
 		}
 		else
 		{
@@ -89,9 +104,7 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 		g_choked_ticks = 0;
 
 		if (options::antiaim::type == options::antiaim::SPIN_SLOW && options::antiaim::type == options::antiaim::SPIN_FAST)
-		{
 			send_packet = true;
-		}
 		else
 		{
 			static bool flip = false;
