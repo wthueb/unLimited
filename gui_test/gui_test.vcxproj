@@ -127,7 +127,6 @@
     <ClCompile Include="..\deps\imgui\examples\directx9_example\imgui_impl_dx9.cpp" />
     <ClCompile Include="..\deps\imgui\imgui.cpp" />
     <ClCompile Include="..\deps\imgui\imgui_draw.cpp" />
-    <ClCompile Include="..\unLimited\options.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

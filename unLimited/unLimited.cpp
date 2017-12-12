@@ -60,7 +60,7 @@ void attach(HMODULE dll)
 	utils::console_print("finished dumping netvars...\n\n\n");
 #endif
 
-	config::init();
+	config::load();
 
 	wait_for_unload();
 }

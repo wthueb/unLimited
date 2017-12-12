@@ -4,6 +4,23 @@
 
 #include <array>
 
+#ifdef GUI_TEST
+enum Bone
+{
+	BONE_INVALID = -1,
+	BONE_PELVIS,
+	LEAN_ROOT,
+	CAM_DRIVER,
+	BONE_HIP,
+	BONE_LOWER_SPINAL_COLUMN,
+	BONE_MIDDLE_SPINAL_COLUMN,
+	BONE_UPPER_SPINAL_COLUMN,
+	BONE_NECK,
+	BONE_HEAD,
+	BONE_MAX_BONES
+};
+#endif
+
 enum class aa_type
 {
 	LEGIT,

@@ -245,8 +245,6 @@ struct econ_item_t
 
 namespace config
 {
-	void init();
-
 	void save();
 	void load();
 

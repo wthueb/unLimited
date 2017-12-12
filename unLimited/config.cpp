@@ -8,7 +8,7 @@
 
 using json = nlohmann::json;
 
-std::vector<econ_item_t> config::items{};
+std::vector<econ_item_t> config::items{ 128 };
 std::unordered_map<std::string, std::string> config::icon_overrides{};
 
 void to_json(json& j, const sticker_t& sticker)
@@ -71,17 +71,10 @@ void from_json(const json& j, econ_item_t& item)
 	item.update_ids();
 }
 
-void config::init()
-{
-	items.reserve(128);
-
-	load();
-}
-
 void config::save()
 {
-	std::ofstream file("unLimited_config.bin", std::ios::binary);
-	file.write(reinterpret_cast<char*>(&options), sizeof(options));
+	//std::ofstream file("unLimited_config.bin", std::ios::binary);
+	//file.write(reinterpret_cast<char*>(&options), sizeof(options));
 
 	std::sort(items.begin(), items.end());
 	std::ofstream("skin_config.json") << json(items);
@@ -89,8 +82,8 @@ void config::save()
 
 void config::load()
 {
-	std::ifstream file("unLimited_config.bin", std::ios::binary);
-	file.read(reinterpret_cast<char*>(&options), sizeof(options));
+	//std::ifstream file("unLimited_config.bin", std::ios::binary);
+	//file.read(reinterpret_cast<char*>(&options), sizeof(options));
 
 	try
 	{

@@ -16,6 +16,8 @@
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+options_class options{};
+
 void init(HWND hwnd, LPDIRECT3DDEVICE9 device)
 {
 	static bool initialized = false;
@@ -27,8 +29,6 @@ void init(HWND hwnd, LPDIRECT3DDEVICE9 device)
 		initialized = true;
 
 	gui::init();
-
-	options::init();
 }
 
 void render(LPDIRECT3DDEVICE9 device)
