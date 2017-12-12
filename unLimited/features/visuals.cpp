@@ -193,7 +193,7 @@ void visuals::skeletons()
 		if (!player->IsValid() || player == localplayer)
 			continue;
 
-		if (localplayer->GetObserverTarget().IsValid() && player == localplayer->GetObserverTarget())
+		if (player == localplayer->GetObserverTarget())
 			continue;
 
 		studiohdr_t* studio_model = g_model_info->GetStudioModel(player->GetModel());
