@@ -15,11 +15,13 @@ void wait_for_unload()
 {
 	while (true)
 	{
+#ifdef _DEBUG
 		if (GetAsyncKeyState(VK_DELETE) & 1)
 		{
 			utils::should_unload = true;
 			utils::printf("unload called for by pressing delete\n\n");
 		}
+#endif
 
 		if (utils::should_unload)
 			utils::unload();
