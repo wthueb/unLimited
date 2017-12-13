@@ -15,7 +15,7 @@ namespace utils
 
 	void attach_console();
 	void detach_console();
-	bool console_print(const char* fmt, ...);
+	bool printf(const char* fmt, ...);
 	char console_read_key();
 
 	uint64_t find_signature(const std::string &szModule, const std::string &szSignature);

@@ -87,28 +87,28 @@ void interfaces::init()
 	get_steam();
 
 #ifdef _DEBUG
-	utils::console_print("g_client_state: 0x%08x\n", g_client_state);
-	utils::console_print("g_global_vars: 0x%08x\n", g_global_vars);
-	utils::console_print("g_glow_manager: 0x%08x\n", g_glow_manager);
-	utils::console_print("g_input: 0x%08x\n", g_input);
-	utils::console_print("g_client: 0x%08x\n", g_client);
-	utils::console_print("g_entity_list: 0x%08x\n", g_entity_list);
-	utils::console_print("g_client_mode: 0x%08x\n", g_client_mode);
-	utils::console_print("g_cvar: 0x%08x\n", g_cvar);
-	utils::console_print("g_engine_trace: 0x%08x\n", g_engine_trace);
-	utils::console_print("g_game_event_manager: 0x%08x\n", g_game_event_manager);
-	utils::console_print("g_localize: 0x%08x\n", g_localize);
-	utils::console_print("g_material_system: 0x%08x\n", g_material_system);
-	utils::console_print("g_panel: 0x%08x\n", g_panel);
-	utils::console_print("g_surface: 0x%08x\n", g_surface);
-	utils::console_print("g_debug_overlay: 0x%08x\n", g_debug_overlay);
-	utils::console_print("g_engine: 0x%08x\n", g_engine);
-	utils::console_print("g_model_info: 0x%08x\n", g_model_info);
-	utils::console_print("g_render_view: 0x%08x\n", g_render_view);
-	utils::console_print("g_model_render: 0x%08x\n\n", g_model_render);
+	utils::printf("g_client_state: 0x%08x\n", g_client_state);
+	utils::printf("g_global_vars: 0x%08x\n", g_global_vars);
+	utils::printf("g_glow_manager: 0x%08x\n", g_glow_manager);
+	utils::printf("g_input: 0x%08x\n", g_input);
+	utils::printf("g_client: 0x%08x\n", g_client);
+	utils::printf("g_entity_list: 0x%08x\n", g_entity_list);
+	utils::printf("g_client_mode: 0x%08x\n", g_client_mode);
+	utils::printf("g_cvar: 0x%08x\n", g_cvar);
+	utils::printf("g_engine_trace: 0x%08x\n", g_engine_trace);
+	utils::printf("g_game_event_manager: 0x%08x\n", g_game_event_manager);
+	utils::printf("g_localize: 0x%08x\n", g_localize);
+	utils::printf("g_material_system: 0x%08x\n", g_material_system);
+	utils::printf("g_panel: 0x%08x\n", g_panel);
+	utils::printf("g_surface: 0x%08x\n", g_surface);
+	utils::printf("g_debug_overlay: 0x%08x\n", g_debug_overlay);
+	utils::printf("g_engine: 0x%08x\n", g_engine);
+	utils::printf("g_model_info: 0x%08x\n", g_model_info);
+	utils::printf("g_render_view: 0x%08x\n", g_render_view);
+	utils::printf("g_model_render: 0x%08x\n\n", g_model_render);
 
-	utils::console_print("g_steam_friends: 0x%08x\n", g_steam_friends);
-	utils::console_print("g_steam_http: 0x%08x\n", g_steam_http);
-	utils::console_print("g_steam_user: 0x%08x\n\n", g_steam_user);
+	utils::printf("g_steam_friends: 0x%08x\n", g_steam_friends);
+	utils::printf("g_steam_http: 0x%08x\n", g_steam_http);
+	utils::printf("g_steam_user: 0x%08x\n\n", g_steam_user);
 #endif
 }

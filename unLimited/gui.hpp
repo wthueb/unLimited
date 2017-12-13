@@ -479,7 +479,7 @@ namespace gui
 				{
 #ifndef GUI_TEST
 					utils::should_unload = true;
-					utils::console_print("unload called for by pressing menu button\n\n");
+					utils::printf("unload called for by pressing menu button\n\n");
 #endif
 				}
 

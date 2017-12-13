@@ -18,7 +18,7 @@ void wait_for_unload()
 		if (GetAsyncKeyState(VK_DELETE) & 1)
 		{
 			utils::should_unload = true;
-			utils::console_print("unload called for by pressing delete\n\n");
+			utils::printf("unload called for by pressing delete\n\n");
 		}
 
 		if (utils::should_unload)
@@ -36,28 +36,28 @@ void attach(HMODULE dll)
 	utils::attach_console();
 #endif
 
-	utils::console_print("successfully attached dll to process\n\n\n");
+	utils::printf("successfully attached dll to process\n\n\n");
 
-	utils::console_print("initializing interfaces...\n\n");
+	utils::printf("initializing interfaces...\n\n");
 	interfaces::init();
-	utils::console_print("finished initializing interfaces\n\n\n");
+	utils::printf("finished initializing interfaces\n\n\n");
 
-	utils::console_print("initializing hooks...\n\n");
+	utils::printf("initializing hooks...\n\n");
 	hooks::init();
-	utils::console_print("finished initializing hooks\n\n\n");
+	utils::printf("finished initializing hooks\n\n\n");
 
-	utils::console_print("finding paint kits...\n\n");
+	utils::printf("finding paint kits...\n\n");
 	find_kits();
-	utils::console_print("finished finding kits\n\n\n");
+	utils::printf("finished finding kits\n\n\n");
 
-	utils::console_print("initializing gui...\n\n");
+	utils::printf("initializing gui...\n\n");
 	gui_init();
-	utils::console_print("finished initializing gui\n\n\n");
+	utils::printf("finished initializing gui\n\n\n");
 
 #ifdef _DEBUG
-	utils::console_print("dumping netvars...\n\n");
+	utils::printf("dumping netvars...\n\n");
 	netvar_sys::get().dump();
-	utils::console_print("finished dumping netvars...\n\n\n");
+	utils::printf("finished dumping netvars...\n\n\n");
 #endif
 
 	config::load();

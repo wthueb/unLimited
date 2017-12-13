@@ -8,20 +8,16 @@
 #include "../notifier.hpp"
 #include "../sdk/sdk.hpp"
 
-std::vector<EventListener*> listeners;
+std::vector<EventListener*> listeners{};
 
 void events::init()
 {
-	/*add_listener("round_end", [](IGameEvent* event)
-	{
-		notifier::update_all_options();
-	});*/
+	
 }
 
 void events::unload()
 {
-	/*for (auto& listener : listeners)
-		g_game_event_manager->RemoveListener(listener);*/
+	
 }
 
 bool events::add_listener(std::string name, std::function<void(IGameEvent*)> func)

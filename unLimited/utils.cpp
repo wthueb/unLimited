@@ -74,7 +74,7 @@ void utils::detach_console()
 	}
 }
 
-bool utils::console_print(const char* fmt, ...)
+bool utils::printf(const char* fmt, ...)
 {
 	if (!out)
 		return false;

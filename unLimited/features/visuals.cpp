@@ -177,7 +177,7 @@ void visuals::glow()
 
 void visuals::skeletons()
 {
-	if (!options.visuals_enabled || !options.visuals_skeletons)
+	if (!options.visuals_enabled || !options.visuals_skeletons || !g_engine->IsInGame())
 		return;
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));

@@ -24,11 +24,11 @@ void Callback::Run(HTTPRequestCompleted_t* pvParam)
 {
 	if (pvParam->m_nStatusCode == 200)
 	{
-		utils::console_print("http response: 200 OK\n\n");
+		utils::printf("http response: 200 OK\n\n");
 	}
 	else
 	{
-		utils::console_print("something went wrong with the http request...\n\n");
+		utils::printf("something went wrong with the http request...\n\n");
 	}
 
 	g_steam_http->ReleaseHTTPRequest(pvParam->m_hRequest);
@@ -55,7 +55,7 @@ void notifier::option_changed(const char* name, const char* value)
 	SteamAPICall_t api_call;
 	g_steam_http->SendHTTPRequest(handle, &api_call);
 
-	utils::console_print("http request sent\n");
+	utils::printf("http request sent\n");
 
 	static Callback g_check_callback{};
 
