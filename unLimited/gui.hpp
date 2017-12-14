@@ -23,7 +23,7 @@ void notifier::option_changed(const char* name, bool value) {}
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 6
-#define VERSION_PATCH 3
+#define VERSION_PATCH 4
 
 namespace ImGui
 {
@@ -118,7 +118,7 @@ namespace ImGui
 		ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !var);                                                 \
 }
 
-#define ADD_CHECKBOX(name, var) if (ImGui::BetterCheckbox(name, &var)) notifier::option_changed(name, var);
+#define ADD_CHECKBOX(name, var) if (ImGui::BetterCheckbox(name, var)) notifier::option_changed(name, *var);
 
 namespace gui
 {
@@ -198,17 +198,17 @@ namespace gui
 			{
 				ImGui::PushItemWidth(150.f);
 
-				ADD_CHECKBOX("aim", options.aim_enabled);
+				ADD_CHECKBOX("aim", &options.aim_enabled);
 				{
 					DISABLE(options.aim_enabled, .2f);
 
-					ADD_CHECKBOX("aimbot", options.aim_aimbot);
+					ADD_CHECKBOX("aimbot", &options.aim_aimbot);
 					{
 						DISABLE(options.aim_aimbot, .2f);
 
 						ImGui::SliderFloat("fov", &options.aim_fov, .1f, 180.f, "%.1f", 2.f);
 
-						ADD_CHECKBOX("smooth", options.aim_smooth);
+						ADD_CHECKBOX("smooth", &options.aim_smooth);
 						{
 							DISABLE(options.aim_smooth, .2f);
 
@@ -229,9 +229,9 @@ namespace gui
 								options.aim_bone = options.bones.at(selected).first;
 						}
 
-						ADD_CHECKBOX("on shoot", options.aim_on_shoot);
+						ADD_CHECKBOX("on shoot", &options.aim_on_shoot);
 
-						ADD_CHECKBOX("reaim", options.aim_reaim);
+						ADD_CHECKBOX("reaim", &options.aim_reaim);
 
 						// aim key
 						{
@@ -244,15 +244,15 @@ namespace gui
 								options.aim_aim_key = options.keys.at(selected).first;
 						}
 
-						ADD_CHECKBOX("shoot teammates", options.aim_friendlies);
+						ADD_CHECKBOX("shoot teammates", &options.aim_friendlies);
 
-						ADD_CHECKBOX("visible check", options.aim_vis_check);
+						ADD_CHECKBOX("visible check", &options.aim_vis_check);
 
 						ImGui::PopStyleVar();
 						ImGui::BetterPopItemFlag();
 					}
 
-					ADD_CHECKBOX("rcs", options.aim_rcs);
+					ADD_CHECKBOX("rcs", &options.aim_rcs);
 
 					ImGui::PopStyleVar();
 					ImGui::BetterPopItemFlag();
@@ -265,21 +265,21 @@ namespace gui
 			{
 				ImGui::PushItemWidth(150.f);
 
-				ADD_CHECKBOX("visuals", options.visuals_enabled);
+				ADD_CHECKBOX("visuals", &options.visuals_enabled);
 				{
 					DISABLE(options.visuals_enabled, .2f);
 
-					ADD_CHECKBOX("chams", options.visuals_chams);
+					ADD_CHECKBOX("chams", &options.visuals_chams);
 					{
 						DISABLE(options.visuals_chams, .2f);
 
-						ADD_CHECKBOX("ignorez (through walls)", options.visuals_ignorez);
+						ADD_CHECKBOX("ignorez (through walls)", &options.visuals_ignorez);
 
 						ImGui::PopStyleVar();
 						ImGui::BetterPopItemFlag();
 					}
 
-					ADD_CHECKBOX("glow", options.visuals_glow);
+					ADD_CHECKBOX("glow", &options.visuals_glow);
 					{
 						DISABLE(options.visuals_glow, .2f);
 
@@ -293,11 +293,11 @@ namespace gui
 						ImGui::BetterPopItemFlag();
 					}
 
-					ADD_CHECKBOX("skeletons", options.visuals_skeletons);
+					ADD_CHECKBOX("skeletons", &options.visuals_skeletons);
 
-					ADD_CHECKBOX("radar", options.visuals_radar);
+					ADD_CHECKBOX("radar", &options.visuals_radar);
 
-					ADD_CHECKBOX("thirdperson", options.visuals_thirdperson);
+					ADD_CHECKBOX("thirdperson", &options.visuals_thirdperson);
 					{
 						DISABLE(options.visuals_thirdperson, .2f);
 
@@ -307,9 +307,9 @@ namespace gui
 						ImGui::BetterPopItemFlag();
 					}
 
-					ADD_CHECKBOX("disable scope", options.visuals_noscope);
+					ADD_CHECKBOX("disable scope", &options.visuals_noscope);
 
-					ADD_CHECKBOX("noflash", options.visuals_noflash);
+					ADD_CHECKBOX("noflash", &options.visuals_noflash);
 
 					ImGui::PopStyleVar();
 					ImGui::BetterPopItemFlag();
@@ -325,15 +325,15 @@ namespace gui
 				if (ImGui::Button("skinchanger"))
 					skin_window_open = !skin_window_open;
 
-				ADD_CHECKBOX("bhop", options.misc_bhop);
+				ADD_CHECKBOX("bhop", &options.misc_bhop);
 
 				//ADD_CHECKBOX("autostrafe", options.misc_autostrafe);
 
-				ADD_CHECKBOX("backtracking", options.misc_backtracking);
+				ADD_CHECKBOX("backtracking", &options.misc_backtracking);
 				{
 					DISABLE(options.misc_backtracking, .2f);
 
-					ADD_CHECKBOX("backtracking visual", options.misc_backtracking_vis);
+					ADD_CHECKBOX("backtracking visual", &options.misc_backtracking_vis);
 
 					// backtracking amount
 					{
@@ -352,7 +352,7 @@ namespace gui
 					ImGui::BetterPopItemFlag();
 				}
 
-				ADD_CHECKBOX("anti-aim", options.aa_enabled);
+				ADD_CHECKBOX("anti-aim", &options.aa_enabled);
 				{
 					DISABLE(options.aa_enabled, .2f);
 
@@ -391,19 +391,19 @@ namespace gui
 					}, nullptr, int(aa_type::AA_COUNT), -1))
 						options.aa_type = aa_type(selected);
 
-					ADD_CHECKBOX("fakelag", options.aa_fakelag);
+					ADD_CHECKBOX("fakelag", &options.aa_fakelag);
 					
-					ADD_CHECKBOX("show angles/choke", options.aa_show);
+					ADD_CHECKBOX("show angles/choke", &options.aa_show);
 
 					ImGui::PopStyleVar();
 					ImGui::BetterPopItemFlag();
 				}
 
-				ADD_CHECKBOX("show ranks", options.misc_show_ranks);
+				ADD_CHECKBOX("show ranks", &options.misc_show_ranks);
 
-				ADD_CHECKBOX("nightmode", options.misc_nightmode);
+				ADD_CHECKBOX("nightmode", &options.misc_nightmode);
 
-				ADD_CHECKBOX("airstuck", options.misc_airstuck);
+				ADD_CHECKBOX("airstuck", &options.misc_airstuck);
 				{
 					DISABLE(options.misc_airstuck, .2f);
 
@@ -425,7 +425,9 @@ namespace gui
 				if (ImGui::InputFloat("view fov", &options.misc_fov, 1.f, 0.f, 0))
 					options.misc_fov = std::clamp(options.misc_fov, 5.f, 179.f);
 
-				ADD_CHECKBOX("chat spam", options.misc_chat_spam);
+				ADD_CHECKBOX("fov while scoped", &options.misc_fov_scoped);
+
+				ADD_CHECKBOX("chat spam", &options.misc_chat_spam);
 
 				ImGui::PopItemWidth();
 			}

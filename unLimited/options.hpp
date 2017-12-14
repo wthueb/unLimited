@@ -146,6 +146,7 @@ public:
 	int misc_airstuck_key = 0;
 
 	float misc_fov = 90.f;
+	bool misc_fov_scoped = false;
 
 	bool misc_chat_spam = false;
 };
