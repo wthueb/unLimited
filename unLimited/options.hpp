@@ -105,7 +105,10 @@ public:
 	bool visuals_enabled = true;
 
 	bool visuals_chams = false;
-	bool visuals_ignorez = false;
+	bool visuals_chams_ignorez = false;
+	bool visuals_chams_flat = false;
+	bool visuals_chams_wireframe = false;
+	bool visuals_chams_glass = false;
 
 	bool visuals_glow = false;
 	float visuals_glow_alpha = 1.f;

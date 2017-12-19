@@ -273,7 +273,7 @@ namespace gui
 					{
 						DISABLE(options.visuals_chams, .2f);
 
-						ADD_CHECKBOX("ignorez (through walls)", &options.visuals_ignorez);
+						ADD_CHECKBOX("ignorez (through walls)", &options.visuals_chams_ignorez);
 
 						ImGui::PopStyleVar();
 						ImGui::BetterPopItemFlag();

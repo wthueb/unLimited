@@ -147,6 +147,7 @@
     <ClCompile Include="hooks\create_move.cpp" />
     <ClCompile Include="hooks\directx.cpp" />
     <ClCompile Include="hooks\do_post_screen_space_effects.cpp" />
+    <ClCompile Include="hooks\draw_model_execute.cpp" />
     <ClCompile Include="hooks\events.cpp" />
     <ClCompile Include="hooks\frame_stage_notify.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />

@@ -18,7 +18,7 @@ void __stdcall hooks::hk_override_view(CViewSetup* view)
 
 	if (localplayer->IsAlive() && (!localplayer->IsScoped() || options.misc_fov_scoped))
 		view->fov = options.misc_fov;
-	else if (localplayer->GetObserverTarget().IsValid() && (!localplayer->GetObserverTarget()->IsScoped() || options.misc_fov_scoped))
+	else if (localplayer->GetObserverTarget().Get() && (!localplayer->GetObserverTarget()->IsScoped() || options.misc_fov_scoped))
 		view->fov = options.misc_fov;
 
 	visuals::thirdperson_override_view();

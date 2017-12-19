@@ -15,6 +15,8 @@ static int g_choked_ticks = 0;
 
 QAngle g_thirdperson_angles{};
 
+#define RETURN { g_thirdperson_angles = g_real = g_fake = cmd->viewangles; g_choking = false; g_choked_ticks = 0; return; }
+
 void antiaim::process(CUserCmd* cmd, bool& send_packet)
 {
 	if (!g_engine->IsInGame())
@@ -28,58 +30,30 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
 	if (!localplayer)
-		return;
+		RETURN;
 
 	if (!localplayer->IsAlive())
-		return;
+		RETURN;
 
 	auto weapon = localplayer->GetActiveWeapon().Get();
 	if (!weapon || weapon->IsKnife() || weapon->IsBomb())
-	{
-		g_thirdperson_angles = g_real = g_fake = cmd->viewangles;
-
-		g_choking = false;
-		g_choked_ticks = 0;
-
-		return;
-	}
+		RETURN;
 
 	if (cmd->buttons & IN_USE)
-	{
-		g_thirdperson_angles = g_real = g_fake = cmd->viewangles;
-
-		g_choking = false;
-		g_choked_ticks = 0;
-
-		return;
-	}
+		RETURN;
 
 	if (weapon->IsNade())
 	{
 		auto nade = static_cast<C_BaseCSGrenade*>(weapon);
 
 		if (nade->GetThrowTime() > 0.f)
-		{
-			g_thirdperson_angles = g_real = g_fake = cmd->viewangles;
-
-			g_choking = false;
-			g_choked_ticks = 0;
-
-			return;
-		}
+			RETURN;
 	}
 
 	if (cmd->buttons & IN_ATTACK &&
 		g_global_vars->get_realtime(cmd) >= weapon->GetNextPrimaryAttack() &&
 		weapon->GetAmmo() > 0)
-	{
-		g_thirdperson_angles = g_real = g_fake = cmd->viewangles;
-
-		g_choking = false;
-		g_choked_ticks = 0;
-
-		return;
-	}
+		RETURN;
 
 	//if (localplayer->GetMoveType() == MOVETYPE_LADDER)
 	//	return;

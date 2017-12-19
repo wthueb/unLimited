@@ -114,9 +114,7 @@ void misc::airstuck(CUserCmd* cmd)
 		return;
 
 	if (options.misc_airstuck_key && GetAsyncKeyState(options.misc_airstuck_key))
-	{
 		cmd->tick_count = 16777216;
-	}
 }
 
 void misc::chat_spam()

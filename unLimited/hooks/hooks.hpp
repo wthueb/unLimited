@@ -30,6 +30,9 @@ namespace hooks
 
 	// game event manager in events.hpp
 
+	// model render
+	void __stdcall hk_draw_model_execute(IMatRenderContext* ctx, const DrawModelState_t& state, const ModelRenderInfo_t& pInfo, matrix3x4_t* pCustomBoneToWorld);
+
 	// panel
 	void __fastcall hk_paint_traverse(void* thisptr, void* edx, VPANEL panel, bool force_repaint, bool allow_force);
 
@@ -40,6 +43,7 @@ namespace hooks
 	extern std::shared_ptr<vmt_hook> client_hook;
 	extern std::shared_ptr<vmt_hook> client_mode_hook;
 	extern std::shared_ptr<vmt_hook> game_event_manager_hook;
+	extern std::shared_ptr<vmt_hook> model_render_hook;
 	extern std::shared_ptr<vmt_hook> panel_hook;
 	extern std::shared_ptr<vmt_hook> render_view_hook;
 
@@ -59,6 +63,9 @@ namespace hooks
 
 		// game event manager
 		static constexpr size_t fire_event_client_side = 9u;
+
+		// model render
+		static constexpr size_t draw_model_execute = 21u;
 
 		// panel
 		static constexpr size_t paint_traverse = 41u;

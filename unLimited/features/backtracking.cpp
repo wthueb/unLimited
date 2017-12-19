@@ -35,7 +35,7 @@ void backtracking::process(CUserCmd* cmd)
 		if (!player)
 			continue;
 
-		if (!player->IsValid() || player == localplayer || player->GetTeam() == localplayer->GetTeam())
+		if (!player->IsValid() || !player->IsPlayer() || player == localplayer || player->GetTeam() == localplayer->GetTeam())
 			continue;
 
 		float simtime = player->GetSimulationTime();
@@ -94,7 +94,7 @@ void backtracking::draw()
 		if (!player)
 			continue;
 
-		if (!player->IsValid() || player == localplayer || player->GetTeam() == localplayer->GetTeam())
+		if (!player->IsValid() || !player->IsPlayer() || player == localplayer || player->GetTeam() == localplayer->GetTeam())
 			continue;
 
 		for (auto j = 0; j < options.misc_backtracking_amt; ++j)

@@ -29,13 +29,55 @@ IMaterial* create_materal(std::string type, std::string texture, bool ignorez, b
 	return g_material_system->CreateMaterial(mat_name.c_str(), key_values);
 }
 
+
+void override_material(bool ignoreZ, bool flat, bool wireframe, bool glass, const Color& col = Color{ 255, 255, 255 })
+{
+	static IMaterial* mat_regular = create_materal("VertexLitGeneric", "vgui/white_additive", false, true, true, true, true);
+	static IMaterial* mat_regular_ignorez = create_materal("VertexLitGeneric", "vgui/white_additive", true, true, true, true, true);
+
+	static IMaterial* mat_flat = create_materal("UnlitGeneric", "vgui/white_additive", false, true, true, true, true);
+	static IMaterial* mat_flat_ignorez = create_materal("UnlitGeneric", "vgui/white_additive", true, true, true, true, true);
+
+	IMaterial* material = nullptr;
+
+	if (flat)
+	{
+		if (ignoreZ)
+			material = mat_flat_ignorez;
+		else
+			material = mat_flat;
+	}
+	else
+	{
+		if (ignoreZ)
+			material = mat_regular_ignorez;
+		else
+			material = mat_regular;
+	}
+
+
+	if (glass)
+	{
+		material = mat_flat;
+		material->AlphaModulate(0.45f);
+	}
+	else
+	{
+		material->AlphaModulate(col.a() / 255.f);
+	}
+
+	material->SetMaterialVarFlag(MATERIAL_VAR_WIREFRAME, wireframe);
+
+	material->ColorModulate(col.r() / 255.f, col.g() / 255.f, col.b() / 255.f);
+
+	g_model_render->ForcedMaterialOverride(material);
+}
+
+
 void visuals::chams()
 {
 	if (!options.visuals_enabled || !options.visuals_chams || !g_engine->IsInGame())
 		return;
-
-	static IMaterial* regular = create_materal("VertexLitGeneric", "vgui/white_additive", false, true, true, true, true);
-	static IMaterial* ignorez = create_materal("VertexLitGeneric", "vgui/white_additive", true, true, true, true, true);
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
 	if (!localplayer)
@@ -44,42 +86,121 @@ void visuals::chams()
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
 	{
 		auto player = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
-		if (!player)
+		if (!player || !player->IsValid())
 			continue;
-
-		if (!player->IsValid())
-			continue;
-
+		
 		if (!g_input->m_fCameraInThirdPerson && player == localplayer)
 			continue;
 
 		if (!options.visuals_friendlies && player->GetTeam() == localplayer->GetTeam())
 			continue;
 
-		//IMaterial* mat = g_material_system->FindMaterial("dev/dev_envmap", TEXTURE_GROUP_OTHER);
-		//IMaterial* mat = g_material_system->FindMaterial("models/inventory_items/trophy_majors/crystal_blue", TEXTURE_GROUP_OTHER);
-		//IMaterial* mat = g_material_system->FindMaterial("models/inventory_items/dogtags/dogtags_outline", TEXTURE_GROUP_OTHER);
+		// "dev/dev_envmap"
+		// "models/inventory_items/trophy_majors/crystal_blue"
+		// "models/inventory_items/dogtags/dogtags_outline"
 
-		if (options.visuals_ignorez)
+		if (options.visuals_chams_ignorez)
 		{
-			g_render_view->SetColorModulation(1.f, 0.f, 0.f);
+			g_render_view->SetColorModulation(.6f, .3f, .3f); // faded red
 			g_render_view->SetBlend(1.f);
 
-			g_model_render->ForcedMaterialOverride(ignorez);
+			override_material(true, options.visuals_chams_flat, options.visuals_chams_wireframe, false);
 
 			player->DrawModel(STUDIO_RENDER, 255);
 		}
 
-		g_render_view->SetColorModulation(0.f, 1.f, 0.f);
-		g_render_view->SetBlend(1.f);
+		g_render_view->SetColorModulation(.3f, .5f, .7f); // faded blue
+		g_render_view->SetBlend(options.visuals_chams_glass && !options.visuals_chams_ignorez ? .45f : 1.f);
 
-		g_model_render->ForcedMaterialOverride(regular);
+		override_material(false, options.visuals_chams_flat, options.visuals_chams_wireframe, options.visuals_chams_ignorez ? false : options.visuals_chams_glass);
 
 		player->DrawModel(STUDIO_RENDER, 255);
 
 		g_model_render->ForcedMaterialOverride(nullptr);
 	}
 }
+
+/*void visuals::chams2(DrawModelExecuteFn o_draw_model_execute, IMatRenderContext* ctx, const DrawModelState_t& state, const ModelRenderInfo_t& info, matrix3x4_t* matrix)
+{
+	if (!options.visuals_enabled || !options.visuals_chams || !g_engine->IsInGame())
+		return;
+
+	const auto mdl = info.pModel;
+
+	auto is_arm = !!strstr(mdl->szName, "arms");
+	auto is_player = !!strstr(mdl->szName, "models/player");
+	auto is_sleeve = !!strstr(mdl->szName, "sleeve");
+	auto is_weapon = !!strstr(mdl->szName, "weapons/v_");
+
+	if (is_player && options.visuals_chams_players)
+	{
+		auto player = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(info.entity_index));
+		if (!player || !player->IsValid())
+			return;
+
+		auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+		if (!localplayer)
+			return;
+
+		auto is_enemy = player->GetTeam() != localplayer->GetTeam();
+
+		if (!options.visuals_friendlies && !is_enemy)
+			return;
+
+		const auto clr_front = is_enemy ? Color{ 100, 255, 100 } : Color{ 100, 100, 255 };
+		const auto clr_back = is_enemy ? Color{ 255, 100, 100 } : Color{ 255, 120, 80 };
+
+		if (options.visuals_chams_ignorez)
+		{
+			override_material(true, options.visuals_chams_flat, options.visuals_chams_wireframe, false, clr_back);
+			
+			o_draw_model_execute(g_model_render, ctx, state, info, matrix);
+
+			override_material(false, options.visuals_chams_flat, options.visuals_chams_wireframe, false, clr_front);
+		}
+		else
+		{
+			override_material(false, options.visuals_chams_flat, options.visuals_chams_wireframe, options.visuals_chams_glass, clr_front);
+		}
+	}
+	else if (is_sleeve && options.visuals_chams_arms)
+	{
+		auto material = g_material_system->FindMaterial(mdl->szName, TEXTURE_GROUP_MODEL);
+		if (!material)
+			return;
+
+		material->SetMaterialVarFlag(MATERIAL_VAR_NO_DRAW, true);
+
+		g_model_render->ForcedMaterialOverride(material);
+	}
+	else if (is_arm)
+	{
+		auto material = g_material_system->FindMaterial(mdl->szName, TEXTURE_GROUP_MODEL);
+		if (!material)
+			return;
+
+		if (options.visuals_no_hands)
+		{
+			material->SetMaterialVarFlag(MATERIAL_VAR_NO_DRAW, true);
+			g_model_render->ForcedMaterialOverride(material);
+		}
+		else if (options.visuals_chams_arms)
+		{
+			if (options.visuals_chams_ignorez)
+			{
+				override_material(true, options.visuals_chams_flat, options.visuals_chams_wireframe, false, Color{ 150, 150, 150 });
+
+				o_draw_model_execute(g_model_render, ctx, state, info, matrix);
+
+				override_material(false, options.visuals_chams_flat, options.visuals_chams_wireframe, false, Color{ 255, 255, 255 });
+			}
+			else
+			{
+				override_material(false, options.visuals_chams_flat, options.visuals_chams_wireframe, options.visuals_chams_glass, Color{ 255, 255, 255 });
+			}
+		}
+	}
+}*/
 
 void visuals::glow()
 {
@@ -190,7 +311,7 @@ void visuals::skeletons()
 		if (!player)
 			continue;
 
-		if (!player->IsValid() || player == localplayer)
+		if (!player->IsValid() || !player->IsPlayer() || player == localplayer)
 			continue;
 
 		if (player == localplayer->GetObserverTarget())
@@ -237,7 +358,7 @@ void visuals::radar()
 		if (!player)
 			continue;
 
-		if (!player->IsValid() || player == localplayer)
+		if (!player->IsValid() || !player->IsPlayer() || player == localplayer)
 			continue;
 
 		player->GetSpotted() = true;

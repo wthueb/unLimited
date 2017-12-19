@@ -384,17 +384,15 @@ void skinchanger::fix_anims()
 	auto knife_model = g_model_info->GetModel(view_model->GetModelIndex());
 	auto model_name = g_model_info->GetModelName(knife_model);
 
-	static int lastseq = -1;
+	static auto lastseq = -1;
 
-	int new_sequence = 0;
+	auto new_sequence = 0;
 
 	if (anim_fixes.count(model_name))
 		new_sequence = anim_fixes.at(model_name)(view_model->GetSequence());
 
 	if (new_sequence && lastseq != view_model->GetSequence())
-	{
 		view_model->SendViewModelMatchingSequence(new_sequence);
-	}
 
 	lastseq = view_model->GetSequence();
 }

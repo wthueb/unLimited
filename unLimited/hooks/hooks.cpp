@@ -11,6 +11,7 @@ namespace hooks
 	std::shared_ptr<vmt_hook> client_hook = nullptr;
 	std::shared_ptr<vmt_hook> client_mode_hook = nullptr;
 	std::shared_ptr<vmt_hook> game_event_manager_hook = nullptr;
+	std::shared_ptr<vmt_hook> model_render_hook = nullptr;
 	std::shared_ptr<vmt_hook> panel_hook = nullptr;
 	std::shared_ptr<vmt_hook> render_view_hook = nullptr;
 
@@ -22,6 +23,7 @@ namespace hooks
 		client_hook = std::make_shared<vmt_hook>(g_client);
 		client_mode_hook = std::make_shared<vmt_hook>(g_client_mode);
 		game_event_manager_hook = std::make_shared<vmt_hook>(g_game_event_manager);
+		model_render_hook = std::make_shared<vmt_hook>(g_model_render);
 		panel_hook = std::make_shared<vmt_hook>(g_panel);
 		render_view_hook = std::make_shared<vmt_hook>(g_render_view);
 
@@ -36,6 +38,8 @@ namespace hooks
 
 		game_event_manager_hook->hook(events::hk_fire_event_client_side, index::fire_event_client_side);
 
+		model_render_hook->hook(hk_draw_model_execute, index::draw_model_execute);
+
 		panel_hook->hook(hk_paint_traverse, index::paint_traverse);
 
 		render_view_hook->hook(hk_scene_end, index::scene_end);
@@ -49,6 +53,7 @@ namespace hooks
 		client_hook->shutdown();
 		client_mode_hook->shutdown();
 		game_event_manager_hook->shutdown();
+		model_render_hook->shutdown();
 		panel_hook->shutdown();
 		render_view_hook->shutdown();
 	}

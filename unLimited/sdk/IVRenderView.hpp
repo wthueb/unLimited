@@ -142,12 +142,8 @@ public:
 	virtual void                Draw3DDebugOverlays(void) = 0;
 	virtual void                SetBlend(float blend) = 0;
 	virtual float               GetBlend(void) = 0;
-	virtual void                SetColorModulation(float const* blend) = 0;
-	inline void                 SetColorModulation(float r, float g, float b)
-	{
-		float clr[3] = { r, g, b };
-		SetColorModulation(clr);
-	}
+	virtual void                SetColorModulation(const float* blend) = 0;
+	inline void                 SetColorModulation(float r, float g, float b) {	float clr[3] = { r, g, b };	this->SetColorModulation(clr); }
 	virtual void                GetColorModulation(float* blend) = 0;
 	virtual void                SceneBegin() = 0;
 	virtual void                SceneEnd() = 0; // 9

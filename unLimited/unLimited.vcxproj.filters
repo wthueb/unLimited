@@ -78,6 +78,9 @@
       <Filter>hooks</Filter>
     </ClCompile>
     <ClCompile Include="notifier.cpp" />
+    <ClCompile Include="hooks\draw_model_execute.cpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />

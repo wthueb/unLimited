@@ -111,7 +111,7 @@ void find_target()
 		if (!potential)
 			continue;
 
-		if (!potential->IsValid() || potential == localplayer)
+		if (!potential->IsValid() || !potential->IsPlayer() || potential == localplayer)
 			continue;
 
 		if (!options.aim_friendlies &&
@@ -174,7 +174,7 @@ void drop_target()
 	if (!target)
 		return;
 
-	if (!target->IsValid() || target == localplayer)
+	if (!target->IsValid() || !target->IsPlayer() || target == localplayer)
 		best_target = -1;
 
 	if (!options.aim_friendlies &&
@@ -191,7 +191,7 @@ void correct_aim()
 	if (!target)
 		return;
 
-	if (!target->IsValid() || target == localplayer)
+	if (!target->IsValid() || !target->IsPlayer() || target == localplayer)
 		return;
 
 	if (options.aim_vis_check &&

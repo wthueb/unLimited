@@ -255,6 +255,11 @@ public:
 	{
 		return get_vfunc<bool(__thiscall*)(C_BaseEntity*)>(this, 160)(this);
 	}
+
+	bool IsPlayer()
+	{
+		return this->GetClientClass()->m_ClassID == ClassId_CCSPlayer;
+	}
 };
 
 using cstr_32 = char[32];
@@ -487,6 +492,6 @@ public:
 
 	bool IsValid()
 	{
-		return !IsDormant() && IsAlive() && !HasImmunity();
+		return !this->IsDormant() && this->IsAlive() && this->IsPlayer() && !this->HasImmunity();
 	}
 };
