@@ -32,10 +32,10 @@ void backtracking::process(CUserCmd* cmd)
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
 	{
 		auto player = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
-		if (!player)
+		if (!player || !player->IsValid())
 			continue;
 
-		if (!player->IsValid() || !player->IsPlayer() || player == localplayer || player->GetTeam() == localplayer->GetTeam())
+		if (player == localplayer || player->GetTeam() == localplayer->GetTeam())
 			continue;
 
 		float simtime = player->GetSimulationTime();
@@ -91,10 +91,10 @@ void backtracking::draw()
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
 	{
 		auto player = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
-		if (!player)
+		if (!player || !player->IsValid())
 			continue;
 
-		if (!player->IsValid() || !player->IsPlayer() || player == localplayer || player->GetTeam() == localplayer->GetTeam())
+		if (player == localplayer || player->GetTeam() == localplayer->GetTeam())
 			continue;
 
 		for (auto j = 0; j < options.misc_backtracking_amt; ++j)

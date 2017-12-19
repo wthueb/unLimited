@@ -108,10 +108,10 @@ void find_target()
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
 	{
 		auto potential = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
-		if (!potential)
+		if (!potential || !potential->IsValid())
 			continue;
 
-		if (!potential->IsValid() || !potential->IsPlayer() || potential == localplayer)
+		if (potential == localplayer)
 			continue;
 
 		if (!options.aim_friendlies &&
@@ -171,10 +171,13 @@ void drop_target()
 		return;
 
 	auto target = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(best_target));
-	if (!target)
+	if (!target || !target->IsValid())
+	{
+		best_target = -1;
 		return;
+	}
 
-	if (!target->IsValid() || !target->IsPlayer() || target == localplayer)
+	if (target == localplayer)
 		best_target = -1;
 
 	if (!options.aim_friendlies &&
@@ -188,10 +191,10 @@ void correct_aim()
 		return;
 
 	auto target = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(best_target));
-	if (!target)
+	if (!target || !target->IsValid())
 		return;
 
-	if (!target->IsValid() || !target->IsPlayer() || target == localplayer)
+	if (target == localplayer)
 		return;
 
 	if (options.aim_vis_check &&

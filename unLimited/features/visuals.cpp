@@ -314,10 +314,10 @@ void visuals::skeletons()
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
 	{
 		auto player = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
-		if (!player)
+		if (!player || !player->IsValid())
 			continue;
 
-		if (!player->IsValid() || !player->IsPlayer() || player == localplayer)
+		if (player == localplayer)
 			continue;
 
 		if (player == localplayer->GetObserverTarget())
@@ -361,10 +361,10 @@ void visuals::radar()
 	for (auto i = 0; i < g_engine->GetMaxClients(); ++i)
 	{
 		auto player = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
-		if (!player)
+		if (!player || !player->IsValid())
 			continue;
 
-		if (!player->IsValid() || !player->IsPlayer() || player == localplayer)
+		if (player == localplayer)
 			continue;
 
 		player->GetSpotted() = true;
