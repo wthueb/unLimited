@@ -437,7 +437,7 @@ namespace gui
 
 			ImGui::Columns(1, nullptr, false);
 
-			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::CalcTextSize("").y - 10.f);
+			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - ImGui::CalcTextSize("").y - 14.f);
 
 			ImGui::BetterCheckbox("dark mode", &dark_mode);
 			{
@@ -491,7 +491,7 @@ namespace gui
 				ImGui::PopStyleColor(4);
 			}
 
-			ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize("wi1.xyz").x - 10.f);
+			ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize("wi1.xyz").x - 14.f);
 
 			ImGui::Text("wi1.xyz");
 
