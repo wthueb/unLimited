@@ -110,6 +110,7 @@ public:
 	bool visuals_chams_wireframe = false;
 	bool visuals_chams_glass = false;
 
+	// FIXMEW: add
 	bool visuals_chams_arms = true;
 	bool visuals_chams_no_hands = false;
 
