@@ -101,7 +101,10 @@ void visuals::chams()
 
 		if (options.visuals_chams_ignorez)
 		{
-			g_render_view->SetColorModulation(.6f, .3f, .3f); // faded red
+			// FIXMEW: make an option
+			static auto igz = Color{ 180, 80, 80 };
+
+			g_render_view->SetColorModulation(igz.r() / 255.f, igz.g() / 255.f, igz.b() / 255.f);
 			g_render_view->SetBlend(1.f);
 
 			override_material(true, options.visuals_chams_flat, options.visuals_chams_wireframe, false);
@@ -109,7 +112,10 @@ void visuals::chams()
 			player->DrawModel(STUDIO_RENDER, 255);
 		}
 
-		g_render_view->SetColorModulation(.3f, .5f, .7f); // faded blue
+		// FIXMEW: make an option
+		static auto reg = Color{ 60, 110, 180 };
+
+		g_render_view->SetColorModulation(reg.r() / 255.f, reg.g() / 255.f, reg.b() / 255.f);
 		g_render_view->SetBlend(options.visuals_chams_glass && !options.visuals_chams_ignorez ? .45f : 1.f);
 
 		override_material(false, options.visuals_chams_flat, options.visuals_chams_wireframe, options.visuals_chams_ignorez ? false : options.visuals_chams_glass);
