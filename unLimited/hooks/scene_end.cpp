@@ -9,5 +9,5 @@ void __fastcall hooks::hk_scene_end(void* thisptr, void* edx)
 
 	o_scene_end(thisptr);
 
-	//visuals::chams();
+	visuals::chams();
 }

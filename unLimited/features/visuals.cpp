@@ -120,7 +120,7 @@ void visuals::chams()
 	}
 }
 
-/*void visuals::chams2(DrawModelExecuteFn o_draw_model_execute, IMatRenderContext* ctx, const DrawModelState_t& state, const ModelRenderInfo_t& info, matrix3x4_t* matrix)
+void visuals::chams2(DrawModelExecuteFn o_draw_model_execute, IMatRenderContext* ctx, const DrawModelState_t& state, const ModelRenderInfo_t& info, matrix3x4_t* matrix)
 {
 	if (!options.visuals_enabled || !options.visuals_chams || !g_engine->IsInGame())
 		return;
@@ -132,7 +132,7 @@ void visuals::chams()
 	auto is_sleeve = !!strstr(mdl->szName, "sleeve");
 	auto is_weapon = !!strstr(mdl->szName, "weapons/v_");
 
-	if (is_player && options.visuals_chams_players)
+	/*if (is_player && options.visuals_chams_players)
 	{
 		auto player = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(info.entity_index));
 		if (!player || !player->IsValid())
@@ -163,7 +163,7 @@ void visuals::chams()
 			override_material(false, options.visuals_chams_flat, options.visuals_chams_wireframe, options.visuals_chams_glass, clr_front);
 		}
 	}
-	else if (is_sleeve && options.visuals_chams_arms)
+	else */if (is_sleeve && options.visuals_chams_arms)
 	{
 		auto material = g_material_system->FindMaterial(mdl->szName, TEXTURE_GROUP_MODEL);
 		if (!material)
@@ -179,7 +179,7 @@ void visuals::chams()
 		if (!material)
 			return;
 
-		if (options.visuals_no_hands)
+		if (options.visuals_chams_no_hands)
 		{
 			material->SetMaterialVarFlag(MATERIAL_VAR_NO_DRAW, true);
 			g_model_render->ForcedMaterialOverride(material);
@@ -200,7 +200,7 @@ void visuals::chams()
 			}
 		}
 	}
-}*/
+}
 
 void visuals::glow()
 {

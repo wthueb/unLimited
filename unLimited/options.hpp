@@ -110,6 +110,9 @@ public:
 	bool visuals_chams_wireframe = false;
 	bool visuals_chams_glass = false;
 
+	bool visuals_chams_arms = true;
+	bool visuals_chams_no_hands = false;
+
 	bool visuals_glow = false;
 	float visuals_glow_alpha = 1.f;
 	int visuals_glow_style = 0;
