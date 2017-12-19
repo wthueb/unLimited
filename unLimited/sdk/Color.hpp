@@ -27,6 +27,17 @@ public:
 	Color(clr_t r, clr_t g, clr_t b, clr_t a = 255)
 		: _r(r), _g(g), _b(b), _a(a) {}
 
+	Color(int r, int g, int b, int a = 255)
+		: _r(r), _g(g), _b(b), _a(a) {}
+
+	explicit Color(float r, float g, float b, float a = 1.f)
+	{
+		_r = unsigned char(r * 255.f);
+		_g = unsigned char(g * 255.f);
+		_b = unsigned char(b * 255.f);
+		_a = unsigned char(a * 255.f);
+	}
+
 	explicit Color(clr_t rgb[4])
 		: _r(rgb[0]), _g(rgb[1]), _b(rgb[2]), _a(rgb[3]) {}
 

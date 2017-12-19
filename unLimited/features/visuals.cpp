@@ -188,11 +188,11 @@ void visuals::chams2(DrawModelExecuteFn o_draw_model_execute, IMatRenderContext*
 		{
 			if (options.visuals_chams_ignorez)
 			{
-				override_material(true, options.visuals_chams_flat, options.visuals_chams_wireframe, false, Color{ 150, 150, 150 });
+				override_material(true, options.visuals_chams_flat, options.visuals_chams_wireframe, false, Color{ .6f, .3f, .3f });
 
 				o_draw_model_execute(g_model_render, ctx, state, info, matrix);
 
-				override_material(false, options.visuals_chams_flat, options.visuals_chams_wireframe, false, Color{ 255, 255, 255 });
+				override_material(false, options.visuals_chams_flat, options.visuals_chams_wireframe, false, Color{ .3f, .5f, .7f });
 			}
 			else
 			{
