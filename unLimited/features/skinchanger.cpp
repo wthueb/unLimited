@@ -377,7 +377,7 @@ void skinchanger::fix_icons(IGameEvent* event)
 void skinchanger::fix_anims()
 {
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
-	if (!localplayer)
+	if (!localplayer || !localplayer->IsAlive())
 		return;
 
 	auto view_model = localplayer->GetViewModel();

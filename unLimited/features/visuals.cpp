@@ -73,7 +73,6 @@ void override_material(bool ignoreZ, bool flat, bool wireframe, bool glass, cons
 	g_model_render->ForcedMaterialOverride(material);
 }
 
-
 void visuals::chams()
 {
 	if (!options.visuals_enabled || !options.visuals_chams || !g_engine->IsInGame())

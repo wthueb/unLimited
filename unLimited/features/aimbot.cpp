@@ -180,8 +180,7 @@ void drop_target()
 	if (target == localplayer)
 		best_target = -1;
 
-	if (!options.aim_friendlies &&
-		target->GetTeam() == localplayer->GetTeam())
+	if (!options.aim_friendlies && target->GetTeam() == localplayer->GetTeam())
 		best_target = -1;
 }
 

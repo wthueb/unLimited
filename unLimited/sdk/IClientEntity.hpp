@@ -435,7 +435,7 @@ public:
 	NETVAR(GetWeapon, CHandle<C_BaseCombatWeapon>, "DT_BaseViewModel", "m_hWeapon");
 	NETVAR(GetOwner, CHandle<C_BasePlayer>, "DT_BaseViewModel", "m_hOwner");
 
-	inline void SendViewModelMatchingSequence(int sequence) {
+	void SendViewModelMatchingSequence(int sequence) {
 		using ofunc = void(__thiscall*)(void*, int);
 		return get_vfunc<ofunc>(this, 241)(this, sequence);
 	}
@@ -492,6 +492,6 @@ public:
 
 	bool IsValid()
 	{
-		return !this->IsDormant() && this->IsAlive() && this->IsPlayer() && !this->HasImmunity();
+		return this->IsPlayer() && !this->IsDormant() && this->IsAlive() && !this->HasImmunity();
 	}
 };

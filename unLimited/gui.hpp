@@ -275,9 +275,7 @@ namespace gui
 
 						ADD_CHECKBOX("ignorez (through walls)", &options.visuals_chams_ignorez);
 						ADD_CHECKBOX("flat", &options.visuals_chams_flat);
-						ADD_CHECKBOX("wireframe", &options.visuals_chams_wireframe);
-						ADD_CHECKBOX("glass", &options.visuals_chams_glass);
-
+												
 						ImGui::PopStyleVar();
 						ImGui::BetterPopItemFlag();
 					}
