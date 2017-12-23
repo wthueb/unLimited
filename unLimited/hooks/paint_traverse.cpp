@@ -32,10 +32,8 @@ void __fastcall hooks::hk_paint_traverse(void* thisptr, void* edx, VPANEL panel,
 	}
 
 	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
-	if (!localplayer)
-		return;
-
-	if (options.visuals_noscope && localplayer->IsScoped())
+	
+	if (options.visuals_noscope && localplayer && localplayer->IsScoped())
 	{
 		int w, h;
 		g_engine->GetScreenSize(w, h);

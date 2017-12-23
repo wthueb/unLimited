@@ -172,9 +172,9 @@ void apply_config(C_BaseAttributableItem* item, const econ_item_t* config, unsig
 	apply_sticker_hooks(item);
 }
 
-inline int rand_seq(Sequence low, Sequence high)
+inline int rand_seq(int low, int high)
 {
-	return rand() % (high - low) + low;
+	return rand() % (high - low + 1) + low;
 }
 
 const static std::unordered_map<std::string, int(*)(int)> anim_fixes
@@ -381,8 +381,16 @@ void skinchanger::fix_anims()
 		return;
 
 	auto view_model = localplayer->GetViewModel();
+	if (!view_model)
+		return;
+
 	auto knife_model = g_model_info->GetModel(view_model->GetModelIndex());
+	if (!knife_model)
+		return;
+
 	auto model_name = g_model_info->GetModelName(knife_model);
+	if (!model_name)
+		return;
 
 	static auto lastseq = -1;
 
