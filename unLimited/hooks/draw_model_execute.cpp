@@ -12,6 +12,4 @@ void __stdcall hooks::hk_draw_model_execute(IMatRenderContext* ctx, const DrawMo
 	// FIXMEW: add arm chams, etc, and fix glass chams
 
 	o_draw_model_execute(g_model_render, ctx, state, info, matrix);
-
-	g_model_render->ForcedMaterialOverride(nullptr);
 }

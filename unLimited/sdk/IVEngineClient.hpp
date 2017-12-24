@@ -60,6 +60,10 @@ public:
 	unsigned char filesdownloaded;
 } player_info_t;
 
+#ifdef CopyFile
+#undef CopyFile
+#endif
+
 class IVEngineClient
 {
 public:

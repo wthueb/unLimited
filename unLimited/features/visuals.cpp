@@ -29,7 +29,6 @@ IMaterial* create_materal(std::string type, std::string texture, bool ignorez, b
 	return g_material_system->CreateMaterial(mat_name.c_str(), key_values);
 }
 
-
 void override_material(bool ignoreZ, bool flat, bool wireframe, bool glass, const Color& col = Color{ 255, 255, 255 })
 {
 	static IMaterial* mat_regular = create_materal("VertexLitGeneric", "vgui/white_additive", false, true, true, true, true);
@@ -88,7 +87,7 @@ void visuals::chams()
 		if (!player || !player->IsValid())
 			continue;
 		
-		if (!g_input->m_fCameraInThirdPerson && player == localplayer)
+		if (!options.visuals_thirdperson && player == localplayer)
 			continue;
 
 		if (!options.visuals_friendlies && player->GetTeam() == localplayer->GetTeam())
