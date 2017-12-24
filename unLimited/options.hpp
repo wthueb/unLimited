@@ -142,7 +142,7 @@ public:
 	bool misc_autostrafe = false;
 
 	bool misc_backtracking = false;
-	bool misc_backtracking_vis = true;
+	bool misc_backtracking_vis = false;
 	int misc_backtracking_amt = 12;
 
 	bool misc_show_ranks = false;

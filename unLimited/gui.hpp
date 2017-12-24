@@ -23,7 +23,7 @@ void notifier::option_changed(const char* name, bool value) {}
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 6
-#define VERSION_PATCH 9
+#define VERSION_PATCH 10
 
 namespace ImGui
 {
@@ -123,8 +123,8 @@ namespace ImGui
 namespace gui
 {
 	static char title[64];
-	static float theme_color[3] = { .65f, .85f, .95f };
-	static bool dark_mode = false;
+	static float theme_color[3] = { 31.f / 255.f, 110.f / 255.f, 149.f / 255.f };
+	static bool dark_mode = true;
 
 	static void setup_style(const ImVec4& theme_color)
 	{
@@ -161,22 +161,6 @@ namespace gui
 		style.Colors[ImGuiCol_Header] = theme_color;
 		style.Colors[ImGuiCol_HeaderHovered] = style.Colors[ImGuiCol_WindowBg];
 		style.Colors[ImGuiCol_HeaderActive] = style.Colors[ImGuiCol_WindowBg];
-		
-		if (dark_mode)
-		{
-			for (auto i = 0; i < ImGuiCol_COUNT; ++i)
-			{
-				ImVec4& col = style.Colors[i];
-
-				float hue, saturation, value;
-				ImGui::ColorConvertRGBtoHSV(col.x, col.y, col.z, hue, saturation, value);
-
-				if (saturation < .1f)
-					value = 1.f - value;
-
-				ImGui::ColorConvertHSVtoRGB(hue, saturation, value, col.x, col.y, col.z);
-			}
-		}
 	}
 
 	static void draw_gui()
