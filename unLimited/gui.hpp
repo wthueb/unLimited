@@ -23,7 +23,7 @@ void notifier::option_changed(const char* name, bool value) {}
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 6
-#define VERSION_PATCH 10
+#define VERSION_PATCH 11
 
 namespace ImGui
 {

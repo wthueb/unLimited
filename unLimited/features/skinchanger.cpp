@@ -122,20 +122,16 @@ void apply_config(C_BaseAttributableItem* item, const econ_item_t* config, unsig
 
 	item->GetAccountID() = xuid_low;
 
-	if (config->entity_quality_index)
-		item->GetEntityQuality() = config->entity_quality_index;
+	item->GetEntityQuality() = config->entity_quality_index;
 
 	if (config->custom_name[0])
 		strcpy_s(item->GetCustomName(), config->custom_name);
 
-	if (config->paint_kit_index)
-		item->GetFallbackPaintKit() = config->paint_kit_index;
+	item->GetFallbackPaintKit() = config->paint_kit_index;
 
-	if (config->seed)
-		item->GetFallbackSeed() = config->seed;
+	item->GetFallbackSeed() = config->seed;
 
-	if (config->stat_trak)
-		item->GetFallbackStatTrak() = config->stat_trak;
+	item->GetFallbackStatTrak() = config->stat_trak;
 
 	item->GetFallbackWear() = config->wear;
 
