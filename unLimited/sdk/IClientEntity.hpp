@@ -245,15 +245,19 @@ public:
 	NETVAR(GetShouldGlow, bool, "DT_DynamicProp", "m_bShouldGlow");
 	NETVAR(GetSequence, Sequence, "DT_BaseAnimating", "m_nSequence");
 
+	Vector GetAbsOrigin()
+	{
+		return get_vfunc<Vector(__thiscall*)(void*)>(this, 10)(this);
+	}
+
 	void SetModelIndex(int index)
 	{
-		using oSetModelIndex = void(__thiscall*)(void*, int);
-		return get_vfunc<oSetModelIndex>(this, 75)(this, index);
+		return get_vfunc<void(__thiscall*)(void*, int)>(this, 75)(this, index);
 	}
 
 	bool IsWeapon()
 	{
-		return get_vfunc<bool(__thiscall*)(C_BaseEntity*)>(this, 160)(this);
+		return get_vfunc<bool(__thiscall*)(void*)>(this, 160)(this);
 	}
 
 	bool IsPlayer()
