@@ -102,8 +102,8 @@ public:
 	char                pad_0x08[0x2C];               //0x08
 	void*               m_pKeys;                      //0x34
 	char                pad_0x38[0x64];               //0x38
-	int					pad_0x41;
-	int					pad_0x42;
+	int					pad_0x78;                     //0x78
+	int					pad_0x7C;                     //0x7C
 	bool                m_fCameraInterceptingMouse;   //0x9C
 	bool                m_fCameraInThirdPerson;       //0x9D
 	bool                m_fCameraMovingWithMouse;     //0x9E
@@ -119,7 +119,7 @@ public:
 	float               m_flLastForwardMove;          //0xDC
 	int                 m_nClearInputState;           //0xE0
 	char                pad_0xE4[0x8];                //0xE4
-	CInput::CUserCmd*   m_pCommands;                  //0xEC
+	CUserCmd*           m_pCommands;                  //0xEC
 	CVerifiedUserCmd*   m_pVerifiedCommands;          //0xF0
 };
 
