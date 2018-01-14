@@ -81,6 +81,9 @@
     <ClCompile Include="hooks\draw_model_execute.cpp">
       <Filter>hooks</Filter>
     </ClCompile>
+    <ClCompile Include="hooks\dispatch_user_message.cpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.hpp" />
@@ -225,6 +228,9 @@
     </ClInclude>
     <ClInclude Include="notifier.hpp" />
     <ClInclude Include="sdk\Steam.hpp">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\bf_read.hpp">
       <Filter>sdk</Filter>
     </ClInclude>
   </ItemGroup>

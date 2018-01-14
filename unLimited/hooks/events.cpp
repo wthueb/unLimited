@@ -17,7 +17,10 @@ void events::init()
 
 void events::unload()
 {
-	
+	for (auto& listener : listeners)
+	{
+		g_game_event_manager->RemoveListener(listener);
+	}
 }
 
 bool events::add_listener(std::string name, std::function<void(IGameEvent*)> func)

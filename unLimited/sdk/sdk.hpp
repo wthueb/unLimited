@@ -1,5 +1,6 @@
 #pragma once
 
+#include "bf_read.hpp"
 #include "CBaseClientState.hpp"
 #include "CGlobalVarsBase.hpp"
 #include "CGlowObjectManager.hpp"

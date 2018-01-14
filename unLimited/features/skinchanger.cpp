@@ -168,45 +168,44 @@ void apply_config(C_BaseAttributableItem* item, const econ_item_t* config, unsig
 	apply_sticker_hooks(item);
 }
 
-inline int rand_seq(int low, int high)
+inline int random_sequence(int low, int high)
 {
 	return rand() % (high - low + 1) + low;
 }
 
-const static std::unordered_map<std::string, int(*)(int)> anim_fixes
+// FIXMEW: use hashing for better performance
+static int fix_animation(const char* model, const int sequence)
 {
-	{ "models/weapons/v_knife_butterfly.mdl", [](int sequence) -> int
+	if (!strcmp(model, "models/weapons/v_knife_butterfly.mdl"))
 	{
 		switch (sequence)
 		{
 		case SEQUENCE_DEFAULT_DRAW:
-			return rand_seq(SEQUENCE_BUTTERFLY_DRAW, SEQUENCE_BUTTERFLY_DRAW2);
+			return random_sequence(SEQUENCE_BUTTERFLY_DRAW, SEQUENCE_BUTTERFLY_DRAW2);
 		case SEQUENCE_DEFAULT_LOOKAT01:
-			return rand_seq(SEQUENCE_BUTTERFLY_LOOKAT01, SEQUENCE_BUTTERFLY_LOOKAT03);
+			return random_sequence(SEQUENCE_BUTTERFLY_LOOKAT01, SEQUENCE_BUTTERFLY_LOOKAT03);
 		default:
 			return sequence + 1;
 		}
-	} },
-		
-	{ "models/weapons/v_knife_falchion_advanced.mdl", [](int sequence) -> int
+	}
+	else if (!strcmp(model, "models/weapons/v_knife_falchion_advanced.mdl"))
 	{
 		switch (sequence)
 		{
 		case SEQUENCE_DEFAULT_IDLE2:
 			return SEQUENCE_FALCHION_IDLE1;
 		case SEQUENCE_DEFAULT_HEAVY_MISS1:
-			return rand_seq(SEQUENCE_FALCHION_HEAVY_MISS1, SEQUENCE_FALCHION_HEAVY_MISS1_NOFLIP);
+			return random_sequence(SEQUENCE_FALCHION_HEAVY_MISS1, SEQUENCE_FALCHION_HEAVY_MISS1_NOFLIP);
 		case SEQUENCE_DEFAULT_LOOKAT01:
-			return rand_seq(SEQUENCE_FALCHION_LOOKAT01, SEQUENCE_FALCHION_LOOKAT02);
+			return random_sequence(SEQUENCE_FALCHION_LOOKAT01, SEQUENCE_FALCHION_LOOKAT02);
 		case SEQUENCE_DEFAULT_DRAW:
 		case SEQUENCE_DEFAULT_IDLE1:
 			return sequence;
 		default:
 			return sequence - 1;
 		}
-	} },
-
-	{ "models/weapons/v_knife_push.mdl", [](int sequence) -> int
+	}
+	else if (!strcmp(model, "models/weapons/v_knife_push.mdl"))
 	{
 		switch (sequence)
 		{
@@ -214,9 +213,9 @@ const static std::unordered_map<std::string, int(*)(int)> anim_fixes
 			return SEQUENCE_DAGGERS_IDLE1;
 		case SEQUENCE_DEFAULT_LIGHT_MISS1:
 		case SEQUENCE_DEFAULT_LIGHT_MISS2:
-			return rand_seq(SEQUENCE_DAGGERS_LIGHT_MISS1, SEQUENCE_DAGGERS_LIGHT_MISS5);
+			return random_sequence(SEQUENCE_DAGGERS_LIGHT_MISS1, SEQUENCE_DAGGERS_LIGHT_MISS5);
 		case SEQUENCE_DEFAULT_HEAVY_MISS1:
-			return rand_seq(SEQUENCE_DAGGERS_HEAVY_MISS2, SEQUENCE_DAGGERS_HEAVY_MISS1);
+			return random_sequence(SEQUENCE_DAGGERS_HEAVY_MISS2, SEQUENCE_DAGGERS_HEAVY_MISS1);
 		case SEQUENCE_DEFAULT_HEAVY_HIT1:
 		case SEQUENCE_DEFAULT_HEAVY_BACKSTAB:
 		case SEQUENCE_DEFAULT_LOOKAT01:
@@ -227,9 +226,8 @@ const static std::unordered_map<std::string, int(*)(int)> anim_fixes
 		default:
 			return sequence + 2;
 		}
-	} },
-
-	{ "models/weapons/v_knife_survival_bowie.mdl", [](int sequence) -> int
+	}
+	else if (!strcmp(model, "models/weapons/v_knife_survival_bowie.mdl"))
 	{
 		switch (sequence)
 		{
@@ -241,8 +239,8 @@ const static std::unordered_map<std::string, int(*)(int)> anim_fixes
 		default:
 			return sequence - 1;
 		}
-	} }
-};
+	}
+}
 
 void skinchanger::apply_skins()
 {
@@ -376,24 +374,23 @@ void skinchanger::fix_anims()
 	if (!localplayer || !localplayer->IsAlive())
 		return;
 
-	auto view_model = localplayer->GetViewModel();
+	auto view_model = localplayer->GetViewModel().Get();
 	if (!view_model)
 		return;
 
-	auto knife_model = g_model_info->GetModel(view_model->GetModelIndex());
-	if (!knife_model)
+	auto view_model_weapon = view_model->GetWeapon().Get();
+	if (!view_model_weapon)
 		return;
-
-	auto model_name = g_model_info->GetModelName(knife_model);
-	if (!model_name)
-		return;
-
-	static auto lastseq = -1;
 
 	auto new_sequence = 0;
 
-	if (anim_fixes.count(model_name))
-		new_sequence = anim_fixes.at(model_name)(view_model->GetSequence());
+	if (model_info.count(view_model_weapon->GetItemDefinitionIndex()))
+	{
+		const auto override_model = model_info.at(view_model_weapon->GetItemDefinitionIndex()).model;
+		new_sequence = fix_animation(override_model, view_model->GetSequence());
+	}
+
+	static auto lastseq = -1;
 
 	if (new_sequence && lastseq != view_model->GetSequence())
 		view_model->SendViewModelMatchingSequence(new_sequence);

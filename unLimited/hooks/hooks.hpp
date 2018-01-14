@@ -22,6 +22,7 @@ namespace hooks
 
 	// client
 	void __stdcall hk_frame_stage_notify(ClientFrameStage stage);
+	bool __fastcall hk_dispatch_user_message(void* thisptr, void* edx, int type, unsigned int a3, unsigned int length, const void* msg_data);
 	
 	// client mode
 	void __stdcall hk_override_view(CViewSetup* view);
@@ -55,6 +56,7 @@ namespace hooks
 
 		// client
 		static constexpr size_t frame_stage_notify = 36u;
+		static constexpr size_t dispatch_user_message = 37u;
 
 		// client mode
 		static constexpr size_t override_view = 18u;

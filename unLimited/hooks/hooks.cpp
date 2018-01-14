@@ -31,6 +31,7 @@ namespace hooks
 		d3d_device_hook->hook(hk_reset, index::reset);
 
 		client_hook->hook(hk_frame_stage_notify, index::frame_stage_notify);
+		client_hook->hook(hk_dispatch_user_message, index::dispatch_user_message);
 
 		client_mode_hook->hook(hk_override_view, index::override_view);
 		client_mode_hook->hook(hk_create_move, index::create_move);

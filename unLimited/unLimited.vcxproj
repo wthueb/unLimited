@@ -146,6 +146,7 @@
     <ClCompile Include="features\misc.cpp" />
     <ClCompile Include="hooks\create_move.cpp" />
     <ClCompile Include="hooks\directx.cpp" />
+    <ClCompile Include="hooks\dispatch_user_message.cpp" />
     <ClCompile Include="hooks\do_post_screen_space_effects.cpp" />
     <ClCompile Include="hooks\draw_model_execute.cpp" />
     <ClCompile Include="hooks\events.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="netvars.hpp" />
     <ClInclude Include="notifier.hpp" />
     <ClInclude Include="options.hpp" />
+    <ClInclude Include="sdk\bf_read.hpp" />
     <ClInclude Include="sdk\CBaseClientState.hpp" />
     <ClInclude Include="sdk\CGlobalVarsBase.hpp" />
     <ClInclude Include="sdk\CGlowObjectManager.hpp" />
