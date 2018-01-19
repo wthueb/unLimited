@@ -384,19 +384,16 @@ void skinchanger::fix_anims()
 	if (!view_model_weapon)
 		return;
 
-	auto new_sequence = 0;
+	static auto lastseq = -1;
 
 	if (model_info.count(view_model_weapon->GetItemDefinitionIndex()))
 	{
 		const auto override_model = model_info.at(view_model_weapon->GetItemDefinitionIndex()).model;
-		new_sequence = fix_animation(override_model, view_model->GetSequence());
-	}
 
-	static auto lastseq = -1;
+		auto new_sequence = fix_animation(override_model, view_model->GetSequence());
 
-	if (new_sequence && lastseq != view_model->GetSequence())
-	{
-		view_model->SendViewModelMatchingSequence(new_sequence);
+		if (lastseq != view_model->GetSequence())
+			view_model->SendViewModelMatchingSequence(new_sequence);
 	}
 
 	lastseq = view_model->GetSequence();
