@@ -240,6 +240,8 @@ static int fix_animation(const char* model, const int sequence)
 			return sequence - 1;
 		}
 	}
+
+	return sequence;
 }
 
 void skinchanger::apply_skins()
@@ -393,7 +395,9 @@ void skinchanger::fix_anims()
 	static auto lastseq = -1;
 
 	if (new_sequence && lastseq != view_model->GetSequence())
+	{
 		view_model->SendViewModelMatchingSequence(new_sequence);
+	}
 
 	lastseq = view_model->GetSequence();
 }
