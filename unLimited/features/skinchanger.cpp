@@ -131,7 +131,8 @@ void apply_config(C_BaseAttributableItem* item, const econ_item_t* config, unsig
 
 	item->GetFallbackSeed() = config->seed;
 
-	item->GetFallbackStatTrak() = config->stat_trak;
+	if (config->stat_trak > 0)
+		item->GetFallbackStatTrak() = config->stat_trak;
 
 	item->GetFallbackWear() = config->wear;
 
