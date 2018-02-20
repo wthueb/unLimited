@@ -78,7 +78,7 @@ namespace math
 		return RAD2DEG(acos(aim.Dot(ang) / aim.LengthSqr()));
 	}
 
-	static void correct_movement(CUserCmd* cmd, const QAngle& old_angle, float old_forward, float old_side)
+	static void correct_movement(CUserCmd* cmd, const QAngle& old_angle, const float old_forward, const float old_side)
 	{
 		float delta;
 		float f1;

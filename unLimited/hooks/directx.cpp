@@ -60,7 +60,7 @@ void gui_shutdown()
 
 HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* device)
 {
-	static auto o_end_scene = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*)>(index::end_scene);
+	static const auto o_end_scene = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*)>(index::end_scene);
 
 	// stupid double rendering
 	static auto ret = _ReturnAddress();
@@ -84,7 +84,7 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* device)
 
 HRESULT __stdcall hooks::hk_reset(IDirect3DDevice9* device, D3DPRESENT_PARAMETERS* presentation_parameters)
 {
-	static auto o_reset = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*, D3DPRESENT_PARAMETERS*)>(index::reset);
+	static const auto o_reset = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*, D3DPRESENT_PARAMETERS*)>(index::reset);
 
 	if (!initialized)
 		return o_reset(device, presentation_parameters);

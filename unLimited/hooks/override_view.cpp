@@ -7,7 +7,7 @@
 
 void __stdcall hooks::hk_override_view(CViewSetup* view)
 {
-	static auto o_override_view = client_mode_hook->get_original<void(__thiscall*)(void*, CViewSetup*)>(index::override_view);
+	static const auto o_override_view = client_mode_hook->get_original<void(__thiscall*)(void*, CViewSetup*)>(index::override_view);
 
 	if (!g_engine->IsInGame())
 		return o_override_view(g_client_mode, view);

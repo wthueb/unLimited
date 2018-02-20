@@ -8,7 +8,7 @@
 
 void __fastcall hooks::hk_paint_traverse(void* thisptr, void* edx, VPANEL panel, bool force_repaint, bool allow_force)
 {
-	static auto o_paint_traverse = panel_hook->get_original<void(__thiscall*)(void*, VPANEL, bool, bool)>(index::paint_traverse);
+	static const auto o_paint_traverse = panel_hook->get_original<void(__thiscall*)(void*, VPANEL, bool, bool)>(index::paint_traverse);
 
 	static VPANEL FocusOverlayPanel = 0u;
 	static VPANEL HudZoom = 0u;

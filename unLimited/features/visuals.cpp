@@ -100,7 +100,7 @@ void visuals::chams()
 		if (options.visuals_chams_ignorez)
 		{
 			// FIXMEW: make an option
-			static auto igz = Color{ 180, 80, 80 };
+			static Color igz{ 180, 80, 80 };
 
 			g_render_view->SetColorModulation(igz.r() / 255.f, igz.g() / 255.f, igz.b() / 255.f);
 			g_render_view->SetBlend(1.f);
@@ -111,7 +111,7 @@ void visuals::chams()
 		}
 
 		// FIXMEW: make an option
-		static auto reg = Color{ 60, 110, 180 };
+		static Color reg{ 60, 110, 180 };
 
 		g_render_view->SetColorModulation(reg.r() / 255.f, reg.g() / 255.f, reg.b() / 255.f);
 		g_render_view->SetBlend(options.visuals_chams_glass && !options.visuals_chams_ignorez ? .45f : 1.f);

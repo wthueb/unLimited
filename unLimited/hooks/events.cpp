@@ -34,7 +34,7 @@ bool events::add_listener(std::string name, std::function<void(IGameEvent*)> fun
 
 bool __stdcall events::hk_fire_event_client_side(IGameEvent* event)
 {
-	static auto o_fire_event_client_side = hooks::game_event_manager_hook->get_original<bool(__thiscall*)(void*, IGameEvent*)>(hooks::index::fire_event_client_side);
+	static const auto o_fire_event_client_side = hooks::game_event_manager_hook->get_original<bool(__thiscall*)(void*, IGameEvent*)>(hooks::index::fire_event_client_side);
 
 	if (!strcmp(event->GetName(), "player_death"))
 	{

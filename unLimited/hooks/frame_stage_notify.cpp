@@ -6,7 +6,7 @@
 
 void __stdcall hooks::hk_frame_stage_notify(ClientFrameStage stage)
 {
-	static auto o_frame_stage_notify = client_hook->get_original<void(__thiscall*)(void*, ClientFrameStage)>(index::frame_stage_notify);
+	static const auto o_frame_stage_notify = client_hook->get_original<void(__thiscall*)(void*, ClientFrameStage)>(index::frame_stage_notify);
 
 	if (stage == FRAME_NET_UPDATE_POSTDATAUPDATE_START)
 	{
