@@ -127,7 +127,7 @@ void find_target()
 		Vector relative{ eye_pos - target_pos };
 
 		QAngle angle;
-		math::VectorAngles(relative, angle);
+		math::vector_angles(relative, angle);
 
 		auto fov = math::get_fov(cmd->viewangles + localplayer->GetAimPunch() * 2.f, angle);
 
@@ -152,7 +152,7 @@ void find_target()
 			Vector relative{ eye_pos - target_pos };
 
 			QAngle angle;
-			math::VectorAngles(relative, angle);
+			math::vector_angles(relative, angle);
 
 			auto fov = math::get_fov(cmd->viewangles + localplayer->GetAimPunch() * 2.f, angle);
 
@@ -206,7 +206,7 @@ void correct_aim()
 	Vector relative{ eye_pos - target_pos };
 
 	QAngle dst;
-	math::VectorAngles(relative, dst);
+	math::vector_angles(relative, dst);
 
 	if (math::get_fov(cmd->viewangles + localplayer->GetAimPunch() * 2.f, dst) > options.aim_fov)
 		return;

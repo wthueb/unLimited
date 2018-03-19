@@ -18,9 +18,10 @@ namespace utils
 	bool printf(const char* fmt, ...);
 	char console_read_key();
 
-	uint64_t find_signature(const std::string &szModule, const std::string &szSignature);
-
-	std::wstring to_wstring(const std::string &str);
+	uint64_t find_signature(const std::string& module_name, const std::string& sig);
+	void* get_export(const std::string& module_name, const std::string& export_name);
+	
+	std::wstring to_wstring(const std::string& str);
 
 	extern HMODULE dll;
 }
@@ -32,14 +33,14 @@ __forceinline static fn get_vfunc(void* base, int index)
 }
 
 #define NETVAR(name, type, table, prop)                                 \
-	type& name##() const                                                \
+	type& name() const                                                \
 	{                                                                   \
 		static auto offset = netvar_sys::get().get_offset(table, prop); \
 		return *reinterpret_cast<type*>(uintptr_t(this) + offset);      \
 	}
 
 #define PNETVAR(name, type, table, prop)                                \
-	type* name##() const                                                \
+	type* name() const                                                \
 	{                                                                   \
 		static auto offset = netvar_sys::get().get_offset(table, prop); \
 		return reinterpret_cast<type*>(uintptr_t(this) + offset);       \

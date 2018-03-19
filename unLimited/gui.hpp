@@ -16,13 +16,13 @@
 #include "kit_parser.hpp"
 #include "utils.hpp"
 #else
-void notifier::option_changed(const char* name, const char* value) {}
-void notifier::option_changed(const char* name, bool value) {}
+template <typename T>
+void notifier::option_changed(const char* name, T value) {}
 #endif
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 6
-#define VERSION_PATCH 12
+#define VERSION_PATCH 13
 
 namespace ImGui
 {

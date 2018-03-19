@@ -231,7 +231,7 @@ void antiaim::draw_angles()
 	
 	// lby
 	{
-		math::AngleVectors(QAngle{ 0.f, localplayer->GetLBY(), 0.f }, &forward);
+		math::angle_vectors(QAngle{ 0.f, localplayer->GetLBY(), 0.f }, &forward);
 		
 		forward *= line_length * 1.5f;
 		
@@ -246,7 +246,7 @@ void antiaim::draw_angles()
 
 	// real
 	{
-		math::AngleVectors(QAngle{ 0.f, g_real.yaw, 0.f }, &forward);
+		math::angle_vectors(QAngle{ 0.f, g_real.yaw, 0.f }, &forward);
 
 		forward *= line_length;
 
@@ -261,7 +261,7 @@ void antiaim::draw_angles()
 
 	// fake
 	{
-		math::AngleVectors(QAngle{ 0.f, g_fake.yaw, 0.f }, &forward);
+		math::angle_vectors(QAngle{ 0.f, g_fake.yaw, 0.f }, &forward);
 
 		forward *= line_length;
 

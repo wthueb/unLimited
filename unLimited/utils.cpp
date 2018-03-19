@@ -33,8 +33,6 @@ void utils::unload()
 	gui_shutdown();
 	Sleep(100);
 
-	events::unload();
-
 	hooks::unload();
 	Sleep(500);
 	
@@ -104,22 +102,22 @@ char utils::console_read_key()
 }
 
 // credits: learn_more
-uint64_t utils::find_signature(const std::string& module, const std::string& signature)
+uint64_t utils::find_signature(const std::string& module_name, const std::string& sig)
 {
 #define INRANGE(x, a, b)  (x >= a && x <= b) 
 #define GET_BITS(x)       (INRANGE((x&(~0x20)),'A','F') ? ((x&(~0x20)) - 'A' + 0xa) : (INRANGE(x,'0','9') ? x - '0' : 0))
 #define GET_BYTE(x)       (GET_BITS(x[0]) << 4 | GET_BITS(x[1]))
 
 	MODULEINFO mod_info;
-	GetModuleInformation(GetCurrentProcess(), GetModuleHandleA(module.c_str()), &mod_info, sizeof(MODULEINFO));
+	K32GetModuleInformation(GetCurrentProcess(), GetModuleHandleA(module_name.c_str()), &mod_info, sizeof(MODULEINFO));
 
-	auto startAddress = reinterpret_cast<DWORD>(mod_info.lpBaseOfDll);
-	auto endAddress = startAddress + mod_info.SizeOfImage;
+	auto start_address = reinterpret_cast<DWORD>(mod_info.lpBaseOfDll);
+	auto end_address = start_address + mod_info.SizeOfImage;
 
-	const char* pat = signature.c_str();
+	const char* pat = sig.c_str();
 
-	DWORD firstMatch{};
-	for (auto cur = startAddress; cur < endAddress; ++cur)
+	DWORD firstMatch;
+	for (auto cur = start_address; cur < end_address; ++cur)
 	{
 		if (!*pat)
 			return firstMatch;
@@ -141,7 +139,7 @@ uint64_t utils::find_signature(const std::string& module, const std::string& sig
 		}
 		else
 		{
-			pat = signature.c_str();
+			pat = sig.c_str();
 			firstMatch = 0;
 		}
 	}
@@ -149,9 +147,18 @@ uint64_t utils::find_signature(const std::string& module, const std::string& sig
 	return 0;
 }
 
+void* utils::get_export(const std::string& module_name, const std::string& export_name)
+{
+	HMODULE mod;
+	while (!(mod = GetModuleHandleA(module_name.c_str())))
+		Sleep(100);
+
+	return reinterpret_cast<void*>(GetProcAddress(mod, export_name.c_str()));
+}
+
 std::wstring utils::to_wstring(const std::string& str)
 {
-	static std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
+	static std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter{};
 
 	try
 	{

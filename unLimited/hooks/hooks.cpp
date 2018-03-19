@@ -44,8 +44,6 @@ namespace hooks
 		panel_hook->hook(hk_paint_traverse, index::paint_traverse);
 
 		render_view_hook->hook(hk_scene_end, index::scene_end);
-
-		events::init();
 	}
 
 	void unload()

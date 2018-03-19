@@ -1,36 +1,11 @@
 #include "events.hpp"
 
-#include <functional>
-#include <string>
-
 #include "../features/features.hpp"
 #include "hooks.hpp"
 #include "../notifier.hpp"
 #include "../sdk/sdk.hpp"
 
-std::vector<EventListener*> listeners{};
-
-void events::init()
-{
-	
-}
-
-void events::unload()
-{
-	for (auto& listener : listeners)
-	{
-		g_game_event_manager->RemoveListener(listener);
-	}
-}
-
-bool events::add_listener(std::string name, std::function<void(IGameEvent*)> func)
-{
-	auto listener = new EventListener{ name, func };
-	
-	listeners.push_back(listener);
-
-	return g_game_event_manager->AddListener(listener, name.c_str(), false);
-}
+// FIXMEW: use listeners instead
 
 bool __stdcall events::hk_fire_event_client_side(IGameEvent* event)
 {
@@ -39,6 +14,10 @@ bool __stdcall events::hk_fire_event_client_side(IGameEvent* event)
 	if (!strcmp(event->GetName(), "player_death"))
 	{
 		skinchanger::fix_icons(event);
+	}
+	else if (!strcmp(event->GetName(), "round_start"))
+	{
+		notifier::update_all_options();
 	}
 
 	return o_fire_event_client_side(g_game_event_manager, event);

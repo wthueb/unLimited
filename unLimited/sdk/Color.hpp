@@ -28,7 +28,7 @@ public:
 		: _r(r), _g(g), _b(b), _a(a) {}
 
 	Color(int r, int g, int b, int a = 255)
-		: _r(r), _g(g), _b(b), _a(a) {}
+		: _r(clr_t(r)), _g(clr_t(g)), _b(clr_t(b)), _a(clr_t(a)) {}
 
 	explicit Color(float r, float g, float b, float a = 1.f)
 	{

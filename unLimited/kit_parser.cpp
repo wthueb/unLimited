@@ -114,6 +114,8 @@ void find_kits()
 	// skip vtable, first member variable of ItemSystem is ItemSchema
 	auto item_schema = reinterpret_cast<CCStrike15ItemSchema*>(uintptr_t(item_system_fn()) + sizeof(void*));
 
+	const auto V_UCS2ToUTF8 = static_cast<int(*)(const wchar_t* ucs2, char* utf8, int len)>(utils::get_export("vstdlib.dll", "V_UCS2ToUTF8"));
+
 	// dump paint kits
 	{
 		// skip the instructions between, skip the opcode, read rel32 address
@@ -139,13 +141,15 @@ void find_kits()
 
 		for (auto i = 0; i <= map_head->last_element; ++i)
 		{
-			auto paint_kit = map_head->memory[i].value;
+			const auto paint_kit = map_head->memory[i].value;
 
 			if (paint_kit->id == 9001)
 				continue;
 
-			const wchar_t* wide_name = g_localize->Find(paint_kit->item_name.buffer + 1);
-			auto name = converter.to_bytes(wide_name);
+			const auto wide_name = g_localize->Find(paint_kit->item_name.buffer + 1);
+
+			char name[256];
+			V_UCS2ToUTF8(wide_name, name, sizeof(name));
 
 			if (paint_kit->id < 10000)
 				weapon_kits.push_back(kit_t{ paint_kit->id, name });
@@ -200,8 +204,10 @@ void find_kits()
 				sticker_name_ptr = sticker_name_if_valve_fucked_up_their_translations;
 			}
 
-			const wchar_t* wide_name = g_localize->Find(sticker_name_ptr);
-			auto name = converter.to_bytes(wide_name);
+			const auto wide_name = g_localize->Find(sticker_name_ptr);
+
+			char name[256];
+			V_UCS2ToUTF8(wide_name, name, sizeof(name));
 
 			stickers.push_back(kit_t{ sticker_kit->id, name });
 		}

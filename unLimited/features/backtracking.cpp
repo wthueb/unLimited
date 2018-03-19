@@ -44,9 +44,9 @@ void backtracking::process(CUserCmd* cmd)
 		head_positions[i][cmd->command_number % 13] = backtrack_data{ simtime, headpos };
 
 		Vector viewdir;
-		math::AngleVectors(cmd->viewangles + localplayer->GetAimPunch() * 2.f, &viewdir);
+		math::angle_vectors(cmd->viewangles + localplayer->GetAimPunch() * 2.f, &viewdir);
 
-		float fov = math::distance_point_to_line(headpos, localplayer->GetEyePosition(), viewdir);
+		float fov = math::distance_vec2line(headpos, localplayer->GetEyePosition(), viewdir);
 
 		if (best_fov > fov)
 		{
@@ -61,11 +61,11 @@ void backtracking::process(CUserCmd* cmd)
 		float best_target_simtime;
 
 		Vector view_forward;
-		math::AngleVectors(cmd->viewangles + localplayer->GetAimPunch() * 2.f, &view_forward);
+		math::angle_vectors(cmd->viewangles + localplayer->GetAimPunch() * 2.f, &view_forward);
 
 		for (auto i = 0; i < options.misc_backtracking_amt; ++i)
 		{
-			float dist = math::distance_point_to_line(head_positions[best_target][i].headpos, localplayer->GetEyePosition(), view_forward);
+			float dist = math::distance_vec2line(head_positions[best_target][i].headpos, localplayer->GetEyePosition(), view_forward);
 
 			if (dist < best_dist && head_positions[best_target][i].simtime > localplayer->GetSimulationTime() - 1)
 			{

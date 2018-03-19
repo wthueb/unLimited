@@ -1,9 +1,5 @@
 #pragma once
 
-#define STEAMFRIENDS_INTERFACE_VERSION "SteamFriends015"
-#define STEAMHTTP_INTERFACE_VERSION "STEAMHTTP_INTERFACE_VERSION002"
-#define STEAMUSER_INTERFACE_VERSION "SteamUser019"
-
 using uint8_t = unsigned char;
 using uint32_t = unsigned int;
 using uint64_t = unsigned long long;

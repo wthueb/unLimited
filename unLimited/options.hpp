@@ -4,6 +4,8 @@
 
 #include <array>
 
+#include "sdk/sdk.hpp"
+
 #ifdef GUI_TEST
 enum Bone
 {
@@ -29,12 +31,6 @@ enum class aa_type
 	SPIN_SLOW,
 	SPIN_FAST,
 	AA_COUNT
-};
-
-struct option_t
-{
-	int num;
-	const char* name;
 };
 
 class options_class

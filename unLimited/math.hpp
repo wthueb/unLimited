@@ -11,25 +11,25 @@ static const auto pi = acos(-1);
 
 namespace math
 {
-	static void inline SinCos(float radians, float* sine, float* cosine)
+	static void inline sincos(float radians, float* sine, float* cosine)
 	{
 		*sine = sin(radians);
 		*cosine = cos(radians);
 	}
 
-	static void AngleVectors(const QAngle& angles, Vector* forward)
+	static void angle_vectors(const QAngle& angles, Vector* forward)
 	{
 		float sp, sy, cp, cy;
 
-		SinCos(DEG2RAD(angles[0]), &sp, &cp);
-		SinCos(DEG2RAD(angles[1]), &sy, &cy);
+		sincos(DEG2RAD(angles[0]), &sp, &cp);
+		sincos(DEG2RAD(angles[1]), &sy, &cy);
 
 		forward->x = cp * cy;
 		forward->y = cp * sy;
 		forward->z = -sp;
 	}
 
-	static void VectorAngles(const Vector& forward, QAngle& angles)
+	static void vector_angles(const Vector& forward, QAngle& angles)
 	{
 		if (forward[1] == 0.f && forward[0] == 0.f)
 		{
@@ -55,7 +55,7 @@ namespace math
 		angles[2] = 0.f;
 	}
 
-	static float distance_point_to_line(const Vector& point, const Vector& line_origin, const Vector& dir)
+	static float distance_vec2line(const Vector& point, const Vector& line_origin, const Vector& dir)
 	{
 		auto point_dir = point - line_origin;
 
@@ -72,8 +72,8 @@ namespace math
 	{
 		Vector aim, ang;
 
-		AngleVectors(view_angle, &aim);
-		AngleVectors(aim_angle, &ang);
+		angle_vectors(view_angle, &aim);
+		angle_vectors(aim_angle, &ang);
 
 		return RAD2DEG(acos(aim.Dot(ang) / aim.LengthSqr()));
 	}

@@ -45,9 +45,7 @@ public:
 
 		last_cmd = cmd;
 
-		float realtime = tick * interval_per_tick;
-
-		return realtime;
+		return tick * interval_per_tick;
 	}
 
 private:
