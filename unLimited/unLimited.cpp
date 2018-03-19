@@ -4,6 +4,7 @@
 #include "hooks/hooks.hpp"
 #include "interfaces.hpp"
 #include "kit_parser.hpp"
+#include "notifier.hpp"
 #include "options.hpp"
 #include "utils.hpp"
 
@@ -63,6 +64,8 @@ void attach(HMODULE dll)
 #endif
 
 	config::load();
+
+	notifier::update_all_options();
 
 	wait_for_unload();
 }

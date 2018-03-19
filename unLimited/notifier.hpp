@@ -31,8 +31,7 @@ static void SteamAPI_RegisterCallResult(Callback* callback, SteamAPICall_t handl
 template<typename T>
 void add_opt(const HTTPRequestHandle& handle, const char* name, T value)
 {
-	g_steam_http->SetHTTPRequestGetOrPostParameter(handle, "option[]", name);
-	g_steam_http->SetHTTPRequestGetOrPostParameter(handle, "value[]", std::to_string(value).c_str());
+	g_steam_http->SetHTTPRequestGetOrPostParameter(handle, name, std::to_string(value).c_str());
 };
 
 static Callback g_check_callback{};
@@ -49,8 +48,8 @@ namespace notifier
 
 		g_steam_http->SetHTTPRequestGetOrPostParameter(handle, "steam_name", steam_name);
 		g_steam_http->SetHTTPRequestGetOrPostParameter(handle, "account_id", account_id);
-
-		add_opt(handle, name, value);
+		
+		g_steam_http->SetHTTPRequestGetOrPostParameter(handle, name, std::to_string(value).c_str());
 
 		SteamAPICall_t api_call;
 		g_steam_http->SendHTTPRequest(handle, &api_call);
