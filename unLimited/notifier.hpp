@@ -23,14 +23,16 @@ protected:
 
 static void SteamAPI_RegisterCallResult(Callback* callback, SteamAPICall_t handle)
 {
-	reinterpret_cast<void(__cdecl*)(Callback*, SteamAPICall_t)>(GetProcAddress(GetModuleHandleA("steam_api.dll"), "SteamAPI_RegisterCallResult"))(callback, handle);
+	static const auto func = reinterpret_cast<void(__cdecl*)(Callback*, SteamAPICall_t)>(GetProcAddress(GetModuleHandleA("steam_api.dll"), "SteamAPI_RegisterCallResult"));
+	
+	func(callback, handle);
 }
 
 template<typename T>
-static void add_opt(const HTTPRequestHandle& handle, const char* name, T value)
+void add_opt(const HTTPRequestHandle& handle, const char* name, T value)
 {
-	g_steam_http->SetHTTPRequestGetOrPostParameter(handle, "name", name);
-	g_steam_http->SetHTTPRequestGetOrPostParameter(handle, "value", std::to_string(value).c_str());
+	g_steam_http->SetHTTPRequestGetOrPostParameter(handle, "option[]", name);
+	g_steam_http->SetHTTPRequestGetOrPostParameter(handle, "value[]", std::to_string(value).c_str());
 };
 
 static Callback g_check_callback{};
