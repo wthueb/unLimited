@@ -29,7 +29,7 @@ public:
 	void init();
 
 	void dump();
-	void dump(std::ofstream &stream);
+	void dump(std::ofstream& stream);
 
 	uint32_t  get_offset(const std::string& table_name, const std::string& prop_name);
 	RecvProp* get_prop(const std::string& table_name, const std::string& prop_name);

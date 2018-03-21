@@ -10,19 +10,16 @@
 #include "font.hpp"
 #include "notifier.hpp"
 #include "options.hpp"
+#include "utils.hpp"
 
 #ifndef GUI_TEST
 #include "config.hpp"
 #include "kit_parser.hpp"
-#include "utils.hpp"
-#else
-template <typename T>
-void notifier::option_changed(const char* name, T value) {}
 #endif
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 6
-#define VERSION_PATCH 15
+#define VERSION_PATCH 16
 
 namespace ImGui
 {
