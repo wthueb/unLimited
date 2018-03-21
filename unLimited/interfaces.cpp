@@ -1,10 +1,10 @@
 #include "interfaces.hpp"
 
 #include <Windows.h>
+
 #include <string>
 
 #include "sdk/sdk.hpp"
-
 #include "utils.hpp"
 
 CBaseClientState* g_client_state = nullptr;

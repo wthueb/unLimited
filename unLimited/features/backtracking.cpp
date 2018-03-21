@@ -1,8 +1,7 @@
 #include "features.hpp"
 
-#include "../options.hpp"
-
 #include "../math.hpp"
+#include "../options.hpp"
 
 #define TIME_TO_TICKS(dt)  (int(.5f + float(dt) / g_global_vars->interval_per_tick))
 

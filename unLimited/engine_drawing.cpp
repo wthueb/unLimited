@@ -2,16 +2,15 @@
 
 #include <vector>
 
-#define _USE_MATH_DEFINES
-#include <math.h>
-
 #include "utils.hpp"
+
+static const auto pi = acos(-1);
 
 void draw::circle(const Vector2D& pos, float points, float radius, const Color& col)
 {
-	auto step = float(M_PI * 2.f / points);
-
-	for (auto a = 0.f; a < M_PI * 2.f; a += step)
+	auto step = float(pi * 2.f / points);
+	
+	for (auto a = 0.f; a < pi * 2.f; a += step)
 	{
 		Vector2D start{ radius * cosf(a) + pos.x, radius * sinf(a) + pos.y };
 		Vector2D end{ radius * cosf(a + step) + pos.x, radius * sinf(a + step) + pos.y };
@@ -22,9 +21,9 @@ void draw::circle(const Vector2D& pos, float points, float radius, const Color& 
 void draw::filled_circle(const Vector2D& pos, float points, float radius, const Color& col)
 {
 	std::vector<Vertex_t> vertices{};
-	auto step = float(M_PI * 2.f / points);
+	auto step = float(pi * 2.f / points);
 
-	for (auto a = 0.f; a < M_PI * 2.f; a += step)
+	for (auto a = 0.f; a < pi * 2.f; a += step)
 		vertices.push_back(Vertex_t{ { radius * cosf(a) + pos.x, radius * sinf(a) + pos.y } });
 
 	textured_polygon(int(points), vertices.data(), col);
@@ -32,11 +31,11 @@ void draw::filled_circle(const Vector2D& pos, float points, float radius, const 
 
 void draw::circle3D(const Vector& pos, float points, float radius, const Color& col)
 {
-	float step = float(M_PI * 2.f / points);
+	float step = float(pi * 2.f / points);
 
 	std::vector<Vector> points3d{};
 
-	for (auto a = 0.f; a < M_PI * 2.f; a += step)
+	for (auto a = 0.f; a < pi * 2.f; a += step)
 	{
 		Vector start{ radius * cosf(a) + pos.x, radius * sinf(a) + pos.y, pos.z };
 		Vector end{ radius * cosf(a + step) + pos.x, radius * sinf(a + step) + pos.y, pos.z };

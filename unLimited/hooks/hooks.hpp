@@ -1,9 +1,9 @@
 #pragma once
 
-#include <memory>
-
 #include <d3d9.h>
 #include <d3dx9.h>
+
+#include <memory>
 
 #include "../sdk/sdk.hpp"
 #include "../vmt_hook.hpp"

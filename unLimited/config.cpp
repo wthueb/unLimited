@@ -1,6 +1,7 @@
 #include "config.hpp"
 
 #include <fstream>
+
 #include <json.hpp>
 
 #include "options.hpp"

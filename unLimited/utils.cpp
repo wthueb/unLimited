@@ -1,9 +1,9 @@
 #include "utils.hpp"
 
+#include <Psapi.h>
+
 #include <sstream>
 #include <string>
-
-#include <Psapi.h>
 
 #include "hooks/events.hpp"
 #include "hooks/hooks.hpp"

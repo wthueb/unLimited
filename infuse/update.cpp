@@ -1,6 +1,6 @@
 #include "update.hpp"
 
-#include "colors.hpp"
+#include <curl/curl.h>
 
 #include <algorithm>
 #include <iostream>
@@ -8,7 +8,7 @@
 #include <sstream>
 #include <vector>
 
-#include <curl/curl.h>
+#include "colors.hpp"
 
 #ifdef _DEBUG
 #pragma comment(lib, "libcurl_a_debug.lib")

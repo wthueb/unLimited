@@ -1,21 +1,18 @@
 #pragma once
 
-#include <algorithm>
-#include <functional>
-
 #include <imgui.h>
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include <imgui_internal.h>
 
+#include <algorithm>
+#include <functional>
+
+#include "config.hpp"
 #include "font.hpp"
+#include "kit_parser.hpp"
 #include "notifier.hpp"
 #include "options.hpp"
 #include "utils.hpp"
-
-#ifndef GUI_TEST
-#include "config.hpp"
-#include "kit_parser.hpp"
-#endif
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 6
@@ -460,10 +457,8 @@ namespace gui
 
 				if (ImGui::Button("unload", size))
 				{
-#ifndef GUI_TEST
 					utils::should_unload = true;
 					utils::printf("unload called for by pressing menu button\n\n");
-#endif
 				}
 
 				ImGui::PopStyleColor(4);
@@ -487,7 +482,6 @@ namespace gui
 				ImGuiWindowFlags_AlwaysAutoResize |
 				ImGuiWindowFlags_NoSavedSettings))
 			{
-#ifndef GUI_TEST
 				auto& entries = config::items;
 
 				if (entries.empty())
@@ -662,7 +656,7 @@ namespace gui
 
 				if (ImGui::Button("load", button_size))
 					config::load();
-#endif
+
 				ImGui::End();
 			}
 		}
