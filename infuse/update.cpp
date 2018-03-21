@@ -42,12 +42,12 @@ size_t write_data_string(void* contents, size_t size, size_t nmemb, std::string*
 	return size * nmemb;
 }
 
-bool get_latest_ver(CURL* &curl, std::string &latest_version)
+bool get_latest_ver(CURL* curl, std::string& latest_version)
 {
 	cyan;
 	std::cout << "getting latest version number...\n\n";
 
-	std::string url = "http://wi1.xyz/latest-unLimited.txt";
+	std::string url = "https://wi1.xyz/latest-unLimited.txt";
 	
 	curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_string);
@@ -98,9 +98,9 @@ std::string get_current_ver()
 	return current_ver;
 }
 
-bool download_version(CURL* &curl, const std::string &version)
+bool download_version(CURL* curl, const std::string &version)
 {
-	std::string url = "http://wi1.xyz/unLimited-downloads/";
+	std::string url = "https://wi1.xyz/unLimited-downloads/";
 
 	url.append(version);
 
@@ -135,7 +135,7 @@ bool download_version(CURL* &curl, const std::string &version)
 	return true;
 }
 
-void delete_old_versions(const std::string &latest_version)
+void delete_old_versions(const std::string& latest_version)
 {
 	HANDLE find;
 	WIN32_FIND_DATA data;
