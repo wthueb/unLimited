@@ -392,46 +392,28 @@ void visuals::thirdperson_override_view()
 	{
 		g_input->m_fCameraInThirdPerson = true;
 
-		const float dist = options.visuals_thirdperson_offset;
+		g_input->m_vecCameraOffset = Vector{ viewangles.pitch, viewangles.yaw, options.visuals_thirdperson_offset };
 
-		Vector desired_cam_offset{ cos(DEG2RAD(viewangles.yaw)) * dist,
-			sin(DEG2RAD(viewangles.yaw)) * dist,
-			sin(DEG2RAD(-viewangles.pitch)) * dist
-		};
+		static constexpr auto cam_hull_offset = 14.f;
 
-		const auto eye_pos = localplayer->GetEyePosition();
+		static const Vector cam_hull_min{ -cam_hull_offset, -cam_hull_offset, -cam_hull_offset };
+		static const Vector cam_hull_max{ cam_hull_offset, cam_hull_offset, cam_hull_offset };
+
+		const auto head_pos = localplayer->GetEyePosition();
+
+		Vector cam_forward;
+		math::angle_vectors(QAngle{ g_input->m_vecCameraOffset.x, g_input->m_vecCameraOffset.y, 0.f }, &cam_forward);
 
 		Ray_t ray;
+		ray.Init(head_pos, head_pos - cam_forward * g_input->m_vecCameraOffset.z, cam_hull_min, cam_hull_max);
 
-		ray.Init(eye_pos, eye_pos - desired_cam_offset);
+		CTraceFilter filter;
+		filter.pSkip = localplayer;
 
-		trace_t tr;
-		CTraceFilter traceFilter;
-		traceFilter.pSkip = localplayer;
-		g_engine_trace->TraceRay(ray, MASK_SHOT, &traceFilter, &tr);
+		CGameTrace tr;
+		g_engine_trace->TraceRay(ray, MASK_SOLID, &filter, &tr);
 
-		const auto diff = eye_pos - tr.endpos;
-
-		const float distance2D = sqrt(abs(diff.x * diff.x) + abs(diff.y * diff.y));
-
-		const bool horOK = distance2D > dist - 2.0f;
-		const bool vertOK = abs(diff.z) - abs(desired_cam_offset.z) < 3.0f;
-
-		float cam_dist = 0.f;
-
-		if (horOK && vertOK)
-		{
-			cam_dist = dist;
-		}
-		else
-		{
-			if (vertOK)
-				cam_dist = distance2D * 0.95f;
-			else
-				cam_dist = abs(diff.z) * 0.95f;
-		}
-
-		g_input->m_vecCameraOffset.z = cam_dist;
+		g_input->m_vecCameraOffset.z *= tr.fraction;
 	}
 	else
 	{
@@ -451,7 +433,7 @@ void visuals::thirdperson_fsn()
 	if (!localplayer)
 		return;
 
-	static ptrdiff_t deadflag = netvar_sys::get().get_offset("DT_BasePlayer", "deadflag");
+	static const auto deadflag = netvar_sys::get().get_offset("DT_BasePlayer", "deadflag");
 
 	if (localplayer->IsAlive() && g_input->m_fCameraInThirdPerson)
 	{
