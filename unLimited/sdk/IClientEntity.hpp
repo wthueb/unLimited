@@ -119,10 +119,11 @@ enum Flags
 	FL_WATERJUMP = (1 << 2),
 	FL_ONTRAIN = (1 << 3),
 	FL_INRAIN = (1 << 4),
-	FL_FROZEN = (1 << 5),
-	FL_ATCONTROLS = (1 << 6),
-	FL_CLIENT = (1 << 7),
-	FL_FAKECLIENT = (1 << 8)
+	FL_UNKNOWN = 0,
+	FL_FROZEN = (1 << 6),
+	FL_ATCONTROLS = (1 << 7),
+	FL_CLIENT = (1 << 8),
+	FL_FAKECLIENT = (1 << 9)
 };
 
 enum MoveType

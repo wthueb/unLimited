@@ -15,6 +15,7 @@ IBaseClientDLL* g_client = nullptr;
 IClientEntityList* g_entity_list = nullptr;
 IClientMode* g_client_mode = nullptr;
 ICvar* g_cvar = nullptr;
+IEngineSound* g_engine_sound = nullptr;
 IEngineTrace* g_engine_trace = nullptr;
 IGameEventManager2* g_game_event_manager = nullptr;
 ILocalize* g_localize = nullptr;
@@ -67,6 +68,7 @@ void interfaces::init()
 	g_client = capture_interface<IBaseClientDLL>("client.dll", "VClient018");
 	g_entity_list = capture_interface<IClientEntityList>("client.dll", "VClientEntityList003");
 	g_cvar = capture_interface<ICvar>("vstdlib.dll", "VEngineCvar007");
+	g_engine_sound = capture_interface<IEngineSound>("engine.dll", "IEngineSoundClient003");
 	g_engine_trace = capture_interface<IEngineTrace>("engine.dll", "EngineTraceClient004");
 	g_game_event_manager = capture_interface<IGameEventManager2>("engine.dll", "GAMEEVENTSMANAGER002");
 	g_localize = capture_interface<ILocalize>("localize.dll", "Localize_001");

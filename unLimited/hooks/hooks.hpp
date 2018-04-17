@@ -29,6 +29,11 @@ namespace hooks
 	bool __stdcall hk_create_move(float sample_input_frametime, CUserCmd* cmd);
 	bool __stdcall hk_do_post_screen_space_effects(CViewSetup* view);
 
+	// engine sound
+	void __fastcall hk_emit_sound(void* thisptr, void* edx, IRecipientFilter& filter, int iEntIndex, int iChannel, const char* pSoundEntry, unsigned int nSoundEntryHash, const char* pSample,
+		float flVolume, float flAttenuation, int nSeed, int iFlags = 0, int iPitch = PITCH_NORM,
+		const Vector* pOrigin = nullptr, const Vector* pDirection = nullptr, CUtlVector<Vector>* pUtlVecOrigins = nullptr, bool bUpdatePositions = true, float soundtime = 0.f, int speakerentity = -1);
+
 	// game event manager in events.hpp
 
 	// model render
@@ -43,6 +48,7 @@ namespace hooks
 	extern std::shared_ptr<vmt_hook> d3d_device_hook;
 	extern std::shared_ptr<vmt_hook> client_hook;
 	extern std::shared_ptr<vmt_hook> client_mode_hook;
+	extern std::shared_ptr<vmt_hook> engine_sound_hook;
 	extern std::shared_ptr<vmt_hook> game_event_manager_hook;
 	extern std::shared_ptr<vmt_hook> model_render_hook;
 	extern std::shared_ptr<vmt_hook> panel_hook;
@@ -51,28 +57,31 @@ namespace hooks
 	namespace index
 	{
 		// d3d
-		static constexpr size_t reset = 16u;
-		static constexpr size_t end_scene = 42u;
+		static constexpr auto reset = 16u;
+		static constexpr auto end_scene = 42u;
 
 		// client
-		static constexpr size_t frame_stage_notify = 36u;
-		static constexpr size_t dispatch_user_message = 37u;
+		static constexpr auto frame_stage_notify = 36u;
+		static constexpr auto dispatch_user_message = 37u;
 
 		// client mode
-		static constexpr size_t override_view = 18u;
-		static constexpr size_t create_move = 24u;
-		static constexpr size_t do_post_screen_space_effects = 44u;
+		static constexpr auto override_view = 18u;
+		static constexpr auto create_move = 24u;
+		static constexpr auto do_post_screen_space_effects = 44u;
+
+		// engine sound
+		static constexpr auto emit_sound = 5u;
 
 		// game event manager
-		static constexpr size_t fire_event_client_side = 9u;
+		static constexpr auto fire_event_client_side = 9u;
 
 		// model render
-		static constexpr size_t draw_model_execute = 21u;
+		static constexpr auto draw_model_execute = 21u;
 
 		// panel
-		static constexpr size_t paint_traverse = 41u;
+		static constexpr auto paint_traverse = 41u;
 
 		// render view
-		static constexpr size_t scene_end = 9u;
+		static constexpr auto scene_end = 9u;
 	}
 }

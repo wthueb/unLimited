@@ -12,6 +12,7 @@
 #include "IClientEntityList.hpp"
 #include "IClientMode.hpp"
 #include "ICvar.hpp"
+#include "IEngineSound.hpp"
 #include "IEngineTrace.hpp"
 #include "IGameEventManager2.hpp"
 #include "ILocalize.hpp"

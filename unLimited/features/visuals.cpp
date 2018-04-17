@@ -4,6 +4,7 @@
 #include <sstream>
 
 #include "../engine_drawing.hpp"
+#include "../math.hpp"
 #include "../options.hpp"
 #include "../sdk/sdk.hpp"
 
@@ -390,7 +391,47 @@ void visuals::thirdperson_override_view()
 	if (localplayer->IsAlive() && !localplayer->IsScoped())
 	{
 		g_input->m_fCameraInThirdPerson = true;
-		g_input->m_vecCameraOffset = Vector{ viewangles.pitch, viewangles.yaw, options.visuals_thirdperson_offset };
+
+		const float dist = options.visuals_thirdperson_offset;
+
+		Vector desired_cam_offset{ cos(DEG2RAD(viewangles.yaw)) * dist,
+			sin(DEG2RAD(viewangles.yaw)) * dist,
+			sin(DEG2RAD(-viewangles.pitch)) * dist
+		};
+
+		const auto eye_pos = localplayer->GetEyePosition();
+
+		Ray_t ray;
+
+		ray.Init(eye_pos, eye_pos - desired_cam_offset);
+
+		trace_t tr;
+		CTraceFilter traceFilter;
+		traceFilter.pSkip = localplayer;
+		g_engine_trace->TraceRay(ray, MASK_SHOT, &traceFilter, &tr);
+
+		const auto diff = eye_pos - tr.endpos;
+
+		const float distance2D = sqrt(abs(diff.x * diff.x) + abs(diff.y * diff.y));
+
+		const bool horOK = distance2D > dist - 2.0f;
+		const bool vertOK = abs(diff.z) - abs(desired_cam_offset.z) < 3.0f;
+
+		float cam_dist = 0.f;
+
+		if (horOK && vertOK)
+		{
+			cam_dist = dist;
+		}
+		else
+		{
+			if (vertOK)
+				cam_dist = distance2D * 0.95f;
+			else
+				cam_dist = abs(diff.z) * 0.95f;
+		}
+
+		g_input->m_vecCameraOffset.z = cam_dist;
 	}
 	else
 	{

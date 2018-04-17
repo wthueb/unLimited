@@ -55,6 +55,7 @@ struct ModelRenderInfo_t
 {
 	Vector                  origin;
 	QAngle                  angles;
+	int                     unk;
 	IClientRenderable*      pRenderable;
 	const model_t*          pModel;
 	const matrix3x4_t*      pModelToWorld;

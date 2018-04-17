@@ -65,10 +65,14 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* device)
 	// stupid double rendering
 	static auto ret = _ReturnAddress();
 
-	if (_ReturnAddress() != ret)
+	if (!initialized || _ReturnAddress() != ret)
 		return o_end_scene(device);
 	
-	if (initialized && gui_open)
+	// Save the state to prevent messing up stuff
+	IDirect3DStateBlock9* state;
+	device->CreateStateBlock(D3DSBT_ALL, &state);
+
+	if (gui_open)
 	{
 		ImGui::GetIO().MouseDrawCursor = true;
 
@@ -78,6 +82,9 @@ HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* device)
 		
 		ImGui::Render();
 	}
+
+	state->Apply();
+	state->Release();
 
 	return o_end_scene(device);
 }

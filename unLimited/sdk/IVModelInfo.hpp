@@ -434,41 +434,43 @@ enum RenderableTranslucencyType_t
 class IVModelInfo
 {
 public:
-	virtual                                 ~IVModelInfo() {}
+	virtual                                 ~IVModelInfo() {} // 0
 	virtual const model_t*                  GetModel(int modelindex) const = 0;
 	// Returns index of model by name
 	virtual int                             GetModelIndex(const char* name) const = 0;
 	// Returns name of model
 	virtual const char*                     GetModelName(const model_t* model) const = 0;
 	virtual vcollide_t*                     GetVCollide(const model_t* model) const = 0;
-	virtual vcollide_t*                     GetVCollide(int modelindex) const = 0;
+	virtual vcollide_t*                     GetVCollide(int modelindex) const = 0; // 5
 	virtual void                            GetModelBounds(const model_t* model, Vector& mins, Vector& maxs) const = 0;
 	virtual void                            GetModelRenderBounds(const model_t* model, Vector& mins, Vector& maxs) const = 0;
 	virtual int                             GetModelFrameCount(const model_t* model) const = 0;
 	virtual int                             GetModelType(const model_t* model) const = 0;
-	virtual void*                           GetModelExtraData(const model_t* model) = 0;
+	virtual void*                           GetModelExtraData(const model_t* model) = 0; // 10
 	virtual bool                            ModelHasMaterialProxy(const model_t* model) const = 0;
 	virtual bool                            IsTranslucent(model_t const* model) const = 0;
 	virtual bool                            IsTranslucentTwoPass(const model_t* model) const = 0;
-	virtual void                            Unused0() {};
-	virtual RenderableTranslucencyType_t    ComputeTranslucencyType(const model_t* model, int nSkin, int nBody) = 0;
+	virtual void                            unk() = 0;
+	virtual RenderableTranslucencyType_t    ComputeTranslucencyType(const model_t* model, int nSkin, int nBody) = 0; // 15
 	virtual int                             GetModelMaterialCount(const model_t* model) const = 0;
-	virtual void                            GetModelMaterials(const model_t* model, int count, IMaterial** ppMaterials) = 0;
-	virtual bool                            IsModelVertexLit(const model_t* model) const = 0;
+	virtual void                            unk1() = 0;
+	virtual void                            unk2() = 0;
+	virtual void                            GetModelMaterials(const model_t* model, int count, IMaterial** ppMaterials) = 0; // 19
+	virtual bool                            IsModelVertexLit(const model_t* model) const = 0; // 20
 	virtual const char*                     GetModelKeyValueText(const model_t* model) = 0;
-	virtual bool                            GetModelKeyValue(const model_t* model, CUtlBuffer& buf) = 0; // supports keyvalue blocks in submodels
+	virtual bool                            GetModelKeyValue(const model_t* model, CUtlBuffer& buf) = 0;
 	virtual float                           GetModelRadius(const model_t* model) = 0;
 	virtual const studiohdr_t*              FindModel(const studiohdr_t* pStudioHdr, void** cache, const char* modelname) const = 0;
-	virtual const studiohdr_t*              FindModel(void* cache) const = 0;
+	virtual const studiohdr_t*              FindModel(void* cache) const = 0; // 25
 	virtual virtualmodel_t*                 GetVirtualModel(const studiohdr_t* pStudioHdr) const = 0;
 	virtual byte*                           GetAnimBlock(const studiohdr_t* pStudioHdr, int iBlock) const = 0;
 	virtual bool                            HasAnimBlockBeenPreloaded(studiohdr_t const*, int) const = 0;
 
 	// Available on client only!!!
 	virtual void                            GetModelMaterialColorAndLighting(const model_t* model, Vector const& origin, QAngle const& angles, trace_t* pTrace, Vector& lighting, Vector& matColor) = 0;
-	virtual void                            GetIlluminationPoint(const model_t* model, IClientRenderable* pRenderable, Vector const& origin, QAngle const& angles, Vector* pLightingCenter) = 0;
+	virtual void                            GetIlluminationPoint(const model_t* model, IClientRenderable* pRenderable, Vector const& origin, QAngle const& angles, Vector* pLightingCenter) = 0; // 30
 	virtual int                             GetModelContents(int modelIndex) const = 0;
-	virtual studiohdr_t*                    GetStudioModel(const model_t* mod) = 0;
+	virtual studiohdr_t*                    GetStudioModel(const model_t* mod) = 0; // 32
 	virtual int                             GetModelSpriteWidth(const model_t* model) const = 0;
 	virtual int                             GetModelSpriteHeight(const model_t* model) const = 0;
 	// Sets/gets a map-specified fade range (client only)

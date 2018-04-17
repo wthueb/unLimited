@@ -149,6 +149,7 @@
     <ClCompile Include="hooks\dispatch_user_message.cpp" />
     <ClCompile Include="hooks\do_post_screen_space_effects.cpp" />
     <ClCompile Include="hooks\draw_model_execute.cpp" />
+    <ClCompile Include="hooks\emit_sound.cpp" />
     <ClCompile Include="hooks\events.cpp" />
     <ClCompile Include="hooks\frame_stage_notify.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="sdk\IClientThinkable.hpp" />
     <ClInclude Include="sdk\IClientUnknown.hpp" />
     <ClInclude Include="sdk\ICvar.hpp" />
+    <ClInclude Include="sdk\IEngineSound.hpp" />
     <ClInclude Include="sdk\IEngineTrace.hpp" />
     <ClInclude Include="sdk\IGameEventManager2.hpp" />
     <ClInclude Include="sdk\IHandleEntity.hpp" />
