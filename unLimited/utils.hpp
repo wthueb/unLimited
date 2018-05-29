@@ -33,14 +33,14 @@ __forceinline static fn get_vfunc(void* base, int index)
 }
 
 #define NETVAR(name, type, table, prop)                                 \
-	type& name() const                                                \
+	type& name() const                                                  \
 	{                                                                   \
 		static auto offset = netvar_sys::get().get_offset(table, prop); \
 		return *reinterpret_cast<type*>(uintptr_t(this) + offset);      \
 	}
 
 #define PNETVAR(name, type, table, prop)                                \
-	type* name() const                                                \
+	type* name() const                                                  \
 	{                                                                   \
 		static auto offset = netvar_sys::get().get_offset(table, prop); \
 		return reinterpret_cast<type*>(uintptr_t(this) + offset);       \

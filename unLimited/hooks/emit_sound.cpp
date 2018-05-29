@@ -11,7 +11,7 @@ void __fastcall hooks::hk_emit_sound(void* thisptr, void* edx, IRecipientFilter&
 
 	if (strstr(pSample, "null"))
 	{
-		iFlags |= SND_STOP;
+		pSample = "";
 	}
 
 	o_emit_sound(thisptr, filter, iEntIndex, iChannel, pSoundEntry, nSoundEntryHash, pSample, flVolume, flAttenuation, nSeed, iFlags, iPitch, pOrigin, pDirection, pUtlVecOrigins, bUpdatePositions, soundtime, speakerentity);

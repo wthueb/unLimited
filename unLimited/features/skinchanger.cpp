@@ -295,7 +295,7 @@ void skinchanger::apply_skins()
 			{
 				auto clazz = g_client->GetAllClasses();
 
-				while (strcmp(clazz->m_pNetworkName, "CEconWearable"))
+				while (clazz->m_ClassID != ClassId_CEconWearable)
 					clazz = clazz->m_pNext;
 
 				create_wearable_fn = clazz->m_pCreateFn;
