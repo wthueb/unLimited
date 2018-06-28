@@ -135,6 +135,8 @@ public:
 	bool misc_fov_scoped = false;
 
 	bool misc_chat_spam = false;
+
+	bool misc_callout = false;
 };
 
 extern options_class options;

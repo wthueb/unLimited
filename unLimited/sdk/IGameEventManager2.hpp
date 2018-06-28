@@ -58,7 +58,7 @@ public:
 	virtual              ~IGameEventManager2() {}; // 0
 	virtual int          LoadEventsFromFile(const char* filename) = 0; // 1
 	virtual void         Reset() = 0; // 2
-	virtual bool         AddListener(IGameEventListener2* listener, const char* name, bool serverside) = 0; // 3
+	virtual bool         AddListener(IGameEventListener2* listener, const char* name, bool serverside = false) = 0; // 3
 	virtual bool         FindListener(IGameEventListener2* listener, const char* name) = 0; // 4
 	virtual void         RemoveListener(IGameEventListener2* listener) = 0; // 5
 	virtual void         AddListenerGlobal(IGameEventListener2* listener, bool serverside) = 0; // 6
@@ -72,27 +72,33 @@ public:
 	virtual KeyValues*   GetEventDataTypes(IGameEvent* event) = 0; // 14
 };
 
+extern IGameEventManager2* g_game_event_manager;
+
 class EventListener : public IGameEventListener2
 {
 public:
-	EventListener() = default;
-
-	EventListener(std::string name, std::function<void(IGameEvent*)> lambda)
-		: _name{ name }, _func{ lambda } {}
-
-	void FireGameEvent(IGameEvent* event)
+	EventListener(const std::string& name, std::function<void(IGameEvent*)> func)
+		: m_event_name{ name }, m_func{ func }
 	{
-		_func(event);
+		g_game_event_manager->AddListener(this, m_event_name.c_str(), false);
 	}
 
-	int GetEventDebugID()
+	void shutdown()
+	{
+		g_game_event_manager->RemoveListener(this);
+	}
+
+	void FireGameEvent(IGameEvent* event) override
+	{
+		m_func(event);
+	}
+
+	int GetEventDebugID() override
 	{
 		return 42;
 	}
 
 private:
-	std::string _name;
-	std::function<void(IGameEvent*)> _func;
+	std::string m_event_name;
+	std::function<void(IGameEvent*)> m_func;
 };
-
-extern IGameEventManager2* g_game_event_manager;

@@ -16,7 +16,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 7
-#define VERSION_PATCH 1
+#define VERSION_PATCH 2
 
 namespace ImGui
 {
@@ -406,6 +406,8 @@ namespace gui
 				ADD_CHECKBOX("fov while scoped", &options.misc_fov_scoped);
 
 				ADD_CHECKBOX("chat spam", &options.misc_chat_spam);
+
+				ADD_CHECKBOX("callout", &options.misc_callout);
 
 				ImGui::PopItemWidth();
 			}

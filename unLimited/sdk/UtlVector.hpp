@@ -12,7 +12,13 @@ public:
 		return m_Memory[i];
 	};
 
+	inline int Size()
+	{
+		return m_Size;
+	}
+
+protected:
 	CAllocator m_Memory;
 	int m_Size;
-	T* m_pElements;
+	T* m_pData;
 };

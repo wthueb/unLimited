@@ -216,7 +216,7 @@ void visuals::glow()
 	if (!localplayer)
 		return;
 
-	for (auto i = 0; i < g_glow_manager->m_GlowObjectDefinitions.m_Size; ++i)
+	for (auto i = 0; i < g_glow_manager->m_GlowObjectDefinitions.Size(); ++i)
 	{
 		auto& object = g_glow_manager->m_GlowObjectDefinitions[i];
 		if (object.IsUnused())

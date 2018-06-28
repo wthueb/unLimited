@@ -339,7 +339,7 @@ public:
 	void InstallChangeCallback(FnChangeCallback_t callback, bool bInvoke = true);
 	void RemoveChangeCallback(FnChangeCallback_t callbackToRemove);
 
-	int GetChangeCallbackCount() const { return m_pParent->m_fnChangeCallbacks.m_Size; }
+	int GetChangeCallbackCount() const { return m_pParent->m_fnChangeCallbacks.Size(); }
 	FnChangeCallback_t GetChangeCallback(int slot) const { return m_pParent->m_fnChangeCallbacks[slot]; }
 
 	// Retrieve value

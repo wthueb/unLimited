@@ -320,6 +320,7 @@ void skinchanger::apply_skins()
 		}
 
 		// credit: beakers
+		//glove->GetIndex() = -1;
 		*reinterpret_cast<int*>(uintptr_t(glove) + 0x64) = -1;
 
 		apply_config(glove, glove_config, player_info.xuid_low);

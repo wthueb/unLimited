@@ -20,6 +20,7 @@ void __stdcall hooks::hk_frame_stage_notify(ClientFrameStage stage)
 		visuals::noflash();
 		misc::nightmode();
 		misc::chat_spam();
+		misc::callout();
 	}
 
 	o_frame_stage_notify(g_client, stage);

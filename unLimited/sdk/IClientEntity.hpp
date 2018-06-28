@@ -459,6 +459,7 @@ public:
 	NETVAR(GetVelocity, Vector, "DT_BasePlayer", "m_vecVelocity[0]");
 	NETVAR(GetViewPunch, QAngle, "DT_BasePlayer", "m_viewPunchAngle");
 	NETVAR(GetAimPunch, QAngle, "DT_BasePlayer", "m_aimPunchAngle");
+	NETVAR(GetLocation, cstr_32, "DT_BasePlayer", "m_szLastPlaceName");
 	NETVAR(GetEyeAngles, QAngle, "DT_CSPlayer", "m_angEyeAngles[0]");
 	NETVAR(IsScoped, bool, "DT_CSPlayer", "m_bIsScoped");
 	NETVAR(GetArmor, int, "DT_CSPlayer", "m_ArmorValue");
@@ -475,12 +476,12 @@ public:
 	PNETVAR(GetWeapons, CHandle<C_BaseCombatWeapon>, "DT_BaseCombatCharacter", "m_hMyWeapons");
 	NETVAR(GetWearables, CHandle<C_BaseAttributableItem>, "DT_BaseCombatCharacter", "m_hMyWearables");
 
-	const Vector GetEyePosition()
+	const Vector GetEyePosition() const
 	{
 		return this->GetOrigin() + this->GetViewOffset();
 	}
 
-	bool IsAlive()
+	bool IsAlive() const
 	{
 		return this->GetLifeState() == LIFE_ALIVE;
 	}

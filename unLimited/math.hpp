@@ -60,8 +60,8 @@ namespace math
 		auto point_dir = point - line_origin;
 
 		auto temp = point_dir.Dot(dir) / dir.LengthSqr();
-		if (temp < 0.000001f)
-			return FLT_MAX;
+		if (temp < 0.001f)
+			return std::numeric_limits<float>::max();
 
 		auto perpendicular = line_origin + dir * temp;
 

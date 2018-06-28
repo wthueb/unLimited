@@ -1,6 +1,8 @@
 #include "features.hpp"
 
 #include <chrono>
+#include <forward_list>
+#include <sstream>
 
 #include "../options.hpp"
 
@@ -119,20 +121,77 @@ void misc::airstuck(CUserCmd* cmd)
 
 void misc::chat_spam()
 {
-	if (!options.misc_chat_spam || !g_engine->IsInGame())
+	if (!options.misc_chat_spam || options.misc_callout || !g_engine->IsInGame())
 		return;
 
 	static std::chrono::time_point<std::chrono::steady_clock> last_time{};
 
-	auto cur_time = std::chrono::steady_clock::now();
+	const auto cur_time = std::chrono::steady_clock::now();
 
-	auto duration_since_last = std::chrono::duration_cast<std::chrono::duration<double>>(cur_time - last_time);
+	const auto duration_since_last = std::chrono::duration_cast<std::chrono::duration<double>>(cur_time - last_time);
 
 	// spam every .35 seconds
 	if (duration_since_last.count() < .35)
 		return;
 
 	g_engine->ClientCmd_Unrestricted("say wi1.xyz takes ahold of me");
+
+	last_time = std::chrono::steady_clock::now();
+}
+
+void misc::callout()
+{
+	if (!options.misc_callout || !g_engine->IsInGame())
+		return;
+
+	static std::chrono::time_point<std::chrono::steady_clock> last_time{};
+
+	const auto cur_time = std::chrono::steady_clock::now();
+
+	const auto duration_since_last = std::chrono::duration_cast<std::chrono::duration<double>>(cur_time - last_time);
+
+	// every 5 seconds
+	if (duration_since_last.count() < 5)
+		return;
+
+	const auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+	if (!localplayer)
+		return;
+
+	std::forward_list<const char*> locations;
+
+	for (auto i = 0; i <= g_engine->GetMaxClients(); ++i)
+	{
+		const auto player = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(i));
+		if (!player || !player->IsValid())
+			continue;
+
+		if (player == localplayer || player->GetTeam() != localplayer->GetTeam())
+			continue;
+
+		const auto location = player->GetLocation();
+		
+		locations.emplace_front(location);
+	}
+
+	std::ostringstream callouts;
+
+	const char* sep = "";
+
+	for (auto it = locations.begin(); it != locations.end(); ++it)
+	{
+		callouts << sep << *it;
+
+		sep = ", ";
+	}
+
+	auto msg = callouts.str();
+
+	msg.resize(126);
+
+	msg = "say teammate locations: " + msg;
+
+	g_engine->ClientCmd_Unrestricted(msg.c_str());
 
 	last_time = std::chrono::steady_clock::now();
 }

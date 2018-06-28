@@ -51,4 +51,5 @@ namespace misc
 	void nightmode();
 	void airstuck(CUserCmd* cmd);
 	void chat_spam();
+	void callout();
 }
