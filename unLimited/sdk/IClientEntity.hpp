@@ -459,7 +459,7 @@ public:
 	NETVAR(GetVelocity, Vector, "DT_BasePlayer", "m_vecVelocity[0]");
 	NETVAR(GetViewPunch, QAngle, "DT_BasePlayer", "m_viewPunchAngle");
 	NETVAR(GetAimPunch, QAngle, "DT_BasePlayer", "m_aimPunchAngle");
-	PNETVAR(GetLocation, char, "DT_BasePlayer", "m_szLastPlaceName");
+	PNETVAR(GetLocation, const char, "DT_BasePlayer", "m_szLastPlaceName");
 	NETVAR(GetEyeAngles, QAngle, "DT_CSPlayer", "m_angEyeAngles[0]");
 	NETVAR(IsScoped, bool, "DT_CSPlayer", "m_bIsScoped");
 	NETVAR(GetArmor, int, "DT_CSPlayer", "m_ArmorValue");
