@@ -187,7 +187,8 @@ void misc::callout()
 
 	auto msg = callouts.str();
 
-	msg.resize(126);
+	// max chat msg count (126) - len("teammate locations: ")
+	msg.resize(106);
 
 	msg = "say teammate locations: " + msg;
 
