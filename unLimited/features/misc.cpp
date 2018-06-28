@@ -158,7 +158,7 @@ void misc::callout()
 	if (!localplayer)
 		return;
 
-	std::forward_list<const char*> locations;
+	std::forward_list<std::string> locations;
 
 	for (auto i = 0; i <= g_engine->GetMaxClients(); ++i)
 	{
@@ -169,9 +169,33 @@ void misc::callout()
 		if (player == localplayer || player->GetTeam() != localplayer->GetTeam())
 			continue;
 
-		const auto location = player->GetLocation();
-		
-		locations.emplace_front(location);
+		auto location_key = player->GetLocation();
+
+		if (location_key)
+		{
+			const auto unicode_location = g_localize->Find(location_key);
+
+			/*const auto format_str = g_localize->Find("#Voice_UseLocation");
+
+			if (format_str)
+			{
+				player_info_t player_info;
+				g_engine->GetPlayerInfo(i, &player_info);
+
+				wchar_t unicode_name[32];
+				g_localize->ConvertANSIToUnicode(player_info.name, unicode_name, sizeof(unicode_name));
+
+				wchar_t converted[64];
+				g_localize->ConstructString(converted, sizeof(converted), format_str, 2, unicode_name, unicode_location);
+
+				locations.emplace_front(converted);
+			}*/
+
+			char location[MAX_PLACE_NAME_LENGTH];
+			g_localize->ConvertUnicodeToANSI(unicode_location, location, sizeof(location));
+
+			locations.emplace_front(location);
+		}
 	}
 
 	std::ostringstream callouts;
@@ -181,7 +205,7 @@ void misc::callout()
 	for (auto it = locations.begin(); it != locations.end(); ++it)
 	{
 		callouts << sep << *it;
-
+		
 		sep = ", ";
 	}
 

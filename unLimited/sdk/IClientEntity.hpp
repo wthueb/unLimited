@@ -10,6 +10,7 @@
 
 #include "../utils.hpp"
 
+#define MAX_PLACE_NAME_LENGTH 18
 #define MAX_SHOOT_SOUNDS 16
 #define MAX_WEAPON_STRING 80
 #define MAX_WEAPON_PREFIX 16
