@@ -147,7 +147,7 @@ void find_kits()
 				continue;
 
 			const auto wide_name = g_localize->Find(paint_kit->item_name.buffer + 1);
-
+			
 			char name[256];
 			V_UCS2ToUTF8(wide_name, name, sizeof(name));
 
