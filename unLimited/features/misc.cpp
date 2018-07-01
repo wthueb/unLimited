@@ -151,7 +151,7 @@ void misc::callout()
 	const auto duration_since_last = std::chrono::duration_cast<std::chrono::duration<double>>(cur_time - last_time);
 
 	// every 5 seconds
-	if (duration_since_last.count() < 5)
+	if (duration_since_last.count() < 3)
 		return;
 
 	const auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
