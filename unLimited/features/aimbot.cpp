@@ -15,11 +15,11 @@ void correct_aim();
 
 bool is_visible(C_BasePlayer* player);
 
-static C_BasePlayer* localplayer = nullptr;
-static C_BaseCombatWeapon* active_weapon = nullptr;
-static CUserCmd* cmd = nullptr;
-static int best_target = -1;
-static Bone bone = BONE_INVALID;
+C_BasePlayer* localplayer = nullptr;
+C_BaseCombatWeapon* active_weapon = nullptr;
+CUserCmd* cmd = nullptr;
+int best_target = -1;
+Bone bone = BONE_INVALID;
 
 void aimbot::process(CUserCmd* _cmd, bool& send_packet)
 {

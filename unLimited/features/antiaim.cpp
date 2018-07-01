@@ -7,14 +7,14 @@
 #define TICKS_TO_TIME(t)  (float(t) * g_global_vars->interval_per_tick)
 #define TIME_TO_TICKS(dt) (int(.5f + float(dt) / g_global_vars->interval_per_tick))
 
-static QAngle g_real{};
-static QAngle g_fake{};
+QAngle g_real{};
+QAngle g_fake{};
 
 // declared in misc.cpp
 extern bool g_choking;
 extern int g_choked_ticks;
 
-static QAngle g_thirdperson_angles{};
+QAngle g_thirdperson_angles{};
 
 #define RETURN { g_thirdperson_angles = g_real = g_fake = cmd->viewangles; return; }
 

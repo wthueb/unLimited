@@ -6,8 +6,8 @@
 
 #include "../options.hpp"
 
-static bool g_choking = false;
-static int g_choked_ticks = 0;
+bool g_choking = false;
+int g_choked_ticks = 0;
 
 void misc::bhop(CUserCmd* cmd)
 {
