@@ -198,6 +198,9 @@ void misc::callout()
 		}
 	}
 
+	if (locations.empty())
+		return;
+
 	std::ostringstream callouts;
 
 	const char* sep = "";
