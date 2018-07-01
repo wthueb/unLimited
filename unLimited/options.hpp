@@ -137,6 +137,7 @@ public:
 	bool misc_chat_spam = false;
 
 	bool misc_callout = false;
+	bool misc_callout_self = false;
 };
 
 extern options_class options;

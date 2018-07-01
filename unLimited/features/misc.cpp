@@ -166,7 +166,10 @@ void misc::callout()
 		if (!player || !player->IsValid())
 			continue;
 
-		if (player == localplayer || player->GetTeam() != localplayer->GetTeam())
+		if (player->GetTeam() != localplayer->GetTeam())
+			continue;
+
+		if (!options.misc_callout_self && player == localplayer)
 			continue;
 
 		auto location_key = player->GetLocation();

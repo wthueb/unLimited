@@ -16,7 +16,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 7
-#define VERSION_PATCH 6
+#define VERSION_PATCH 7
 
 namespace ImGui
 {
@@ -408,6 +408,14 @@ namespace gui
 				ADD_CHECKBOX("chat spam", &options.misc_chat_spam);
 
 				ADD_CHECKBOX("callout", &options.misc_callout);
+				{
+					DISABLE(options.misc_callout, .2f);
+
+					ADD_CHECKBOX("callout self", &options.misc_callout_self);
+
+					ImGui::PopStyleVar();
+					ImGui::BetterPopItemFlag();
+				}
 
 				ImGui::PopItemWidth();
 			}
