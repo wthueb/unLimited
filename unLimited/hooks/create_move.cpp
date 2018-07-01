@@ -15,12 +15,13 @@ bool __stdcall hooks::hk_create_move(float sample_input_frametime, CUserCmd* cmd
 	
 	auto ebp = reinterpret_cast<uintptr_t*>(uintptr_t(_AddressOfReturnAddress()) - sizeof(void*));
 
-	bool& send_packet = *reinterpret_cast<bool*>(*ebp - 0x1C);
+	auto& send_packet = *reinterpret_cast<bool*>(*ebp - 0x1C);
 
 	backtracking::process(cmd);
 	aimbot::process(cmd, send_packet);
 	misc::bhop(cmd);
 	misc::autostrafe(cmd);
+	misc::fakelag(cmd, send_packet);
 	misc::airstuck(cmd);
 	misc::show_ranks(cmd);
 

@@ -16,7 +16,7 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 7
-#define VERSION_PATCH 7
+#define VERSION_PATCH 8
 
 namespace ImGui
 {
@@ -369,13 +369,13 @@ namespace gui
 					}, nullptr, int(aa_type::AA_COUNT), -1))
 						options.aa_type = aa_type(selected);
 
-					ADD_CHECKBOX("fakelag", &options.aa_fakelag);
-					
 					ADD_CHECKBOX("show angles/choke", &options.aa_show);
 
 					ImGui::PopStyleVar();
 					ImGui::BetterPopItemFlag();
 				}
+
+				ADD_CHECKBOX("fakelag", &options.misc_fakelag);
 
 				ADD_CHECKBOX("show ranks", &options.misc_show_ranks);
 

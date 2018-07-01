@@ -10,12 +10,13 @@
 static QAngle g_real{};
 static QAngle g_fake{};
 
-static bool g_choking = false;
-static int g_choked_ticks = 0;
+// declared in misc.cpp
+extern bool g_choking;
+extern int g_choked_ticks;
 
-QAngle g_thirdperson_angles{};
+static QAngle g_thirdperson_angles{};
 
-#define RETURN { g_thirdperson_angles = g_real = g_fake = cmd->viewangles; g_choking = false; g_choked_ticks = 0; return; }
+#define RETURN { g_thirdperson_angles = g_real = g_fake = cmd->viewangles; return; }
 
 void antiaim::process(CUserCmd* cmd, bool& send_packet)
 {
@@ -51,42 +52,12 @@ void antiaim::process(CUserCmd* cmd, bool& send_packet)
 	}
 
 	if (cmd->buttons & IN_ATTACK &&
-		g_global_vars->get_realtime(cmd) >= weapon->GetNextPrimaryAttack() &&
+		weapon->GetNextPrimaryAttack() <= g_global_vars->get_realtime(cmd) &&
 		weapon->GetAmmo() > 0)
 		RETURN;
 
-	//if (localplayer->GetMoveType() == MOVETYPE_LADDER)
-	//	return;
-
-	if (options.aa_fakelag && !(localplayer->GetFlags() & FL_ONGROUND && cmd->buttons & IN_JUMP))
-	{
-		if (++g_choked_ticks < 15)
-		{
-			send_packet = false;
-		}
-		else
-		{
-			send_packet = true;
-			g_choked_ticks = 0;
-		}
-
-		g_choking = !send_packet;
-	}
-	else
-	{
-		g_choking = false;
-		g_choked_ticks = 0;
-
-		if (options.aa_type == aa_type::SPIN_SLOW && options.aa_type == aa_type::SPIN_FAST)
-			send_packet = true;
-		else
-		{
-			static bool flip = false;
-			flip = !flip;
-
-			send_packet = flip;
-		}
-	}
+	/*if (localplayer->GetMoveType() == MOVETYPE_LADDER)
+		return;*/
 
 	switch (options.aa_type)
 	{

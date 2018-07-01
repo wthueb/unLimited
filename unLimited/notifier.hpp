@@ -94,7 +94,7 @@ namespace notifier
 			add_opt(handle, "show angles/choke", options.aa_show); bool aa_show = false;
 
 			add_opt(handle, "aa type", int(options.aa_type));
-			add_opt(handle, "fakelag", options.aa_fakelag);
+			add_opt(handle, "fakelag", options.misc_fakelag);
 
 			// visuals
 

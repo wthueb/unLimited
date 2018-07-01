@@ -47,6 +47,7 @@ namespace misc
 {
 	void bhop(CUserCmd* cmd);
 	void autostrafe(CUserCmd* cmd);
+	void fakelag(CUserCmd* cmd, bool& send_packet);
 	void show_ranks(CUserCmd* cmd);
 	void nightmode();
 	void airstuck(CUserCmd* cmd);

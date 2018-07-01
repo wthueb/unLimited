@@ -6,6 +6,9 @@
 
 #include "../options.hpp"
 
+static bool g_choking = false;
+static int g_choked_ticks = 0;
+
 void misc::bhop(CUserCmd* cmd)
 {
 	if (!options.misc_bhop || !g_engine->IsInGame())
@@ -40,6 +43,63 @@ void misc::autostrafe(CUserCmd* cmd)
 		cmd->sidemove = -450.f;
 	else
 		cmd->sidemove = cmd->command_number % 2 ? 450.f : -450.f;
+}
+
+void misc::fakelag(CUserCmd* cmd, bool& send_packet)
+{
+	if (!options.misc_fakelag || !g_engine->IsInGame())
+		return;
+	
+	auto localplayer = static_cast<C_BasePlayer*>(g_entity_list->GetClientEntity(g_engine->GetLocalPlayer()));
+	if (!localplayer)
+		return;
+
+	if (!localplayer->IsAlive())
+		return;
+
+	auto weapon = localplayer->GetActiveWeapon().Get();
+	if (!weapon)
+		return;
+
+	// if not trying to shoot or jump
+	if (cmd->buttons & IN_ATTACK &&
+		weapon->GetNextPrimaryAttack() <= g_global_vars->get_realtime(cmd) &&
+		weapon->GetAmmo() > 0 ||
+		!(localplayer->GetFlags() & FL_ONGROUND && cmd->buttons & IN_JUMP))
+	{
+		if (++g_choked_ticks < 15)
+		{
+			send_packet = false;
+		}
+		else
+		{
+			send_packet = true;
+		}
+	}
+	else
+	{
+		send_packet = true; // should already be true, but semantics
+
+		if (options.aa_enabled)
+		{
+			if (options.aa_type == aa_type::SPIN_SLOW && options.aa_type == aa_type::SPIN_FAST)
+				send_packet = true;
+			else
+			{
+				static bool flip = false;
+				flip = !flip;
+
+				send_packet = flip;
+			}
+		}
+	}
+
+	g_choking = !send_packet;
+
+	if (!send_packet)
+		++g_choked_ticks;
+	else
+		g_choked_ticks = 0;
 }
 
 void misc::show_ranks(CUserCmd* cmd)

@@ -77,7 +77,7 @@ public:
 	bool aa_show = false;
 
 	aa_type aa_type = aa_type::LEGIT;
-	bool aa_fakelag = false;
+	bool misc_fakelag = false;
 
 	// visuals
 
