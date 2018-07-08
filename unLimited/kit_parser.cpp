@@ -103,7 +103,7 @@ void find_kits()
 	// lea     ecx, [eax+4]
 	// call    CEconItemSchema::GetPaintKitDefinition
 
-	auto sig_address = utils::find_signature("client.dll", "E8 ? ? ? ? FF 76 0C 8D 48 04 E8");
+	auto sig_address = utils::find_signature("client_panorama.dll", "E8 ? ? ? ? FF 76 0C 8D 48 04 E8");
 
 	// skip the opcode, read rel32 address
 	auto item_system_offset = *reinterpret_cast<int32_t*>(sig_address + 1);
@@ -163,7 +163,7 @@ void find_kits()
 
 	// dump sticker kits
 	{
-		auto sticker_sig = utils::find_signature("client.dll", "53 8D 48 04 E8 ? ? ? ? 8B 4D 10") + 4;
+		auto sticker_sig = utils::find_signature("client_panorama.dll", "53 8D 48 04 E8 ? ? ? ? 8B 4D 10") + 4;
 
 		// skip the opcode, read rel32 address
 		auto get_sticker_kit_definition_offset = *reinterpret_cast<intptr_t*>(sticker_sig + 1);

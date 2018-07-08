@@ -115,7 +115,7 @@ void misc::show_ranks(CUserCmd* cmd)
 	using MsgFunc_ServerRankRevealAllFn = bool(__cdecl*)(int[3]);
 
 	static MsgFunc_ServerRankRevealAllFn MsgFunc_ServerRankRevealAll =
-		reinterpret_cast<MsgFunc_ServerRankRevealAllFn>(utils::find_signature("client.dll", "55 8B EC 8B 0D ? ? ? ? 68"));
+		reinterpret_cast<MsgFunc_ServerRankRevealAllFn>(utils::find_signature("client_panorama.dll", "55 8B EC 8B 0D ? ? ? ? 85 C9 75 ? A1 ? ? ? ? 68 ? ? ? ? 8B 08 8B 01 FF 50 ? 85 C0 74 ? 8B C8 E8 ? ? ? ? 8B C8 EB ? 33 C9 89 0D ? ? ? ? 8B 45 ? FF 70 ? E8 ? ? ? ? B0 ? 5D"));
 
 	MsgFunc_ServerRankRevealAll(arg);
 }

@@ -61,8 +61,8 @@ namespace hooks
 		static constexpr auto end_scene = 42u;
 
 		// client
-		static constexpr auto frame_stage_notify = 36u;
-		static constexpr auto dispatch_user_message = 37u;
+		static constexpr auto frame_stage_notify = 37u;
+		static constexpr auto dispatch_user_message = 38u;
 
 		// client mode
 		static constexpr auto override_view = 18u;

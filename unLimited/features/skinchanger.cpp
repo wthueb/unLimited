@@ -308,7 +308,7 @@ void skinchanger::apply_skins()
 			glove = reinterpret_cast<C_BaseAttributableItem*>(g_entity_list->GetClientEntity(entry));
 
 			static auto set_abs_origin_fn =
-				reinterpret_cast<void(__thiscall*)(void*, const Vector&)>(utils::find_signature("client.dll", "55 8B EC 83 E4 F8 51 53 56 57 8B F1"));
+				reinterpret_cast<void(__thiscall*)(void*, const Vector&)>(utils::find_signature("client_panorama.dll", "55 8B EC 83 E4 F8 51 53 56 57 8B F1"));
 			
 			static const Vector new_pos = { 10000.f, 10000.f, 10000.f };
 

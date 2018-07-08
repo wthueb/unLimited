@@ -273,7 +273,7 @@ using cstr_32 = char[32];
 class C_BaseAttributableItem : public C_BaseEntity
 {
 public:
-	NETVAR(GetItemDefinitionIndex, int, "DT_BaseAttributableItem", "m_iItemDefinitionIndex");
+	NETVAR(GetItemDefinitionIndex, short, "DT_BaseAttributableItem", "m_iItemDefinitionIndex");
 	NETVAR(GetFallbackPaintKit, int, "DT_BaseAttributableItem", "m_nFallbackPaintKit");
 	NETVAR(GetFallbackSeed, int, "DT_BaseAttributableItem", "m_nFallbackSeed");
 	NETVAR(GetFallbackWear, float, "DT_BaseAttributableItem", "m_flFallbackWear");
@@ -292,7 +292,7 @@ public:
 	KeyValues(const char* name)
 	{
 		static auto func = reinterpret_cast<void(__thiscall*)(void*, const char*)>
-			(utils::find_signature("client.dll", "55 8B EC 51 33 C0 C7 45 ? ? ? ? ? 56 8B F1 81 26 ? ? ? ? C6 46 03 00 89 46 10 89 46 18 89 46 14 89 46 1C 89 46 04 89 46 08 89 46 0C FF 15 ? ? ? ? 6A 01 FF 75 08 8D 4D FC 8B 10 51 8B C8 FF 52 24 8B 0E 33 4D FC 81 E1 ? ? ? ? 31 0E 88 46 03"));
+			(utils::find_signature("client_panorama.dll", "55 8B EC 51 33 C0 C7 45 ? ? ? ? ? 56 8B F1 81 26 ? ? ? ? C6 46 03 00 89 46 10 89 46 18 89 46 14 89 46 1C 89 46 04 89 46 08 89 46 0C FF 15 ? ? ? ? 6A 01 FF 75 08 8D 4D FC 8B 10 51 8B C8 FF 52 24 8B 0E 33 4D FC 81 E1 ? ? ? ? 31 0E 88 46 03"));
 		
 		func(this, name);
 	}
@@ -300,7 +300,7 @@ public:
 	void LoadFromBuffer(const char* resource_name, const char* buffer, void* file_system = nullptr, const char* path_id = nullptr, void* evaluate_symbol_proc = nullptr)
 	{
 		static auto func = reinterpret_cast<void(__thiscall*)(void*, const char*, const char*, void*, const char*, void*)>
-			(utils::find_signature("client.dll", "55 8B EC 83 E4 F8 83 EC 34 53 8B 5D 0C 89 4C 24 04"));
+			(utils::find_signature("client_panorama.dll", "55 8B EC 83 E4 F8 83 EC 34 53 8B 5D 0C 89 4C 24 04"));
 
 		func(this, resource_name, buffer, file_system, path_id, evaluate_symbol_proc);
 	}
@@ -375,7 +375,7 @@ public:
 
 	bool IsPistol()
 	{
-		int weaponid = GetItemDefinitionIndex();
+		auto weaponid = GetItemDefinitionIndex();
 
 		return weaponid == WEAPON_DEAGLE || weaponid == WEAPON_ELITE ||
 			weaponid == WEAPON_FIVESEVEN || weaponid == WEAPON_P250 ||
@@ -386,7 +386,7 @@ public:
 
 	bool IsShotgun()
 	{
-		int weaponid = GetItemDefinitionIndex();
+		auto weaponid = GetItemDefinitionIndex();
 
 		return weaponid == WEAPON_XM1014 || weaponid == WEAPON_NOVA ||
 			weaponid == WEAPON_SAWEDOFF || weaponid == WEAPON_MAG7;
@@ -394,7 +394,7 @@ public:
 
 	bool IsSniper()
 	{
-		int weaponid = GetItemDefinitionIndex();
+		auto weaponid = GetItemDefinitionIndex();
 
 		return weaponid == WEAPON_AWP || weaponid == WEAPON_SCAR20 ||
 			weaponid == WEAPON_G3SG1 || weaponid == WEAPON_SSG08;
@@ -402,7 +402,7 @@ public:
 
 	bool IsNade()
 	{
-		int weaponid = GetItemDefinitionIndex();
+		auto weaponid = GetItemDefinitionIndex();
 
 		return weaponid == WEAPON_FLASHBANG || weaponid == WEAPON_HEGRENADE ||
 			weaponid == WEAPON_SMOKEGRENADE || weaponid == WEAPON_MOLOTOV ||
@@ -411,7 +411,7 @@ public:
 
 	bool IsKnife()
 	{
-		int weaponid = GetItemDefinitionIndex();
+		auto weaponid = GetItemDefinitionIndex();
 
 		return weaponid == WEAPON_KNIFE || weaponid == WEAPON_KNIFE_T ||
 			weaponid >= 500;
@@ -419,7 +419,7 @@ public:
 
 	bool IsBomb()
 	{
-		int weaponid = GetItemDefinitionIndex();
+		auto weaponid = GetItemDefinitionIndex();
 
 		return weaponid == WEAPON_C4;
 	}

@@ -237,7 +237,7 @@ bool is_visible(C_BasePlayer* player)
 	using LineGoesThroughSmokeFn = bool(__cdecl*)(Vector, Vector, bool);
 
 	static LineGoesThroughSmokeFn LineGoesThroughSmoke =
-		reinterpret_cast<LineGoesThroughSmokeFn>(utils::find_signature("client.dll", "55 8B EC 83 EC 08 8B 15 ? ? ? ? 0F 57 C0"));
+		reinterpret_cast<LineGoesThroughSmokeFn>(utils::find_signature("client_panorama.dll", "55 8B EC 83 EC 08 8B 15 ? ? ? ? 0F 57 C0"));
 
 	Vector start{ localplayer->GetEyePosition() };
 	Vector end{ player->GetBonePos(bone) };
