@@ -9,7 +9,7 @@ void __fastcall hooks::hk_emit_sound(void* thisptr, void* edx, IRecipientFilter&
 	static const auto o_emit_sound = engine_sound_hook->get_original<void(__thiscall*)(void*, IRecipientFilter&, int, int, const char*, unsigned int, const char*, float, float, int, int, int,
 		const Vector*, const Vector*, CUtlVector<Vector>*, bool, float, int, int)>(index::emit_sound);
 
-	if (strstr(pSample, "null"))
+	if (pSample[0] == 'c' && !strcmp(pSample, "common\\null.wav"))
 		pSample = "";
 
 	o_emit_sound(thisptr, filter, iEntIndex, iChannel, pSoundEntry, nSoundEntryHash, pSample, flVolume, flAttenuation, nSeed, iFlags, iPitch, pOrigin, pDirection, pUtlVecOrigins, bUpdatePositions,
