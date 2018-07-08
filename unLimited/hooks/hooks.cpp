@@ -39,7 +39,7 @@ namespace hooks
 		client_mode_hook->hook(hk_create_move, index::create_move);
 		client_mode_hook->hook(hk_do_post_screen_space_effects, index::do_post_screen_space_effects);
 
-		//engine_sound_hook->hook(hk_emit_sound, index::emit_sound);
+		engine_sound_hook->hook(hk_emit_sound, index::emit_sound);
 
 		game_event_manager_hook->hook(events::hk_fire_event_client_side, index::fire_event_client_side);
 

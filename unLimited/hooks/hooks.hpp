@@ -32,7 +32,8 @@ namespace hooks
 	// engine sound
 	void __fastcall hk_emit_sound(void* thisptr, void* edx, IRecipientFilter& filter, int iEntIndex, int iChannel, const char* pSoundEntry, unsigned int nSoundEntryHash, const char* pSample,
 		float flVolume, float flAttenuation, int nSeed, int iFlags = 0, int iPitch = PITCH_NORM,
-		const Vector* pOrigin = nullptr, const Vector* pDirection = nullptr, CUtlVector<Vector>* pUtlVecOrigins = nullptr, bool bUpdatePositions = true, float soundtime = 0.f, int speakerentity = -1);
+		const Vector* pOrigin = nullptr, const Vector* pDirection = nullptr, CUtlVector<Vector>* pUtlVecOrigins = nullptr, bool bUpdatePositions = true, float soundtime = 0.f, int speakerentity = -1,
+		int arg19 = 0);
 
 	// game event manager in events.hpp
 
