@@ -44,7 +44,7 @@ class IGameEventListener2
 public:
 	virtual       ~IGameEventListener2() {};
 
-	virtual void  FireGameEvent(IGameEvent *event) = 0;
+	virtual void  FireGameEvent(IGameEvent* event) = 0;
 	virtual int   GetEventDebugID() = 0;
 };
 
@@ -77,10 +77,20 @@ extern IGameEventManager2* g_game_event_manager;
 class EventListener : public IGameEventListener2
 {
 public:
-	EventListener(const std::string& name, std::function<void(IGameEvent*)> func)
-		: m_event_name{ name }, m_func{ func }
+	EventListener(const char* name, std::function<void(IGameEvent*)> callback, int debug_id = EVENT_DEBUG_ID_INIT)
+		: m_event_name{ name }, m_callback{ callback }, m_debug_id{ debug_id }
 	{
-		g_game_event_manager->AddListener(this, m_event_name.c_str(), false);
+		init();
+	}
+
+	~EventListener()
+	{
+		shutdown();
+	}
+
+	void init()
+	{
+		g_game_event_manager->AddListener(this, m_event_name, false);
 	}
 
 	void shutdown()
@@ -90,15 +100,16 @@ public:
 
 	void FireGameEvent(IGameEvent* event) override
 	{
-		m_func(event);
+		m_callback(event);
 	}
 
 	int GetEventDebugID() override
 	{
-		return 42;
+		return m_debug_id;
 	}
 
 private:
-	std::string m_event_name;
-	std::function<void(IGameEvent*)> m_func;
+	const char* m_event_name;
+	std::function<void(IGameEvent*)> m_callback;
+	int m_debug_id;
 };
