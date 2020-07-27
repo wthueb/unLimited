@@ -147,16 +147,16 @@ struct sticker_t
 
 	void update_values()
 	{
-		kit_vector_index = kit_vector_index < int(stickers.size()) ? kit_vector_index : stickers.size() - 1;
+		kit_vector_index = int(kit_vector_index < stickers.size() ? kit_vector_index : stickers.size() - 1);
 		kit_index = stickers.at(kit_vector_index).id;
 	}
 
 	void update_ids()
 	{
-		kit_vector_index = find_if(stickers.begin(), stickers.end(), [this](const kit_t& x)
+		kit_vector_index = int(find_if(stickers.begin(), stickers.end(), [this](const kit_t& x)
 		{
 			return this->kit_index == x.id;
-		}) - stickers.begin();
+		}) - stickers.begin());
 	}
 };
 
@@ -185,26 +185,26 @@ struct econ_item_t
 
 	void update_values()
 	{
-		definition_vector_index = definition_vector_index < int(weapon_names.size()) ? definition_vector_index : weapon_names.size() - 1;
+		definition_vector_index = int(definition_vector_index < weapon_names.size() ? definition_vector_index : weapon_names.size() - 1);
 		definition_index = weapon_names.at(definition_vector_index).definition_index;
 
-		entity_quality_vector_index = entity_quality_vector_index < int(quality_names.size()) ? entity_quality_vector_index : quality_names.size() - 1;
+		entity_quality_vector_index = int(entity_quality_vector_index < quality_names.size() ? entity_quality_vector_index : quality_names.size() - 1);
 		entity_quality_index = quality_names.at(entity_quality_vector_index).index;
 
 		if (definition_index == GLOVE_T_SIDE)
 		{
-			paint_kit_vector_index = paint_kit_vector_index < int(glove_kits.size()) ? paint_kit_vector_index : glove_kits.size() - 1;
+			paint_kit_vector_index = int(paint_kit_vector_index < glove_kits.size() ? paint_kit_vector_index : glove_kits.size() - 1);
 			paint_kit_index = glove_kits.at(paint_kit_vector_index).id;
 
-			definition_override_vector_index = definition_override_vector_index < int(glove_names.size()) ? definition_override_vector_index : glove_names.size() - 1;
+			definition_override_vector_index = int(definition_override_vector_index < glove_names.size() ? definition_override_vector_index : glove_names.size() - 1);
 			definition_override_index = glove_names.at(definition_override_vector_index).definition_index;
 		}
 		else
 		{
-			paint_kit_vector_index = paint_kit_vector_index < int(weapon_kits.size()) ? paint_kit_vector_index : weapon_kits.size() - 1;
+			paint_kit_vector_index = int(paint_kit_vector_index < weapon_kits.size() ? paint_kit_vector_index : weapon_kits.size() - 1);
 			paint_kit_index = weapon_kits.at(paint_kit_vector_index).id;
 
-			definition_override_vector_index = definition_override_vector_index < int(knife_names.size()) ? definition_override_vector_index : knife_names.size() - 1;
+			definition_override_vector_index = int(definition_override_vector_index < knife_names.size() ? definition_override_vector_index : knife_names.size() - 1);
 			definition_override_index = knife_names.at(definition_override_vector_index).definition_index;
 		}
 
@@ -214,29 +214,29 @@ struct econ_item_t
 
 	void update_ids()
 	{
-		definition_vector_index = find_if(weapon_names.begin(), weapon_names.end(), [this](const wpn_name_t& x)
+		definition_vector_index = int(find_if(weapon_names.begin(), weapon_names.end(), [this](const wpn_name_t& x)
 		{
 			return this->definition_index == x.definition_index;
-		}) - weapon_names.begin();
+		}) - weapon_names.begin());
 
-		entity_quality_vector_index = find_if(quality_names.begin(), quality_names.end(), [this](const quality_name_t& x)
+		entity_quality_vector_index = int(find_if(quality_names.begin(), quality_names.end(), [this](const quality_name_t& x)
 		{
 			return this->entity_quality_index == x.index;
-		}) - quality_names.begin();
+		}) - quality_names.begin());
 
 		const auto& kit_set = definition_index == GLOVE_T_SIDE ? glove_kits : weapon_kits;
 
-		paint_kit_vector_index = find_if(kit_set.begin(), kit_set.end(), [this](const kit_t& x)
+		paint_kit_vector_index = int(find_if(kit_set.begin(), kit_set.end(), [this](const kit_t& x)
 		{
 			return this->paint_kit_index == x.id;
-		}) - kit_set.begin();
+		}) - kit_set.begin());
 
 		const auto& override_set = definition_index == GLOVE_T_SIDE ? glove_names : knife_names;
 
-		definition_override_vector_index = find_if(override_set.begin(), override_set.end(), [this](const wpn_name_t& x)
+		definition_override_vector_index = int(find_if(override_set.begin(), override_set.end(), [this](const wpn_name_t& x)
 		{
 			return this->definition_override_index == x.definition_index;
-		}) - override_set.begin();
+		}) - override_set.begin());
 
 		for (auto& sticker : stickers)
 			sticker.update_ids();

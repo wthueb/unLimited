@@ -116,8 +116,8 @@ uint64_t utils::find_signature(const std::string& module_name, const std::string
 
 	const char* pat = sig.c_str();
 
-	DWORD firstMatch;
-	for (auto cur = start_address; cur < end_address; ++cur)
+	uint64_t firstMatch;
+	for (uint64_t cur = start_address; cur < end_address; ++cur)
 	{
 		if (!*pat)
 			return firstMatch;

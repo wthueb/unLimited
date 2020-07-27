@@ -1,8 +1,7 @@
 .git/
 .vs/
 
-Debug/
-Release/
+build/
 
 *.VC.db
 

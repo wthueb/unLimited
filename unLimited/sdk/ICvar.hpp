@@ -1,5 +1,7 @@
 #pragma once
 
+#pragma warning( disable : 4302 4311 )
+
 #include "Color.hpp"
 #include "IAppSystem.hpp"
 #include "UtlVector.hpp"

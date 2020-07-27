@@ -2,7 +2,7 @@
 
 #include <fstream>
 
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 
 #include "options.hpp"
 #include "sdk/sdk.hpp"

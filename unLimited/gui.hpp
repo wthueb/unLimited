@@ -87,10 +87,10 @@ namespace ImGui
 // this might be the ugliest thing i have ever done holy shit
 #define DISABLE(var, fade_time) \
 {                                                                                                           \
-	static float alpha = .3f;                                                                               \
+	static double alpha = .3;                                                                               \
 	static bool old = var;                                                                                  \
-	static float start_alpha = alpha;                                                                       \
-	static float start_time = ImGui::GetTime();                                                             \
+	static double start_alpha = alpha;                                                                       \
+	static double start_time = ImGui::GetTime();                                                             \
                                                                                                             \
 	if (var != old)                                                                                         \
 	{                                                                                                       \
@@ -100,11 +100,11 @@ namespace ImGui
 	}                                                                                                       \
                                                                                                             \
 	if (!var)                                                                                               \
-		alpha = std::clamp(start_alpha - .7f * (ImGui::GetTime() - start_time) / fade_time, .3f, 1.f);      \
+		alpha = std::clamp(start_alpha - .7 * (ImGui::GetTime() - start_time) / fade_time, .3, 1.);      \
 	else                                                                                                    \
-		alpha = std::clamp(start_alpha + .7f * (ImGui::GetTime() - start_time) / fade_time, .3f, 1.f);      \
+		alpha = std::clamp(start_alpha + .7 * (ImGui::GetTime() - start_time) / fade_time, .3, 1.);      \
                                                                                                             \
-	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, std::min(style.Alpha, alpha));                                 \
+	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, float(std::min(double(style.Alpha), alpha)));                                 \
                                                                                                             \
 	ImGuiWindow* window = ImGui::GetCurrentWindow();                                                        \
 	if (!window->DC.ItemFlagsStack.size() || !(window->DC.ItemFlagsStack.back() & ImGuiItemFlags_Disabled)) \
@@ -130,7 +130,7 @@ namespace gui
 		style.Colors[ImGuiCol_Text] = ImVec4{ .05f, .05f, .05f, 1.f };
 		style.Colors[ImGuiCol_TextDisabled] = style.Colors[ImGuiCol_Text];
 		style.Colors[ImGuiCol_WindowBg] = ImVec4{ .9f, .9f, .9f, 1.f };
-		style.Colors[ImGuiCol_ChildWindowBg] = style.Colors[ImGuiCol_WindowBg];
+		//style.Colors[ImGuiCol_ChildWindowBg] = style.Colors[ImGuiCol_WindowBg];
 		style.Colors[ImGuiCol_PopupBg] = ImVec4{ .6f, .6f, .6f, 1.f };
 		style.Colors[ImGuiCol_Border] = ImVec4{ 0.f, 0.f, 0.f, 1.f };
 		style.Colors[ImGuiCol_BorderShadow] = ImVec4{ 0.f, 0.f, 0.f, 1.f };
@@ -177,17 +177,17 @@ namespace gui
 
 				ADD_CHECKBOX("aim", &options.aim_enabled);
 				{
-					DISABLE(options.aim_enabled, .2f);
+					DISABLE(options.aim_enabled, .2);
 
 					ADD_CHECKBOX("aimbot", &options.aim_aimbot);
 					{
-						DISABLE(options.aim_aimbot, .2f);
+						DISABLE(options.aim_aimbot, .2);
 
 						ImGui::SliderFloat("fov", &options.aim_fov, .1f, 180.f, "%.1f", 2.f);
 
 						ADD_CHECKBOX("smooth", &options.aim_smooth);
 						{
-							DISABLE(options.aim_smooth, .2f);
+							DISABLE(options.aim_smooth, .2);
 
 							ImGui::SliderFloat("smooth amount", &options.aim_smooth_amount, 1.f, 30.f, "%.1f", 1.f);
 
@@ -202,7 +202,7 @@ namespace gui
 							{
 								*out_text = options.bones.at(idx).second;
 								return true;
-							}, nullptr, options.bones.size(), -1))
+							}, nullptr, int(options.bones.size()), -1))
 								options.aim_bone = options.bones.at(selected).first;
 						}
 
@@ -217,7 +217,7 @@ namespace gui
 							{
 								*out_text = options.keys.at(idx).second;
 								return true;
-							}, nullptr, options.keys.size(), -1))
+							}, nullptr, int(options.keys.size()), -1))
 								options.aim_aim_key = options.keys.at(selected).first;
 						}
 
@@ -244,11 +244,11 @@ namespace gui
 
 				ADD_CHECKBOX("visuals", &options.visuals_enabled);
 				{
-					DISABLE(options.visuals_enabled, .2f);
+					DISABLE(options.visuals_enabled, .2);
 
 					ADD_CHECKBOX("chams", &options.visuals_chams);
 					{
-						DISABLE(options.visuals_chams, .2f);
+						DISABLE(options.visuals_chams, .2);
 
 						ADD_CHECKBOX("ignorez (through walls)", &options.visuals_chams_ignorez);
 						ADD_CHECKBOX("flat", &options.visuals_chams_flat);
@@ -259,7 +259,7 @@ namespace gui
 
 					ADD_CHECKBOX("glow", &options.visuals_glow);
 					{
-						DISABLE(options.visuals_glow, .2f);
+						DISABLE(options.visuals_glow, .2);
 
 						if (ImGui::InputFloat("glow alpha", &options.visuals_glow_alpha, .1f, 0.f, 1))
 							options.visuals_glow_alpha = std::clamp(options.visuals_glow_alpha, .1f, 1.f);
@@ -277,7 +277,7 @@ namespace gui
 
 					ADD_CHECKBOX("thirdperson", &options.visuals_thirdperson);
 					{
-						DISABLE(options.visuals_thirdperson, .2f);
+						DISABLE(options.visuals_thirdperson, .2);
 
 						ImGui::SliderFloat("thirdperson offset", &options.visuals_thirdperson_offset, 20.f, 300.f, "%.0f");
 
@@ -309,7 +309,7 @@ namespace gui
 
 				ADD_CHECKBOX("backtracking", &options.misc_backtracking);
 				{
-					DISABLE(options.misc_backtracking, .2f);
+					DISABLE(options.misc_backtracking, .2);
 
 					ADD_CHECKBOX("backtracking visual", &options.misc_backtracking_vis);
 
@@ -332,7 +332,7 @@ namespace gui
 
 				ADD_CHECKBOX("anti-aim", &options.aa_enabled);
 				{
-					DISABLE(options.aa_enabled, .2f);
+					DISABLE(options.aa_enabled, .2);
 
 					static auto selected = int(options.aa_type);
 
@@ -383,7 +383,7 @@ namespace gui
 
 				ADD_CHECKBOX("airstuck", &options.misc_airstuck);
 				{
-					DISABLE(options.misc_airstuck, .2f);
+					DISABLE(options.misc_airstuck, .2);
 
 					// airstuck key
 					{
@@ -392,7 +392,7 @@ namespace gui
 						{
 							*out_text = options.keys.at(idx).second;
 							return true;
-						}, nullptr, options.keys.size(), -1))
+						}, nullptr, int(options.keys.size()), -1))
 							options.misc_airstuck_key = options.keys.at(selected).first;
 					}
 
@@ -409,7 +409,7 @@ namespace gui
 
 				ADD_CHECKBOX("callout", &options.misc_callout);
 				{
-					DISABLE(options.misc_callout, .2f);
+					DISABLE(options.misc_callout, .2);
 
 					ADD_CHECKBOX("callout self", &options.misc_callout_self);
 
@@ -509,7 +509,7 @@ namespace gui
 					{
 						snprintf(element_name, sizeof(element_name), "%s (%s)", entries.at(idx).name, weapon_names.at(entries.at(idx).definition_vector_index).name);
 						return element_name;
-					}, entries.size(), 12);
+					}, int(entries.size()), 12);
 
 					static auto button_size = ImVec2{ ImGui::GetColumnWidth() / 2.f - 12.5f, 20 };
 
@@ -537,7 +537,7 @@ namespace gui
 					{
 						*out_text = weapon_names.at(idx).name;
 						return true;
-					}, nullptr, weapon_names.size(), 10);
+					}, nullptr, int(weapon_names.size()), 10);
 
 					ImGui::BetterCheckbox("enabled", &selected_entry.enabled);
 
@@ -555,7 +555,7 @@ namespace gui
 						{
 							*out_text = weapon_kits.at(idx).name.c_str();
 							return true;
-						}, nullptr, weapon_kits.size(), 10);
+						}, nullptr, int(weapon_kits.size()), 10);
 					}
 					else
 					{
@@ -563,14 +563,14 @@ namespace gui
 						{
 							*out_text = glove_kits.at(idx).name.c_str();
 							return true;
-						}, nullptr, glove_kits.size(), 10);
+						}, nullptr, int(glove_kits.size()), 10);
 					}
 
 					ImGui::Combo("quality", &selected_entry.entity_quality_vector_index, [](void* data, int idx, const char** out_text)
 					{
 						*out_text = quality_names.at(idx).name;
 						return true;
-					}, nullptr, quality_names.size(), quality_names.size());
+					}, nullptr, int(quality_names.size()), int(quality_names.size()));
 
 					selected_entry.update_values();
 
@@ -580,7 +580,7 @@ namespace gui
 						{
 							*out_text = knife_names.at(idx).name;
 							return true;
-						}, nullptr, knife_names.size(), knife_names.size());
+						}, nullptr, int(knife_names.size()), int(knife_names.size()));
 					}
 					else if (selected_entry.definition_index == GLOVE_T_SIDE)
 					{
@@ -588,7 +588,7 @@ namespace gui
 						{
 							*out_text = glove_names.at(idx).name;
 							return true;
-						}, nullptr, glove_names.size(), glove_names.size());
+						}, nullptr, int(glove_names.size()), int(glove_names.size()));
 					}
 					else
 					{
@@ -637,7 +637,7 @@ namespace gui
 					{
 						*out_text = stickers.at(idx).name.c_str();
 						return true;
-					}, nullptr, stickers.size(), 10);
+					}, nullptr, int(stickers.size()), 10);
 
 					ImGui::SliderFloat("float", &selected_sticker.wear, .00001f, 1.f, "%.5f");
 

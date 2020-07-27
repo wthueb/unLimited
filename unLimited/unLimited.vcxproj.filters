@@ -38,12 +38,6 @@
     <ClCompile Include="..\deps\imgui\imgui.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\deps\imgui\imgui_draw.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\deps\imgui\examples\directx9_example\imgui_impl_dx9.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
     <ClCompile Include="features\aimbot.cpp">
       <Filter>features</Filter>
     </ClCompile>
@@ -86,6 +80,18 @@
     </ClCompile>
     <ClCompile Include="hooks\emit_sound.cpp">
       <Filter>hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\examples\imgui_impl_dx9.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\imgui_widgets.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\imgui\examples\imgui_impl_win32.cpp">
+      <Filter>imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +244,12 @@
     </ClInclude>
     <ClInclude Include="sdk\IEngineSound.hpp">
       <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deps\imgui\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deps\imgui\examples\imgui_impl_dx9.h">
+      <Filter>imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

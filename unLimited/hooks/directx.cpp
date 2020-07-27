@@ -3,7 +3,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <imgui.h>
-#include <imgui_impl_dx9.h>
+#include <examples/imgui_impl_dx9.h>
 #include <intrin.h>
 
 #include "../gui.hpp"
@@ -30,9 +30,9 @@ void gui_init()
 	for (; !hwnd; hwnd = FindWindowA("Valve001", nullptr))
 		Sleep(100);
 
-	o_wndproc = reinterpret_cast<WNDPROC>(SetWindowLongA(hwnd, GWLP_WNDPROC, LONG_PTR(hk_wndproc)));
+	o_wndproc = reinterpret_cast<WNDPROC>(uintptr_t(SetWindowLongA(hwnd, GWLP_WNDPROC, LONG(hk_wndproc))));
 
-	if (ImGui_ImplDX9_Init(hwnd, reinterpret_cast<IDirect3DDevice9*>(d3d_device)))
+	if (ImGui_ImplDX9_Init(reinterpret_cast<IDirect3DDevice9*>(d3d_device)))
 		initialized = true;
 
 	gui::init();
@@ -43,7 +43,7 @@ void gui_shutdown()
 	if (!initialized)
 		return;
 
-	SetWindowLongA(hwnd, GWLP_WNDPROC, LONG_PTR(o_wndproc));
+	SetWindowLongA(hwnd, GWLP_WNDPROC, LONG(o_wndproc));
 
 	gui_open = false;
 

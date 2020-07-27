@@ -1,3 +1,5 @@
+#pragma warning( disable : 4302 4311 )
+
 #include "CRC.hpp"
 
 #define BigShort(val)       WordSwap(val)

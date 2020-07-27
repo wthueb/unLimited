@@ -124,7 +124,7 @@ void draw::text(int x, int y, const char* text, HFont font, const Color& col)
 	g_surface->DrawSetTextFont(font);
 	g_surface->DrawSetTextColor(col.to_int());
 
-	g_surface->DrawPrintText(wstr.c_str(), wcslen(wstr.c_str()));
+	g_surface->DrawPrintText(wstr.c_str(), int(wcslen(wstr.c_str())));
 }
 
 void draw::text(const Vector2D& pos, const char* text, HFont font, const Color& col)

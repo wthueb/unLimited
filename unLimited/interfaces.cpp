@@ -32,19 +32,19 @@ ISteamFriends* g_steam_friends = nullptr;
 ISteamHTTP* g_steam_http = nullptr;
 ISteamUser* g_steam_user = nullptr;
 
-template<typename t>
-t* capture_interface(const std::string& module, const std::string& interface)
+template<class T>
+T* capture_interface(const std::string& module, const std::string& iface)
 {
-	using create_interface_fn = t*(*)(const char* name, int return_code);
+	using create_interface_fn = T*(*)(const char* name, int return_code);
 
 	// technically we should cache the factories so we don't have to look up, say,
 	// client.dll 10 times, but whatever, it's only ran once during initialization
 	auto func = reinterpret_cast<create_interface_fn>(GetProcAddress(GetModuleHandleA(module.c_str()), "CreateInterface"));
 
-	auto result = func(interface.c_str(), 0);
+	auto result = func(iface.c_str(), 0);
 
 	if (!result)
-		throw std::runtime_error("failed to get interface for: " + interface);
+		throw std::runtime_error("failed to get interface for: " + iface);
 
 	return result;
 }
@@ -53,8 +53,8 @@ void init_steam()
 {
 	ISteamClient* steam_client = reinterpret_cast<ISteamClient*>(reinterpret_cast<void*(__cdecl*)()>(GetProcAddress(GetModuleHandleA("steam_api.dll"), "SteamClient"))());
 
-	const auto h_steam_user = reinterpret_cast<uint32_t(__cdecl*)()>(GetProcAddress(GetModuleHandleA("steam_api.dll"), "SteamAPI_GetHSteamUser"))();
-	const auto h_steam_pipe = reinterpret_cast<uint32_t(__cdecl*)()>(GetProcAddress(GetModuleHandleA("steam_api.dll"), "SteamAPI_GetHSteamPipe"))();
+	const auto h_steam_user = reinterpret_cast<HSteamUser(__cdecl*)()>(GetProcAddress(GetModuleHandleA("steam_api.dll"), "SteamAPI_GetHSteamUser"))();
+	const auto h_steam_pipe = reinterpret_cast<HSteamPipe(__cdecl*)()>(GetProcAddress(GetModuleHandleA("steam_api.dll"), "SteamAPI_GetHSteamPipe"))();
 
 	g_steam_friends = steam_client->GetISteamFriends(h_steam_user, h_steam_pipe, "SteamFriends015");
 	g_steam_http = steam_client->GetISteamHTTP(h_steam_user, h_steam_pipe, "STEAMHTTP_INTERFACE_VERSION002");
