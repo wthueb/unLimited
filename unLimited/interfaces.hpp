@@ -2,5 +2,5 @@
 
 namespace interfaces
 {
-	void init();
+    void init();
 }

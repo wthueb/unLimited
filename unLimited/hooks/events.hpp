@@ -4,5 +4,5 @@
 
 namespace events
 {
-	bool __stdcall hk_fire_event_client_side(IGameEvent* event);
+    bool __stdcall hk_fire_event_client_side(IGameEvent* event);
 }

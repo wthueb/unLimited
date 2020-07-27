@@ -24,110 +24,110 @@ extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM w_para
 
 void gui_init()
 {
-	if (initialized)
-		return;
+    if (initialized)
+        return;
 
-	for (; !hwnd; hwnd = FindWindowA("Valve001", nullptr))
-		Sleep(100);
+    for (; !hwnd; hwnd = FindWindowA("Valve001", nullptr))
+        Sleep(100);
 
-	o_wndproc = reinterpret_cast<WNDPROC>(uintptr_t(SetWindowLongA(hwnd, GWLP_WNDPROC, LONG(hk_wndproc))));
+    o_wndproc = reinterpret_cast<WNDPROC>(uintptr_t(SetWindowLongA(hwnd, GWLP_WNDPROC, LONG(hk_wndproc))));
 
-	if (ImGui_ImplDX9_Init(reinterpret_cast<IDirect3DDevice9*>(d3d_device)))
-		initialized = true;
+    if (ImGui_ImplDX9_Init(reinterpret_cast<IDirect3DDevice9*>(d3d_device)))
+        initialized = true;
 
-	gui::init();
+    gui::init();
 }
 
 void gui_shutdown()
 {
-	if (!initialized)
-		return;
+    if (!initialized)
+        return;
 
-	SetWindowLongA(hwnd, GWLP_WNDPROC, LONG(o_wndproc));
+    SetWindowLongA(hwnd, GWLP_WNDPROC, LONG(o_wndproc));
 
-	gui_open = false;
+    gui_open = false;
 
-	auto cl_mouseenable = g_cvar->FindVar("cl_mouseenable");
+    auto cl_mouseenable = g_cvar->FindVar("cl_mouseenable");
 
-	cl_mouseenable->SetValue(1);
+    cl_mouseenable->SetValue(1);
 
-	Sleep(2000);
+    Sleep(2000);
 
-	ImGui_ImplDX9_Shutdown();
+    ImGui_ImplDX9_Shutdown();
 
-	initialized = false;
+    initialized = false;
 }
 
 HRESULT __stdcall hooks::hk_end_scene(IDirect3DDevice9* device)
 {
-	static const auto o_end_scene = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*)>(index::end_scene);
+    static const auto o_end_scene = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*)>(index::end_scene);
 
-	// stupid double rendering
-	static auto ret = _ReturnAddress();
+    // stupid double rendering
+    static auto ret = _ReturnAddress();
 
-	if (!initialized || _ReturnAddress() != ret)
-		return o_end_scene(device);
+    if (!initialized || _ReturnAddress() != ret)
+        return o_end_scene(device);
 
-	IDirect3DStateBlock9* state;
-	device->CreateStateBlock(D3DSBT_PIXELSTATE, &state);
+    IDirect3DStateBlock9* state;
+    device->CreateStateBlock(D3DSBT_PIXELSTATE, &state);
 
-	if (gui_open)
-	{
-		ImGui::GetIO().MouseDrawCursor = true;
+    if (gui_open)
+    {
+        ImGui::GetIO().MouseDrawCursor = true;
 
-		ImGui_ImplDX9_NewFrame();
+        ImGui_ImplDX9_NewFrame();
 
-		gui::draw_gui();
-		
-		ImGui::Render();
-	}
+        gui::draw_gui();
+        
+        ImGui::Render();
+    }
 
-	state->Apply();
-	state->Release();
+    state->Apply();
+    state->Release();
 
-	return o_end_scene(device);
+    return o_end_scene(device);
 }
 
 HRESULT __stdcall hooks::hk_reset(IDirect3DDevice9* device, D3DPRESENT_PARAMETERS* presentation_parameters)
 {
-	static const auto o_reset = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*, D3DPRESENT_PARAMETERS*)>(index::reset);
+    static const auto o_reset = d3d_device_hook->get_original<HRESULT(__stdcall*)(IDirect3DDevice9*, D3DPRESENT_PARAMETERS*)>(index::reset);
 
-	if (!initialized)
-		return o_reset(device, presentation_parameters);
+    if (!initialized)
+        return o_reset(device, presentation_parameters);
 
-	ImGui_ImplDX9_InvalidateDeviceObjects();
+    ImGui_ImplDX9_InvalidateDeviceObjects();
 
-	auto ret = o_reset(device, presentation_parameters);
+    auto ret = o_reset(device, presentation_parameters);
 
-	ImGui_ImplDX9_CreateDeviceObjects();
+    ImGui_ImplDX9_CreateDeviceObjects();
 
-	return ret;
+    return ret;
 }
 
 bool handle_input(UINT message, WPARAM w_param, LPARAM l_param)
 {
-	if (!initialized)
-		return false;
+    if (!initialized)
+        return false;
 
-	if (message == WM_KEYUP && w_param == VK_INSERT)
-	{
-		static auto cl_mouseenable = g_cvar->FindVar("cl_mouseenable");
-		
-		gui_open = !gui_open;
+    if (message == WM_KEYUP && w_param == VK_INSERT)
+    {
+        static auto cl_mouseenable = g_cvar->FindVar("cl_mouseenable");
+        
+        gui_open = !gui_open;
 
-		cl_mouseenable->SetValue(!gui_open);
-	}
+        cl_mouseenable->SetValue(!gui_open);
+    }
 
-	if (gui_open)
-		return ImGui_ImplWin32_WndProcHandler(hwnd, message, w_param, l_param) == 0;
+    if (gui_open)
+        return ImGui_ImplWin32_WndProcHandler(hwnd, message, w_param, l_param) == 0;
 
-	return false;
+    return false;
 }
 
 LRESULT __stdcall hk_wndproc(HWND hwnd, UINT message, WPARAM w_param, LPARAM l_param)
 {
-	if (handle_input(message, w_param, l_param))
-		return true;
+    if (handle_input(message, w_param, l_param))
+        return true;
 
-	return CallWindowProcA(o_wndproc, hwnd, message, w_param, l_param);
+    return CallWindowProcA(o_wndproc, hwnd, message, w_param, l_param);
 };

@@ -8,211 +8,211 @@ using vec_t = float;
 class Vector
 {
 public:
-	Vector(void)
-	{
-		Invalidate();
-	}
-	Vector(vec_t X, vec_t Y, vec_t Z)
-	{
-		x = X;
-		y = Y;
-		z = Z;
-	}
-	Vector(const float* clr)
-	{
-		x = clr[0];
-		y = clr[1];
-		z = clr[2];
-	}
+    Vector(void)
+    {
+        Invalidate();
+    }
+    Vector(vec_t X, vec_t Y, vec_t Z)
+    {
+        x = X;
+        y = Y;
+        z = Z;
+    }
+    Vector(const float* clr)
+    {
+        x = clr[0];
+        y = clr[1];
+        z = clr[2];
+    }
 
-	void Init(vec_t ix = 0.0f, vec_t iy = 0.0f, vec_t iz = 0.0f)
-	{
-		x = ix; y = iy; z = iz;
-	}
-	bool IsValid() const
-	{
-		return std::isfinite(x) && std::isfinite(y) && std::isfinite(z);
-	}
-	void Invalidate()
-	{
-		x = y = z = std::numeric_limits<float>::infinity();
-	}
+    void Init(vec_t ix = 0.0f, vec_t iy = 0.0f, vec_t iz = 0.0f)
+    {
+        x = ix; y = iy; z = iz;
+    }
+    bool IsValid() const
+    {
+        return std::isfinite(x) && std::isfinite(y) && std::isfinite(z);
+    }
+    void Invalidate()
+    {
+        x = y = z = std::numeric_limits<float>::infinity();
+    }
 
-	float& operator[](int i)
-	{
-		return ((vec_t*)this)[i];
-	}
-	float operator[](int i) const
-	{
-		return ((vec_t*)this)[i];
-	}
+    float& operator[](int i)
+    {
+        return ((vec_t*)this)[i];
+    }
+    float operator[](int i) const
+    {
+        return ((vec_t*)this)[i];
+    }
 
-	void Zero()
-	{
-		x = y = z = 0.0f;
-	}
+    void Zero()
+    {
+        x = y = z = 0.0f;
+    }
 
-	bool operator==(const Vector& src) const
-	{
-		return (src.x == x) && (src.y == y) && (src.z == z);
-	}
-	bool operator!=(const Vector& src) const
-	{
-		return (src.x != x) || (src.y != y) || (src.z != z);
-	}
+    bool operator==(const Vector& src) const
+    {
+        return (src.x == x) && (src.y == y) && (src.z == z);
+    }
+    bool operator!=(const Vector& src) const
+    {
+        return (src.x != x) || (src.y != y) || (src.z != z);
+    }
 
-	Vector& operator+=(const Vector& v)
-	{
-		x += v.x; y += v.y; z += v.z;
-		return *this;
-	}
-	Vector& operator-=(const Vector& v)
-	{
-		x -= v.x; y -= v.y; z -= v.z;
-		return *this;
-	}
-	Vector& operator*=(vec_t fl)
-	{
-		x *= fl;
-		y *= fl;
-		z *= fl;
-		return *this;
-	}
-	Vector& operator*=(const Vector& v)
-	{
-		x *= v.x;
-		y *= v.y;
-		z *= v.z;
-		return *this;
-	}
-	Vector& operator/=(const Vector& v)
-	{
-		x /= v.x;
-		y /= v.y;
-		z /= v.z;
-		return *this;
-	}
-	Vector& operator+=(vec_t fl)
-	{
-		x += fl;
-		y += fl;
-		z += fl;
-		return *this;
-	}
-	Vector& operator/=(vec_t fl)
-	{
-		x /= fl;
-		y /= fl;
-		z /= fl;
-		return *this;
-	}
-	Vector& operator-=(vec_t fl)
-	{
-		x -= fl;
-		y -= fl;
-		z -= fl;
-		return *this;
-	}
+    Vector& operator+=(const Vector& v)
+    {
+        x += v.x; y += v.y; z += v.z;
+        return *this;
+    }
+    Vector& operator-=(const Vector& v)
+    {
+        x -= v.x; y -= v.y; z -= v.z;
+        return *this;
+    }
+    Vector& operator*=(vec_t fl)
+    {
+        x *= fl;
+        y *= fl;
+        z *= fl;
+        return *this;
+    }
+    Vector& operator*=(const Vector& v)
+    {
+        x *= v.x;
+        y *= v.y;
+        z *= v.z;
+        return *this;
+    }
+    Vector& operator/=(const Vector& v)
+    {
+        x /= v.x;
+        y /= v.y;
+        z /= v.z;
+        return *this;
+    }
+    Vector& operator+=(vec_t fl)
+    {
+        x += fl;
+        y += fl;
+        z += fl;
+        return *this;
+    }
+    Vector& operator/=(vec_t fl)
+    {
+        x /= fl;
+        y /= fl;
+        z /= fl;
+        return *this;
+    }
+    Vector& operator-=(vec_t fl)
+    {
+        x -= fl;
+        y -= fl;
+        z -= fl;
+        return *this;
+    }
 
-	void NormalizeInPlace()
-	{
-		*this = Normalized();
-	}
-	Vector Normalized() const
-	{
-		Vector res = *this;
-		float l = res.Length();
-		if (l != 0.0f) {
-			res /= l;
-		}
-		else {
-			res.x = res.y = res.z = 0.0f;
-		}
-		return res;
-	}
+    void NormalizeInPlace()
+    {
+        *this = Normalized();
+    }
+    Vector Normalized() const
+    {
+        Vector res = *this;
+        float l = res.Length();
+        if (l != 0.0f) {
+            res /= l;
+        }
+        else {
+            res.x = res.y = res.z = 0.0f;
+        }
+        return res;
+    }
 
-	float DistTo(const Vector &vOther) const
-	{
-		Vector delta;
+    float DistTo(const Vector &vOther) const
+    {
+        Vector delta;
 
-		delta.x = x - vOther.x;
-		delta.y = y - vOther.y;
-		delta.z = z - vOther.z;
+        delta.x = x - vOther.x;
+        delta.y = y - vOther.y;
+        delta.z = z - vOther.z;
 
-		return delta.Length();
-	}
-	float DistToSqr(const Vector &vOther) const
-	{
-		Vector delta;
+        return delta.Length();
+    }
+    float DistToSqr(const Vector &vOther) const
+    {
+        Vector delta;
 
-		delta.x = x - vOther.x;
-		delta.y = y - vOther.y;
-		delta.z = z - vOther.z;
+        delta.x = x - vOther.x;
+        delta.y = y - vOther.y;
+        delta.z = z - vOther.z;
 
-		return delta.LengthSqr();
-	}
-	float Dot(const Vector& vOther) const
-	{
-		return (x*vOther.x + y*vOther.y + z*vOther.z);
-	}
-	float Length() const
-	{
-		return sqrt(x*x + y*y + z*z);
-	}
-	float LengthSqr(void) const
-	{
-		return (x*x + y*y + z*z);
-	}
-	float Length2D() const
-	{
-		return sqrt(x*x + y*y);
-	}
+        return delta.LengthSqr();
+    }
+    float Dot(const Vector& vOther) const
+    {
+        return (x*vOther.x + y*vOther.y + z*vOther.z);
+    }
+    float Length() const
+    {
+        return sqrt(x*x + y*y + z*z);
+    }
+    float LengthSqr(void) const
+    {
+        return (x*x + y*y + z*z);
+    }
+    float Length2D() const
+    {
+        return sqrt(x*x + y*y);
+    }
 
-	Vector& operator=(const Vector &vOther)
-	{
-		x = vOther.x; y = vOther.y; z = vOther.z;
-		return *this;
-	}
+    Vector& operator=(const Vector &vOther)
+    {
+        x = vOther.x; y = vOther.y; z = vOther.z;
+        return *this;
+    }
 
-	Vector Vector::operator-(void) const
-	{
-		return Vector(-x, -y, -z);
-	}
-	Vector Vector::operator+(const Vector& v) const
-	{
-		return Vector(x + v.x, y + v.y, z + v.z);
-	}
-	Vector Vector::operator-(const Vector& v) const
-	{
-		return Vector(x - v.x, y - v.y, z - v.z);
-	}
-	Vector Vector::operator*(float fl) const
-	{
-		return Vector(x * fl, y * fl, z * fl);
-	}
-	Vector Vector::operator*(const Vector& v) const
-	{
-		return Vector(x * v.x, y * v.y, z * v.z);
-	}
-	Vector Vector::operator/(float fl) const
-	{
-		return Vector(x / fl, y / fl, z / fl);
-	}
-	Vector Vector::operator/(const Vector& v) const
-	{
-		return Vector(x / v.x, y / v.y, z / v.z);
-	}
+    Vector Vector::operator-(void) const
+    {
+        return Vector(-x, -y, -z);
+    }
+    Vector Vector::operator+(const Vector& v) const
+    {
+        return Vector(x + v.x, y + v.y, z + v.z);
+    }
+    Vector Vector::operator-(const Vector& v) const
+    {
+        return Vector(x - v.x, y - v.y, z - v.z);
+    }
+    Vector Vector::operator*(float fl) const
+    {
+        return Vector(x * fl, y * fl, z * fl);
+    }
+    Vector Vector::operator*(const Vector& v) const
+    {
+        return Vector(x * v.x, y * v.y, z * v.z);
+    }
+    Vector Vector::operator/(float fl) const
+    {
+        return Vector(x / fl, y / fl, z / fl);
+    }
+    Vector Vector::operator/(const Vector& v) const
+    {
+        return Vector(x / v.x, y / v.y, z / v.z);
+    }
 
-	float x, y, z;
+    float x, y, z;
 };
 
 inline Vector operator*(float lhs, const Vector& rhs)
 {
-	return rhs * lhs;
+    return rhs * lhs;
 }
 inline Vector operator/(float lhs, const Vector& rhs)
 {
-	return rhs / lhs;
+    return rhs / lhs;
 }
 
 void  VectorCopy(const Vector& src, Vector& dst);
@@ -224,29 +224,29 @@ vec_t NormalizeVector(Vector& v);
 class __declspec(align(16)) VectorAligned : public Vector
 {
 public:
-	inline VectorAligned(void) {};
-	inline VectorAligned(float X, float Y, float Z)
-	{
-		Init(X, Y, Z);
-	}
+    inline VectorAligned(void) {};
+    inline VectorAligned(float X, float Y, float Z)
+    {
+        Init(X, Y, Z);
+    }
 
 public:
-	explicit VectorAligned(const Vector &vOther)
-	{
-		Init(vOther.x, vOther.y, vOther.z);
-	}
+    explicit VectorAligned(const Vector &vOther)
+    {
+        Init(vOther.x, vOther.y, vOther.z);
+    }
 
-	VectorAligned& operator=(const Vector &vOther)
-	{
-		Init(vOther.x, vOther.y, vOther.z);
-		return *this;
-	}
+    VectorAligned& operator=(const Vector &vOther)
+    {
+        Init(vOther.x, vOther.y, vOther.z);
+        return *this;
+    }
 
-	VectorAligned& operator=(const VectorAligned &vOther)
-	{
-		Init(vOther.x, vOther.y, vOther.z);
-		return *this;
-	}
+    VectorAligned& operator=(const VectorAligned &vOther)
+    {
+        Init(vOther.x, vOther.y, vOther.z);
+        return *this;
+    }
 
-	float w;
+    float w;
 };
